@@ -1,3 +1,15 @@
-.main-layout {
-	font-weight: bold;
+@use 'Layouts/MainLayout.scss';
+@use 'Components/sidebar.scss';
+
+html {
+	height: 100%;
+
+	body {
+		height: 100%;
+
+		#app {
+			height: 100%;
+		}
+	}
 }
+
