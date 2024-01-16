@@ -1,9 +1,11 @@
 <script>
 import sidebar from '@/Components/sidebar.vue';
+import { Head } from '@inertiajs/vue3';
 
 export default {
 	components: {
 		sidebar,
+		Head,
 	},
 	props: {
 		title: String,
@@ -12,6 +14,7 @@ export default {
 </script>
 
 <template>
+	<Head :title="title" />
 	<div class="main-layout">
 	  <el-container>
 		<el-aside width="250px"><sidebar></sidebar></el-aside>

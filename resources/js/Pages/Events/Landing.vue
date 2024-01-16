@@ -1,11 +1,8 @@
 <script>
-import { Head } from '@inertiajs/vue3';
-
 import MainLayout from '@/Layouts/MainLayout.vue';
 
 export default {
 	components: {
-		Head,
 		MainLayout,
 	},
 	props: {
@@ -22,9 +19,7 @@ export default {
 </script>
 
 <template>
-    <Head title="Events" />
-
-	<MainLayout title="Hello there">
+	<MainLayout title="Events">
 		<div>Events Landing</div>
 	</MainLayout>
 </template>
