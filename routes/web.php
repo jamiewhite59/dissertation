@@ -37,5 +37,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/events', [EventController::class, 'show']);
+Route::get('/events/create', [EventController::class, 'create']);
 
 require __DIR__.'/auth.php';

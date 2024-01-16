@@ -17,15 +17,20 @@ class EventController extends Controller
         ]);
     }
 
-    public function create(Request $request): RedirectResponse {
+    public function create(Request $request): Response {
+        return Inertia::render('Events/Create');
+    }
+
+    public function store(Request $request): RedirectResponse {
+        // save event to database
         $event = new Event;
-        $event->title = 'Test Event 1';
-        $event->start_date = Carbon::today();
-        $event->end_date = Carbon::today();
-        $event->icon = 'fa-plus';
+        $event->title = $request->title;
+        $event->start_date = $request->start_date;
+        $event->end_date = $request->end_date;
+        $event->icon = $request->icon;
 
         $event->save();
-
+        //then
         return redirect('/events');
     }
 }
