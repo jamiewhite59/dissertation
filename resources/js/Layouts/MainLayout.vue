@@ -14,10 +14,10 @@ export default {
 <template>
 	<div class="main-layout">
 	  <el-container>
-		<el-aside width="200px"><sidebar></sidebar></el-aside>
+		<el-aside width="250px"><sidebar></sidebar></el-aside>
 		<el-container>
 		  <el-header>{{title}}</el-header>
-		  <el-main>Main</el-main>
+		  <el-main><slot></slot></el-main>
 		</el-container>
 	  </el-container>
 	</div>

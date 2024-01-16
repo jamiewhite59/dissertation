@@ -1,28 +1,30 @@
-<script setup>
+<script>
 import { Head } from '@inertiajs/vue3';
 
 import MainLayout from '@/Layouts/MainLayout.vue';
 
-const props = defineProps(['name']);
+export default {
+	components: {
+		Head,
+		MainLayout,
+	},
+	props: {
+		name: String,
+	},
 
-function create() {
-	console.debug('this is a test ');
+	methods: {
+		create() {
+			console.debug('this is a test');
+		}
+	}
 }
+
 </script>
 
 <template>
     <Head title="Events" />
 
 	<MainLayout title="Hello there">
-
+		<div>Events Landing</div>
 	</MainLayout>
-	<!-- <h2>
-		Hi there
-	</h2>
-	<div>
-		Hellooooooo
-		<p>{{ name }}</p>
-		<el-button type="primary" :icon="Plus" @click="create">Create Event</el-button>
-	</div> -->
-
 </template>
