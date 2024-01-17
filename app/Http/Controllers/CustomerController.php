@@ -11,4 +11,8 @@ class CustomerController extends Controller
     public function show(Request $request): Response {
         return Inertia::render('Customers/Index');
     }
+
+    public function create(Request $request): Response {
+        return Inertia::render('Customers/Create');
+    }
 }
