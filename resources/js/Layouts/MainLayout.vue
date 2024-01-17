@@ -9,15 +9,15 @@ export default {
 	},
 	props: {
 		title: String,
-	}
-}
+	},
+};
 </script>
 
 <template>
 	<Head :title="title" />
 	<div class="main-layout">
 		<el-container>
-			<el-aside width="250px"><sidebar></sidebar></el-aside>
+			<el-aside width="250px"><sidebar/></el-aside>
 			<el-container>
 				<el-header class="main-header" height="100px">
 					<el-text size="large">{{title}}</el-text>
@@ -26,4 +26,4 @@ export default {
 			</el-container>
 		</el-container>
 	</div>
-  </template>
+</template>

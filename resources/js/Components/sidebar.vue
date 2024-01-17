@@ -1,19 +1,12 @@
 <script>
-import {User, Postcard, Coordinate, Document, OfficeBuilding, Files} from '@element-plus/icons-vue';
-
 export default {
 	components: {
-		User,
-		Postcard,
-		Coordinate,
-		Document,
-		OfficeBuilding,
-		Files,
+
 	},
 	methods: {
 
 	},
-}
+};
 </script>
 
 <template>

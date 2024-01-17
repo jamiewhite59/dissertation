@@ -12,9 +12,9 @@ export default {
 	methods: {
 		create() {
 			console.debug('this is a test');
-		}
-	}
-}
+		},
+	},
+};
 
 </script>
 
