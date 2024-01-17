@@ -12,7 +12,7 @@ use Inertia\Response;
 class EventController extends Controller
 {
     public function show(Request $request): Response {
-        return Inertia::render('Events/Landing', [
+        return Inertia::render('Events/Index', [
             'name' => 'Jamie'
         ]);
     }

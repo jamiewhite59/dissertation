@@ -37,8 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/events', [EventController::class, 'show']);
-Route::get('/events/create', [EventController::class, 'create']);
-Route::get('/customers', [CustomerController::class, 'show']);
+Route::get('/events', [EventController::class, 'show'])->name('events.index');
+Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+Route::get('/customers', [CustomerController::class, 'show'])->name('customers.index');
 
 require __DIR__.'/auth.php';

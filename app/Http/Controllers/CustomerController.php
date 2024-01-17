@@ -9,6 +9,6 @@ use Inertia\Response;
 class CustomerController extends Controller
 {
     public function show(Request $request): Response {
-        return Inertia::render('Customers/Landing');
+        return Inertia::render('Customers/Index');
     }
 }
