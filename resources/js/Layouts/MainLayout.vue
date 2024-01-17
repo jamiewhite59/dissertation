@@ -16,12 +16,14 @@ export default {
 <template>
 	<Head :title="title" />
 	<div class="main-layout">
-	  <el-container>
-		<el-aside width="250px"><sidebar></sidebar></el-aside>
 		<el-container>
-		  <el-header>{{title}}</el-header>
-		  <el-main><slot></slot></el-main>
+			<el-aside width="250px"><sidebar></sidebar></el-aside>
+			<el-container>
+				<el-header class="main-header" height="100px">
+					<el-text size="large">{{title}}</el-text>
+				</el-header>
+				<el-main class="main-main"><slot></slot></el-main>
+			</el-container>
 		</el-container>
-	  </el-container>
 	</div>
   </template>
