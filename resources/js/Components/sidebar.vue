@@ -2,24 +2,34 @@
 import {User, Postcard, Coordinate, Document, OfficeBuilding, Files} from '@element-plus/icons-vue';
 
 export default {
-components: {
-	User,
-	Postcard,
-	Coordinate,
-	Document,
-	OfficeBuilding,
-	Files,
-}
+	components: {
+		User,
+		Postcard,
+		Coordinate,
+		Document,
+		OfficeBuilding,
+		Files,
+	},
+	methods: {
+		customers() {
+			route('customers');
+		},
+		events() {
+			route('events');
+		},
+	},
 }
 </script>
 
 <template>
-	<el-menu>
-		<el-menu-item index="1">
+	<el-link :href="route('customers')">Customers</el-link>
+	<el-link :href="route('events')">Events</el-link>
+	<!-- <el-menu>
+		<el-menu-item index="1" @click="route('customers')">
 			<el-icon><Postcard /></el-icon>
 			<span>Events</span>
 		</el-menu-item>
-		<el-menu-item index="2">
+		<el-menu-item index="2" @click="customers()">
 			<el-icon><Coordinate /></el-icon>
 			<span>Customers</span>
 		</el-menu-item>
@@ -39,5 +49,5 @@ components: {
 			<el-icon><User /></el-icon>
 			<span>User</span>
 		</el-menu-item>
-	</el-menu>
+	</el-menu> -->
 </template>
