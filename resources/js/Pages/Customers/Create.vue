@@ -1,5 +1,6 @@
 <script>
 import MainLayout from '@/Layouts/MainLayout.vue';
+import { router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
 
 export default {
@@ -17,8 +18,9 @@ export default {
 		};
 	},
 	methods: {
-		test() {
+		save() {
 			console.debug('form data', this.customerForm);
+			router.post('/customers/create', this.customerForm);
 		},
 	},
 };
@@ -29,13 +31,13 @@ export default {
 		<el-container direction="vertical">
 			<el-container>
 				<el-form label-position="top" :model="customerForm">
-					<el-form-item label="Name">
+					<el-form-item label="Name" required>
 						<el-input v-model="customerForm.name"/>
 					</el-form-item>
-					<el-form-item label="Email">
+					<el-form-item label="Email" required>
 						<el-input v-model="customerForm.email"/>
 					</el-form-item>
-					<el-form-item label="Phone Number">
+					<el-form-item label="Phone Number" required>
 						<el-input v-model="customerForm.phone_number"/>
 					</el-form-item>
 					<el-form-item label="Company">
@@ -57,7 +59,7 @@ export default {
 					</el-col>
 					<el-col :span="8"/>
 					<el-col :span="8" style="text-align: end;">
-						<el-button @click="test()">Save</el-button>
+						<el-button @click="save()">Save</el-button>
 					</el-col>
 				</el-row>
 			</el-container>

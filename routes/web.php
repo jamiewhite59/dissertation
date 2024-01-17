@@ -39,7 +39,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/events', [EventController::class, 'show'])->name('events.index');
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+
 Route::get('/customers', [CustomerController::class, 'show'])->name('customers.index');
 Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
+Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
 
 require __DIR__.'/auth.php';
