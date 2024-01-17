@@ -11,19 +11,14 @@ export default {
 		Files,
 	},
 	methods: {
-		customers() {
-			route('customers');
-		},
-		events() {
-			route('events');
-		},
+
 	},
 }
 </script>
 
 <template>
-	<el-link :href="route('customers')">Customers</el-link>
-	<el-link :href="route('events')">Events</el-link>
+	<el-link :href="route('customers.index')">Customers</el-link>
+	<el-link :href="route('events.index')">Events</el-link>
 	<!-- <el-menu>
 		<el-menu-item index="1" @click="route('customers')">
 			<el-icon><Postcard /></el-icon>
