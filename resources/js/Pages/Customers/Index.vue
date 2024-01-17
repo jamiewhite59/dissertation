@@ -27,9 +27,7 @@ export default {
 		};
 	},
 	methods: {
-		test() {
-			console.debug('button clicked', this.search);
-		},
+
 	},
 };
 </script>
@@ -43,7 +41,7 @@ export default {
 					<el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
 				</el-select>
 				<a :href="route('customers.create')">
-					<el-button type="primary" @click="test()">
+					<el-button type="primary">
 						Create
 						<el-icon><Plus/></el-icon>
 					</el-button>
