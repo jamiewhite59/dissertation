@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -38,5 +39,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/events', [EventController::class, 'show']);
 Route::get('/events/create', [EventController::class, 'create']);
+Route::get('/customers', [CustomerController::class, 'show']);
 
 require __DIR__.'/auth.php';
