@@ -11,7 +11,11 @@ use Inertia\Response;
 class CustomerController extends Controller
 {
     public function show(Request $request): Response {
-        return Inertia::render('Customers/Index');
+        $customers = Customer::all();
+
+        return Inertia::render('Customers/Index', [
+            'customers' => $customers,
+        ]);
     }
 
     public function create(Request $request): Response {
