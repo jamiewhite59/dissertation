@@ -1,18 +1,25 @@
 <script>
+import { router } from '@inertiajs/vue3';
+
 export default {
 	components: {
 
 	},
 	methods: {
-
+		openEvents() {
+			router.get(route('events.index'));
+		},
+		openCustomers() {
+			router.get(route('customers.index'));
+		},
 	},
 };
 </script>
 
 <template>
 	<div class="sidebar">
-		<el-link :href="route('customers.index')">Customers</el-link>
-		<el-link :href="route('events.index')">Events</el-link>
+		<el-button @click="openCustomers">Customers</el-button>
+		<el-button @click="openEvents">Events</el-button>
 	</div>
 	<!-- <el-menu>
 		<el-menu-item index="1" @click="route('customers')">
