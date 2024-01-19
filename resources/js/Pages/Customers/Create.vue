@@ -20,7 +20,10 @@ export default {
 	methods: {
 		save() {
 			console.debug('form data', this.customerForm);
-			router.post('/customers/create', this.customerForm);
+			router.post(route('customers.create', this.customerForm));
+		},
+		openIndex() {
+			router.get(route('customers.index'));
 		},
 	},
 };
@@ -48,9 +51,7 @@ export default {
 			<el-container direction="vertical">
 				<el-row>
 					<el-col :span="24" style="text-align: end;">
-						<a :href="route('customers.index')">
-							<el-button>Cancel</el-button>
-						</a>
+						<el-button @click="openIndex">Cancel</el-button>
 					</el-col>
 				</el-row>
 				<el-row justify="space-evenly">

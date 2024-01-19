@@ -1,6 +1,7 @@
 <script>
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { Plus } from '@element-plus/icons-vue';
+import { router } from '@inertiajs/vue3';
 
 export default {
 	components: {
@@ -30,7 +31,9 @@ export default {
 		};
 	},
 	methods: {
-
+		openCreate() {
+			router.get(route('customers.create'));
+		},
 	},
 };
 </script>
@@ -43,12 +46,10 @@ export default {
 				<el-select v-model="search" filterable disabled placeholder="" style="width:250px">
 					<el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
 				</el-select>
-				<a :href="route('customers.create')">
-					<el-button type="primary">
-						Create
-						<el-icon><Plus/></el-icon>
-					</el-button>
-				</a>
+				<el-button type="primary" @click="openCreate">
+					Create
+					<el-icon><Plus/></el-icon>
+				</el-button>
 			</el-header>
 			<el-main class="customer-index-list">
 				<el-space class="list-space" wrap size="small" prefixCls="space-item">
