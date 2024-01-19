@@ -5,4 +5,8 @@
 	height: 100%;
 
 	background-color: #1a2527;
+
+	.el-button+.el-button {
+		margin-left: 0;
+	}
 }

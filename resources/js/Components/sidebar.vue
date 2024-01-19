@@ -17,10 +17,10 @@ export default {
 </script>
 
 <template>
-	<div class="sidebar">
+	<el-container direction="vertical" class="sidebar">
 		<el-button @click="openCustomers">Customers</el-button>
 		<el-button @click="openEvents">Events</el-button>
-	</div>
+	</el-container>
 	<!-- <el-menu>
 		<el-menu-item index="1" @click="route('customers')">
 			<el-icon><Postcard /></el-icon>
