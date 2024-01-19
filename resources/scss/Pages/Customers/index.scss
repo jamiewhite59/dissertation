@@ -1,0 +1,21 @@
+.customer-index-create {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1em;
+}
+
+.customer-index-list {
+	.list-space {
+		justify-content: center;
+
+		.space-item__item {
+			width: 24%;
+		}
+
+		.list-card {
+			text-align: center;
+		}
+	}
+
+}
