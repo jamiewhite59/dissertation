@@ -1,10 +1,10 @@
 <script>
-import sidebar from '@/Components/sidebar.vue';
+import Sidebar from '@/Components/Sidebar.vue';
 import { Head } from '@inertiajs/vue3';
 
 export default {
 	components: {
-		sidebar,
+		Sidebar,
 		Head,
 	},
 	props: {
