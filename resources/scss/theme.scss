@@ -1,0 +1,19 @@
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'white': #ddd,
+    'black': #333,
+    'primary': (
+      'base': #E01F27,
+    ),
+    'info': (
+        'base': #E01F27
+    )
+  ),
+  $card: (
+    'padding': 12px,
+  )
+);
+
+@use "element-plus/theme-chalk/src/dark/css-vars.scss" as *;
+
+@use "element-plus/theme-chalk/src/index.scss" as *;
