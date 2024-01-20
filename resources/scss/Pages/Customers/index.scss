@@ -6,8 +6,12 @@
 }
 
 .customer-index-list {
+	flex: initial !important;
+
 	.list-space {
-		justify-content: center;
+		display: grid !important;
+		grid-gap: 15px;
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 
 		.space-item__item {
 			width: 24%;
@@ -15,6 +19,12 @@
 
 		.list-card {
 			text-align: center;
+			height: 120px;
+		}
+
+		.el-card.is-hover-shadow:hover{
+			border: 1px solid var(--el-color-primary);
+			cursor: pointer;
 		}
 	}
 

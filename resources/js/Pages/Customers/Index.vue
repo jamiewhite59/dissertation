@@ -52,15 +52,14 @@ export default {
 				</el-button>
 			</el-header>
 			<el-main class="customer-index-list">
-				<el-space class="list-space" wrap size="small" prefixCls="space-item">
-					<el-card class="list-card" v-for="customer in customers" :key="customer.id">
-						<el-space direction="vertical">
-							<el-text tag="b">{{ customer.name }}</el-text>
-							<el-text>{{ customer.email }}</el-text>
-							<el-text>{{ customer.phone_number }}</el-text>
-						</el-space>
+				<el-container class="list-space">
+					<el-card class="list-card" v-for="customer in customers" :key="customer.id" shadow="hover">
+						<el-descriptions :title="customer.name" column="1">
+							<el-descriptions-item>{{ customer.email }}</el-descriptions-item>
+							<el-descriptions-item>{{ customer.phone_number }}</el-descriptions-item>
+						</el-descriptions>
 					</el-card>
-				</el-space>
+				</el-container>
 			</el-main>
 		</el-container>
 	</MainLayout>
