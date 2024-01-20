@@ -7,20 +7,28 @@ export default {
 	components: {
 		MainLayout,
 	},
+	props: {
+		customer: Object,
+	},
 	data() {
 		return {
 			customerForm: reactive({
-				name: '',
-				email: '',
-				phone_number: '',
-				company: '',
+				name: this.customer ? this.customer.name : '',
+				email: this.customer ? this.customer.email : '',
+				phone_number: this.customer ? this.customer.phone_number : '',
+				company: this.customer ? this.customer.company : '',
 			}),
 		};
 	},
 	methods: {
 		save() {
 			console.debug('form data', this.customerForm);
-			router.post(route('customers.create', this.customerForm));
+			if (this.customer) {
+				console.debug('saving customer data');
+			} else {
+				console.debug('creating new customer');
+				// router.post(route('customers.create', this.customerForm));
+			}
 		},
 		openIndex() {
 			router.get(route('customers.index'));

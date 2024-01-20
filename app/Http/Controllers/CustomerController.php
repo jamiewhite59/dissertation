@@ -32,4 +32,12 @@ class CustomerController extends Controller
 
         return redirect('/customers');
     }
+
+    public function edit(Request $request, $customerId): Response {
+        $customer = Customer::find($customerId);
+
+        return Inertia::render('Customers/Create', [
+            'customer' => $customer,
+        ]);
+    }
 }

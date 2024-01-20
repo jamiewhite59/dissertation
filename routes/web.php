@@ -43,5 +43,6 @@ Route::get('/events/create', [EventController::class, 'create'])->name('events.c
 Route::get('/customers', [CustomerController::class, 'show'])->name('customers.index');
 Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
 Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
+Route::get('/customers/{id}', [CustomerController::class, 'edit'])->name('customers.edit');
 
 require __DIR__.'/auth.php';
