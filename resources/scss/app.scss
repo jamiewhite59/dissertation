@@ -9,7 +9,10 @@ html {
 	font-family: var(--el-font-family);
 
 	body {
+		margin: 0;
+
 		height: 100%;
+		overflow: hidden;
 
 		#app {
 			height: 100%;
