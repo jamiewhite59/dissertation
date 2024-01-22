@@ -2,10 +2,23 @@
 	height: 100%;
 
 	.main-header {
-		background-color: #fffffb;
+		display: flex;
 
-		span {
-			font-size: 2em;
+		justify-content: space-between;
+		align-items: center;
+
+		background-color: var(--el-color-white);
+
+		.user-avatar {
+			.el-icon {
+				height: 1.5em;
+				width: 2em;
+
+				svg {
+					height: 2em;
+					width: 2em;
+				}
+			}
 		}
 	}
 
@@ -15,5 +28,41 @@
 
 	.el-container {
 		height: 100%;
+
+		aside {
+			height: 100%;
+
+			background-color: var(--el-menu-bg-color);
+
+			.logo-container {
+				display: flex;
+				justify-content: center;
+
+				padding-top: 1em;
+				padding-bottom: 1em;
+
+				.logo {
+					height: 68px;
+
+					object-fit: cover;
+				}
+			}
+
+			.el-menu {
+				border-right: 0;
+
+				.el-menu-item:hover {
+					color: var(--el-menu-hover-text-color);
+				}
+
+				.is-disabled {
+					color: var(--el-menu-text-color) !important;
+				}
+
+				.el-sub-menu__title:hover {
+					color: var(--el-menu-hover-text-color) !important;
+				}
+			}
+		}
 	}
 }

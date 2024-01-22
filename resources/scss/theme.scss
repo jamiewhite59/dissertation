@@ -11,6 +11,14 @@
   ),
   $card: (
     'padding': 12px,
+  ),
+  $menu: (
+    'text-color': white,
+    'hover-text-color': var(--el-menu-bg-color),
+    'bg-color': #1A2527,
+  ),
+  $avatar: (
+    'bg-color': var(--el-color-black),
   )
 );
 
