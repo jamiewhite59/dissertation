@@ -21,14 +21,14 @@ export default {
 		};
 	},
 	methods: {
+		create() {
+			router.post(route('customers.create', this.customerForm));
+		},
 		save() {
-			console.debug('form data', this.customerForm);
-			if (this.customer) {
-				console.debug('saving customer data');
-			} else {
-				console.debug('creating new customer');
-				// router.post(route('customers.create', this.customerForm));
-			}
+			router.patch(route('customers.update', this.customer.id), this.customerForm);
+		},
+		remove() {
+			router.delete(route('customers.destroy', this.customer.id));
 		},
 		openIndex() {
 			router.get(route('customers.index'));
@@ -64,11 +64,12 @@ export default {
 				</el-row>
 				<el-row justify="space-evenly">
 					<el-col :span="8">
-						<el-button>Delete</el-button>
+						<el-button @click="remove">Delete</el-button>
 					</el-col>
 					<el-col :span="8"/>
 					<el-col :span="8" style="text-align: end;">
-						<el-button @click="save()">Save</el-button>
+						<el-button v-if="customer" @click="save">Save</el-button>
+						<el-button v-else @click="create">Create</el-button>
 					</el-col>
 				</el-row>
 			</el-container>
