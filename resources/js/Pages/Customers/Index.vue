@@ -50,8 +50,10 @@ export default {
 					<el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
 				</el-select>
 				<el-button type="primary" @click="openCreate">
+					<template #icon>
+						<el-icon><Plus/></el-icon>
+					</template>
 					Create
-					<el-icon><Plus/></el-icon>
 				</el-button>
 			</el-header>
 			<el-main class="customer-index-list">
