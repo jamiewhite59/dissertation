@@ -27,6 +27,9 @@ export default {
 				start_date: [
 					{ required: true, message: 'Start Date is required', trigger: 'blur', },
 				],
+				end_date: [
+					{ validator: this.validateEndDate, trigger: 'blur', },
+				],
 			}),
 		};
 	},
@@ -86,6 +89,19 @@ export default {
 					return false;
 				});
 		},
+		validateEndDate(rule, value, callback) {
+			let currentStart = new Date(this.eventForm.start_date).toISOString();
+			let currentEnd = new Date(this.eventForm.end_date).toISOString();
+			if (this.eventForm.end_date && currentStart > currentEnd) {
+				callback(new Error('Start date must be before end date'));
+			} else {
+				callback();
+			}
+		},
+	},
+	mounted() {
+		console.debug('mounted start date', this.eventForm.start_date);
+		console.debug('mounted end date', this.eventForm.end_date);
 	},
 };
 </script>
