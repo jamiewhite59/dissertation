@@ -9,6 +9,7 @@ export default {
 	},
 	props: {
 		customer: Object,
+		errors: Object,
 	},
 	data() {
 		return {
@@ -22,7 +23,7 @@ export default {
 	},
 	methods: {
 		create() {
-			router.post(route('customers.create', this.customerForm));
+			router.post(route('customers.store', this.customerForm));
 		},
 		save() {
 			router.patch(route('customers.update', this.customer.id), this.customerForm);
@@ -33,6 +34,16 @@ export default {
 		openIndex() {
 			router.get(route('customers.index'));
 		},
+	},
+	watch: {
+		errors() {
+			console.debug('errors changed', this.errors);
+		},
+	},
+	mounted() {
+		if (this.errors) {
+			console.debug('We have some errors!', this.errors);
+		}
 	},
 };
 </script>
