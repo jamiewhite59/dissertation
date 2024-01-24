@@ -88,14 +88,14 @@ export default {
 	<MainLayout title="Customers">
 		<el-container direction="vertical">
 			<el-container>
-				<el-form ref="formRef" label-position="top" :model="customerForm">
-					<el-form-item label="Name" prop="name">
+				<el-form ref="formRef" label-position="top" :model="customerForm" :rules="rules">
+					<el-form-item label="Name" prop="name" required>
 						<el-input v-model="customerForm.name"/>
 					</el-form-item>
-					<el-form-item label="Email" prop="email">
+					<el-form-item label="Email" prop="email" required>
 						<el-input v-model="customerForm.email"/>
 					</el-form-item>
-					<el-form-item label="Phone Number" prop="phone_number">
+					<el-form-item label="Phone Number" prop="phone_number" required>
 						<el-input v-model="customerForm.phone_number"/>
 					</el-form-item>
 					<el-form-item label="Company" prop="company">
