@@ -18,7 +18,7 @@ export default {
 		};
 	},
 	computed: {
-		displayCustomers() {
+		filteredCustomers() {
 			if (this.search) {
 				return this.customers.filter((customer) => {
 					return customer[this.select] ? customer[this.select].toLowerCase().includes(this.search.toLowerCase()) : false;
@@ -63,7 +63,7 @@ export default {
 			<el-main class="customer-index-list">
 				<el-empty v-if="!customers.length" description="No customers" />
 				<el-container v-else class="list-space">
-					<el-card class="list-card" v-for="customer in displayCustomers" :key="customer.id" shadow="hover" @click="openEdit(customer.id)">
+					<el-card class="list-card" v-for="customer in filteredCustomers" :key="customer.id" shadow="hover" @click="openEdit(customer.id)">
 						<el-descriptions :title="customer.name" :column="1">
 							<el-descriptions-item>{{ customer.email }}</el-descriptions-item>
 							<el-descriptions-item>{{ customer.phone_number }}</el-descriptions-item>

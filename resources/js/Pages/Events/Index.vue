@@ -16,6 +16,17 @@ export default {
 			search: '',
 		};
 	},
+	computed: {
+		filteredEvents() {
+			if (this.search) {
+				return this.events.filter((event) => {
+					return event.title.toLowerCase().includes(this.search.toLowerCase());
+				});
+			} else {
+				return this.events;
+			}
+		},
+	},
 	methods: {
 		openCreate() {
 			router.get(route('events.create'));
@@ -43,7 +54,7 @@ export default {
 			<el-main class="event-index-list">
 				<el-empty v-if="!events.length" description="No events" />
 				<el-container v-else class="list-space">
-					<el-card class="list-card" v-for="event in events" :key="event.id" shadow="hover" @click="openEdit(event.id)">
+					<el-card class="list-card" v-for="event in filteredEvents" :key="event.id" shadow="hover" @click="openEdit(event.id)">
 						<el-descriptions :title="event.title" :column="1">
 							<el-descriptions-item>Some event information</el-descriptions-item>
 						</el-descriptions>
