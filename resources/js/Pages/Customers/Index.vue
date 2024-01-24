@@ -13,22 +13,20 @@ export default {
 	},
 	data() {
 		return {
-			options: [
-				{
-					value: 'Option1',
-					label: 'Option1',
-				},
-				{
-					value: 'Option2',
-					label: 'Option2',
-				},
-				{
-					value: 'Option3',
-					label: 'Option3',
-				},
-			],
 			search: '',
+			select: 'name',
 		};
+	},
+	computed: {
+		displayCustomers() {
+			if (this.search) {
+				return this.customers.filter((customer) => {
+					return customer[this.select] ? customer[this.select].toLowerCase().includes(this.search.toLowerCase()) : this.customers;
+				});
+			} else {
+				return this.customers;
+			}
+		},
 	},
 	methods: {
 		openCreate() {
@@ -46,9 +44,15 @@ export default {
 		<el-container>
 			<el-header class="customer-index-create">
 				<span>Search</span>
-				<el-select v-model="search" filterable disabled placeholder="" style="width:250px">
-					<el-option v-for="option in options" :key="option.value" :label="option.label" :value="option.value" />
-				</el-select>
+				<el-input v-model="search" placeholder="Search Customers" clearable style="width:450px">
+					<template #prepend>
+						<el-select v-model="select" placholder="Filter By" style="width:150px">
+							<el-option label="Name" value="name"/>
+							<el-option label="Email" value="email"/>
+							<el-option label="Company" value="company"/>
+						</el-select>
+					</template>
+				</el-input>
 				<el-button type="primary" @click="openCreate">
 					<template #icon>
 						<el-icon><Plus/></el-icon>
@@ -58,7 +62,7 @@ export default {
 			</el-header>
 			<el-main class="customer-index-list">
 				<el-container class="list-space">
-					<el-card class="list-card" v-for="customer in customers" :key="customer.id" shadow="hover" @click="openEdit(customer.id)">
+					<el-card class="list-card" v-for="customer in displayCustomers" :key="customer.id" shadow="hover" @click="openEdit(customer.id)">
 						<el-descriptions :title="customer.name" :column="1">
 							<el-descriptions-item>{{ customer.email }}</el-descriptions-item>
 							<el-descriptions-item>{{ customer.phone_number }}</el-descriptions-item>
