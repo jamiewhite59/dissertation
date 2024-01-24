@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CustomerFormRequest;
 use App\Models\Customer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,13 +23,7 @@ class CustomerController extends Controller
         return Inertia::render('Customers/Create');
     }
 
-    public function store(Request $request): RedirectResponse {
-        $validatedData = $request->validate([
-            'name' => ['required'],
-            'email' => ['required', 'email'],
-            'phone_number' => ['required'],
-        ]);
-
+    public function store(CustomerFormRequest $request): RedirectResponse {
         $customer = new Customer;
         $customer->name = $request->name;
         $customer->email = $request->email;
@@ -47,13 +42,7 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id): RedirectResponse {
-        $validatedData = $request->validate([
-            'name' => ['required'],
-            'email' => ['required', 'email'],
-            'phone_number' => ['required'],
-        ]);
-
+    public function update(CustomerFormRequest $request, $id): RedirectResponse {
         $customer = Customer::find($id);
 
         $customer->name = $request->name;
