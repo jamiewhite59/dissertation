@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\EndDateNotBeforeStart;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EventFormRequest extends FormRequest
@@ -24,6 +25,7 @@ class EventFormRequest extends FormRequest
         return [
             'title' => ['required'],
             'start_date' => ['required'],
+            'end_date' => [new EndDateNotBeforeStart($this->start_date)]
         ];
     }
 }
