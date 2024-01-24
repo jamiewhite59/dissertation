@@ -55,7 +55,7 @@ class EventController extends Controller
     }
 
     public function destroy(Request $request, $id): RedirectResponse {
-        Event::destoy($id);
+        Event::destroy($id);
 
         return redirect('/events');
     }
