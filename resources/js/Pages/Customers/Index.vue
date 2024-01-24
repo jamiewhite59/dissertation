@@ -21,7 +21,7 @@ export default {
 		displayCustomers() {
 			if (this.search) {
 				return this.customers.filter((customer) => {
-					return customer[this.select] ? customer[this.select].toLowerCase().includes(this.search.toLowerCase()) : this.customers;
+					return customer[this.select] ? customer[this.select].toLowerCase().includes(this.search.toLowerCase()) : false;
 				});
 			} else {
 				return this.customers;
