@@ -61,7 +61,8 @@ export default {
 				</el-button>
 			</el-header>
 			<el-main class="customer-index-list">
-				<el-container class="list-space">
+				<el-empty v-if="!customers.length" description="No customers" />
+				<el-container v-else class="list-space">
 					<el-card class="list-card" v-for="customer in displayCustomers" :key="customer.id" shadow="hover" @click="openEdit(customer.id)">
 						<el-descriptions :title="customer.name" :column="1">
 							<el-descriptions-item>{{ customer.email }}</el-descriptions-item>

@@ -41,7 +41,8 @@ export default {
 				</el-button>
 			</el-header>
 			<el-main class="event-index-list">
-				<el-container class="list-space">
+				<el-empty v-if="!events.length" description="No events" />
+				<el-container v-else class="list-space">
 					<el-card class="list-card" v-for="event in events" :key="event.id" shadow="hover" @click="openEdit(event.id)">
 						<el-descriptions :title="event.title" :column="1">
 							<el-descriptions-item>Some event information</el-descriptions-item>
