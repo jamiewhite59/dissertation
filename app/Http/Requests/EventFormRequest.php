@@ -22,7 +22,8 @@ class EventFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required'],
+            'start_date' => ['required'],
         ];
     }
 }
