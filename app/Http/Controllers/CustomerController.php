@@ -23,6 +23,12 @@ class CustomerController extends Controller
     }
 
     public function store(Request $request): RedirectResponse {
+        $validatedData = $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+            'phone_number' => ['required'],
+        ]);
+
         $customer = new Customer;
         $customer->name = $request->name;
         $customer->email = $request->email;
@@ -42,6 +48,12 @@ class CustomerController extends Controller
     }
 
     public function update(Request $request, $id): RedirectResponse {
+        $validatedData = $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+            'phone_number' => ['required'],
+        ]);
+
         $customer = Customer::find($id);
 
         $customer->name = $request->name;
