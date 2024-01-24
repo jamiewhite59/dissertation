@@ -2,7 +2,7 @@
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default {
 	components: {
@@ -66,7 +66,17 @@ export default {
 				});
 		},
 		remove() {
-			router.delete(route('customers.destroy', this.customer.id));
+			ElMessageBox.confirm(
+				'Are you sure you want to permanently delete this user?',
+				'Delete User',
+				{
+					confirmButtonText: 'Delete',
+					type: 'error',
+					center: true,
+				}
+			).then(() => {
+				router.delete(route('customers.destroy', this.customer.id));
+			}).catch(() => {});
 		},
 		openIndex() {
 			router.get(route('customers.index'));
@@ -111,7 +121,7 @@ export default {
 				</el-row>
 				<el-row justify="space-evenly">
 					<el-col :span="8">
-						<el-button @click="remove">Delete</el-button>
+						<el-button v-if="customer" @click="remove">Delete</el-button>
 					</el-col>
 					<el-col :span="8"/>
 					<el-col :span="8" style="text-align: end;">
