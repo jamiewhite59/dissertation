@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EventFormRequest;
 use App\Models\Event;
+use App\Models\Customer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -36,9 +37,11 @@ class EventController extends Controller
 
     public function edit(Request $request, $id): Response {
         $event = Event::find($id);
+        $customers = Customer::all();
 
         return Inertia::render('Events/Create', [
             'event' => $event,
+            'customers' => $customers,
         ]);
     }
 
