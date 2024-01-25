@@ -61,7 +61,7 @@ export default {
 				</el-button>
 			</el-header>
 			<el-main class="customer-index-list">
-				<el-empty v-if="!customers.length" description="No customers" />
+				<el-empty v-if="!customers?.length" description="No customers" />
 				<el-container v-else class="list-space">
 					<el-card class="list-card" v-for="customer in filteredCustomers" :key="customer.id" shadow="hover" @click="openEdit(customer.id)">
 						<el-descriptions :title="customer.name" :column="1">

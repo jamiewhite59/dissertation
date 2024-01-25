@@ -3,13 +3,16 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import { router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { Plus } from '@element-plus/icons-vue';
 
 export default {
 	components: {
 		MainLayout,
+		Plus,
 	},
 	props: {
 		event: Object,
+		customers: Array,
 		errors: Object,
 	},
 	data() {
@@ -98,6 +101,12 @@ export default {
 				callback();
 			}
 		},
+		openCustomer(id) {
+			router.get((route('customers.edit', id)));
+		},
+		openModal() {
+			console.debug('opening modal');
+		},
 	},
 };
 </script>
@@ -106,20 +115,47 @@ export default {
 	<MainLayout title="Events">
 		<el-container direction="vertical">
 			<el-container>
-				<el-form ref="formRef" label-position="top" :model="eventForm" :rules="rules">
-					<el-form-item label="Title" prop="title" required>
-						<el-input v-model="eventForm.title"/>
-					</el-form-item>
-					<el-form-item label="Start Date" prop="start_date" required>
-						<el-date-picker v-model="eventForm.start_date" type="date" clearable />
-					</el-form-item>
-					<el-form-item label="End Date" prop="end_date">
-						<el-date-picker v-model="eventForm.end_date" type="date" clearable />
-					</el-form-item>
-					<el-form-item label="Icon" prop="icon">
-						<el-input v-model="eventForm.icon"/>
-					</el-form-item>
+				<el-form class="event-info-form" ref="formRef" label-position="top" :model="eventForm" :rules="rules">
+					<el-row :gutter="30">
+						<el-col :span="12">
+							<el-form-item label="Title" prop="title" required>
+								<el-input v-model="eventForm.title"/>
+							</el-form-item>
+						</el-col>
+						<el-col :span="12">
+							<el-form-item label="Icon" prop="icon">
+								<el-input v-model="eventForm.icon"/>
+							</el-form-item>
+						</el-col>
+					</el-row>
+					<el-row :gutter="30">
+						<el-col :span="12">
+							<el-form-item label="Start Date" prop="start_date" required >
+								<el-date-picker v-model="eventForm.start_date" type="date" clearable style="width:100%" />
+							</el-form-item>
+						</el-col>
+						<el-col :span="12">
+							<el-form-item label="End Date" prop="end_date">
+								<el-date-picker v-model="eventForm.end_date" type="date" clearable  style="width:100%"/>
+							</el-form-item>
+						</el-col>
+					</el-row>
 				</el-form>
+			</el-container>
+			<el-container direction="vertical" class="customer-index-list">
+				<el-text size="large" tag="b">Customers</el-text>
+				<el-container class="list-space">
+					<el-card class="list-card" v-for="customer in customers" :key="customer.id" shadow="hover" @click="openCustomer(customer.id)">
+						<el-descriptions :title="customer.name" :column="1">
+							<el-descriptions-item>{{ customer.email }}</el-descriptions-item>
+							<el-descriptions-item>{{ customer.phone_number }}</el-descriptions-item>
+						</el-descriptions>
+					</el-card>
+					<el-card class="list-card add-card" shadow="hover" @click="openModal">
+						<el-text tag="b" size="large">Add Customer</el-text>
+						<el-icon><Plus/></el-icon>
+					</el-card>
+				</el-container>
 			</el-container>
 			<el-container direction="vertical">
 				<el-row>
@@ -141,3 +177,47 @@ export default {
 		</el-container>
 	</MainLayout>
 </template>
+<style lang="scss">
+.event-info-form {
+	width: 100%;
+}
+
+.customer-index-list {
+	flex: initial !important;
+
+	.list-space {
+		display: grid !important;
+		grid-gap: 15px;
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+		.space-item__item {
+			width: 24%;
+		}
+
+		.list-card {
+			text-align: center;
+			height: 120px;
+
+			&.add-card {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				.el-card__body {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+
+					gap: 1em;
+				}
+			}
+		}
+
+		.el-card.is-hover-shadow:hover{
+			border: 1px solid var(--el-color-primary);
+			cursor: pointer;
+		}
+	}
+}
+</style>
