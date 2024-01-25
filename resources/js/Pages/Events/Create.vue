@@ -14,6 +14,7 @@ export default {
 		event: Object,
 		customers: Array,
 		errors: Object,
+		eventCustomers: Array,
 	},
 	data() {
 		return {
@@ -34,7 +35,18 @@ export default {
 					{ validator: this.validateEndDate, trigger: 'blur', },
 				],
 			}),
+			dialogVisible: false,
+			search: '',
 		};
+	},
+	computed: {
+		filteredCustomers() {
+			if (this.search) {
+				return this.customers.filter((customer) => customer.name.toLowerCase().includes(this.search.toLowerCase()));
+			} else {
+				return this.customers;
+			}
+		},
 	},
 	watch: {
 		errors() {
@@ -105,7 +117,10 @@ export default {
 			router.get((route('customers.edit', id)));
 		},
 		openModal() {
-			console.debug('opening modal');
+			this.dialogVisible = true;
+		},
+		addCustomer(id) {
+			console.debug('add customer', id);
 		},
 	},
 };
@@ -145,7 +160,7 @@ export default {
 			<el-container direction="vertical" class="customer-index-list">
 				<el-text size="large" tag="b">Customers</el-text>
 				<el-container class="list-space">
-					<el-card class="list-card" v-for="customer in customers" :key="customer.id" shadow="hover" @click="openCustomer(customer.id)">
+					<el-card class="list-card" v-for="customer in eventCustomers" :key="customer.id" shadow="hover" @click="openCustomer(customer.id)">
 						<el-descriptions :title="customer.name" :column="1">
 							<el-descriptions-item>{{ customer.email }}</el-descriptions-item>
 							<el-descriptions-item>{{ customer.phone_number }}</el-descriptions-item>
@@ -176,6 +191,18 @@ export default {
 			</el-container>
 		</el-container>
 	</MainLayout>
+	<el-dialog v-model="dialogVisible" width="30%" style="height:400px" align-center>
+		<template #header>Customers</template>
+		<template #default>
+			<el-input class="customer-search" v-model="search" placeholder="Search Customers" clearable/>
+			<el-scrollbar max-height="250px">
+				<el-row class="customer-row" v-for="customer in filteredCustomers" :key="customer.id" style="marginBottom:10px">
+					<el-col :span="3"><el-button size="small" @click="addCustomer(customer.id)"><el-icon><Plus/></el-icon></el-button></el-col>
+					<el-col class="customer-name" :span="21"><el-text>{{ customer.name }}</el-text></el-col>
+				</el-row>
+			</el-scrollbar>
+		</template>
+	</el-dialog>
 </template>
 <style lang="scss">
 .event-info-form {
@@ -217,6 +244,19 @@ export default {
 		.el-card.is-hover-shadow:hover{
 			border: 1px solid var(--el-color-primary);
 			cursor: pointer;
+		}
+	}
+}
+
+.el-dialog {
+	.customer-search {
+		margin-bottom: 20px;
+	}
+
+	.customer-row {
+		.customer-name {
+			display: flex;
+			align-items: center;
 		}
 	}
 }
