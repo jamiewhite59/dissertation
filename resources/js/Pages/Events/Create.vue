@@ -123,6 +123,8 @@ export default {
 		},
 		addCustomer(id) {
 			console.debug('add customer', id);
+			this.dialogVisible = false;
+			router.put(route('events.addCustomer', this.event.id), {id: id,});
 		},
 	},
 };
