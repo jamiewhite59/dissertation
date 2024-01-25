@@ -99,10 +99,6 @@ export default {
 			}
 		},
 	},
-	mounted() {
-		console.debug('mounted start date', this.eventForm.start_date);
-		console.debug('mounted end date', this.eventForm.end_date);
-	},
 };
 </script>
 
