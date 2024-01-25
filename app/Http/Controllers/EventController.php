@@ -37,11 +37,13 @@ class EventController extends Controller
 
     public function edit(Request $request, $id): Response {
         $event = Event::find($id);
+        $eventCustomers = $event->customers;
         $customers = Customer::all();
 
         return Inertia::render('Events/Create', [
             'event' => $event,
             'customers' => $customers,
+            'eventCustomers' => $eventCustomers,
         ]);
     }
 
@@ -54,12 +56,20 @@ class EventController extends Controller
         $event->icon = $request->icon;
         $event->save();
 
-        return redirect('/events');
+        return redirect()->route('events.index');
     }
 
     public function destroy(Request $request, $id): RedirectResponse {
         Event::destroy($id);
 
-        return redirect('/events');
+        return redirect()->route('events.index');
+    }
+
+    public function addCustomer(Request $request, $id): RedirectResponse {
+        $event = Event::find($id);
+
+        $event->customers()->attach($request->id);
+
+        return redirect()->route('events.edit', $id);
     }
 }
