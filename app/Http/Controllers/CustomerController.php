@@ -11,7 +11,7 @@ use Inertia\Response;
 
 class CustomerController extends Controller
 {
-    public function show(Request $request): Response {
+    public function index(Request $request): Response {
         $customers = Customer::all();
 
         return Inertia::render('Customers/Index', [

@@ -12,7 +12,7 @@ use Inertia\Response;
 
 class EventController extends Controller
 {
-    public function show(Request $request): Response {
+    public function index(Request $request): Response {
         $events = Event::all();
 
         return Inertia::render('Events/Index', [
