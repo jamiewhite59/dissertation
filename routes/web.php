@@ -38,20 +38,9 @@ use Inertia\Inertia;
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-Route::get('/events', [EventController::class, 'show'])->name('events.index');
-Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-Route::post('/events', [EventController::class, 'store'])->name('events.store');
-Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
-Route::patch('/events/{event}', [EventController::class, 'update'])->name('events.update');
-Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+Route::resource('events', EventController::class);
 
-// TODO: Make this a single resource route.
-Route::get('/customers', [CustomerController::class, 'show'])->name('customers.index');
-Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
-Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
-Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
-Route::patch('/customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
-Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+Route::resource('customers', CustomerController::class);
 
 Route::get('/test', [TestController::class, 'test'])->name('test');
 
