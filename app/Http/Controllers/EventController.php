@@ -72,4 +72,12 @@ class EventController extends Controller
 
         return redirect()->route('events.edit', $id);
     }
+
+    public function removeCustomer(Request $request, $id): RedirectResponse {
+        $event = Event::find($id);
+
+        $event->customers()->detach($request->id);
+
+        return redirect()->route('events.edit', $id);
+    }
 }

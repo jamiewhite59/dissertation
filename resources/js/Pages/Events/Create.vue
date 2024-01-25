@@ -3,12 +3,13 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import { router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { Plus } from '@element-plus/icons-vue';
+import { Plus, Minus } from '@element-plus/icons-vue';
 
 export default {
 	components: {
 		MainLayout,
 		Plus,
+		Minus,
 	},
 	props: {
 		event: Object,
@@ -122,9 +123,11 @@ export default {
 			this.dialogVisible = true;
 		},
 		addCustomer(id) {
-			console.debug('add customer', id);
 			this.dialogVisible = false;
 			router.put(route('events.addCustomer', this.event.id), {id: id,});
+		},
+		removeCustomer(id) {
+			router.put(route('events.removeCustomer', this.event.id), {id: id,});
 		},
 	},
 };
@@ -166,6 +169,9 @@ export default {
 				<el-container class="list-space">
 					<el-card class="list-card" v-for="customer in eventCustomers" :key="customer.id" shadow="hover" @click="openCustomer(customer.id)">
 						<el-descriptions :title="customer.name" :column="1">
+							<template #extra>
+								<el-button size="small" @click.stop="removeCustomer(customer.id)"><el-icon><Minus/></el-icon></el-button>
+							</template>
 							<el-descriptions-item>{{ customer.email }}</el-descriptions-item>
 							<el-descriptions-item>{{ customer.phone_number }}</el-descriptions-item>
 						</el-descriptions>

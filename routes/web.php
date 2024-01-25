@@ -39,7 +39,8 @@ use Inertia\Inertia;
 // });
 
 Route::resource('events', EventController::class);
-Route::put('/events/{event}', [EventController::class, 'addCustomer'])->name('events.addCustomer');
+Route::put('/events/{event}/addCustomer', [EventController::class, 'addCustomer'])->name('events.addCustomer');
+Route::put('/events/{event}/removeCustomer', [EventController::class, 'removeCustomer'])->name('events.removeCustomer');
 
 Route::resource('customers', CustomerController::class);
 
