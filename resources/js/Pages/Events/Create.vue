@@ -157,7 +157,7 @@ export default {
 					</el-row>
 				</el-form>
 			</el-container>
-			<el-container direction="vertical" class="customer-index-list">
+			<el-container v-if="event" direction="vertical" class="customer-index-list">
 				<el-text size="large" tag="b">Customers</el-text>
 				<el-container class="list-space">
 					<el-card class="list-card" v-for="customer in eventCustomers" :key="customer.id" shadow="hover" @click="openCustomer(customer.id)">
