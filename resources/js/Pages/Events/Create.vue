@@ -133,10 +133,6 @@ export default {
 			router.put(route('events.removeCustomer', this.event.id), {id: id,});
 		},
 	},
-	mounted() {
-		let eventCustomerIds = this.eventCustomers.map((customer) => customer.id);
-		console.debug('ids', !eventCustomerIds.includes(this.customers[1].id));
-	},
 };
 </script>
 

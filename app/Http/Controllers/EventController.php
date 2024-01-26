@@ -68,6 +68,14 @@ class EventController extends Controller
     public function addCustomer(Request $request, $id): RedirectResponse {
         $event = Event::find($id);
 
+        //TODO: this
+         $eventCustomers = $event->customers;
+        foreach ($eventCustomers as &$customer) {
+            if ($customer->id == $request->id) {
+                abort(500);
+            }
+        }
+
         $event->customers()->attach($request->id);
 
         return redirect()->route('events.edit', $id);
