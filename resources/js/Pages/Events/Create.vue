@@ -42,10 +42,13 @@ export default {
 	},
 	computed: {
 		filteredCustomers() {
+			var eventCustomerIds = this.eventCustomers.map((customer) => customer.id);
+			var availableCustomers = this.customers.filter((customer) => !eventCustomerIds.includes(customer.id));
 			if (this.search) {
-				return this.customers.filter((customer) => customer.name.toLowerCase().includes(this.search.toLowerCase()));
+				return availableCustomers.filter((customer) =>
+					customer.name.toLowerCase().includes(this.search.toLowerCase()));
 			} else {
-				return this.customers;
+				return availableCustomers;
 			}
 		},
 	},
@@ -129,6 +132,10 @@ export default {
 		removeCustomer(id) {
 			router.put(route('events.removeCustomer', this.event.id), {id: id,});
 		},
+	},
+	mounted() {
+		let eventCustomerIds = this.eventCustomers.map((customer) => customer.id);
+		console.debug('ids', !eventCustomerIds.includes(this.customers[1].id));
 	},
 };
 </script>
