@@ -61,20 +61,15 @@ export default {
 		},
 	},
 	methods: {
-		create() {
+		save(){
 			this.validate()
 				.then((valid) => {
 					if (valid) {
-						router.post(route('events.store', this.eventForm));
-					}
-				})
-			;
-		},
-		save() {
-			this.validate()
-				.then((valid) => {
-					if (valid) {
-						router.patch(route('events.update', this.event.id), this.eventForm);
+						if (this.event.id){
+							router.patch(route('events.update', this.event.id), this.eventForm);
+						} else {
+							router.post(route('events.store', this.eventForm));
+						}
 					}
 				});
 		},
