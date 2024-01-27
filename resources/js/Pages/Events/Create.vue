@@ -126,63 +126,56 @@ export default {
 
 <template>
 	<MainLayout title="Events">
-		<el-container direction="vertical">
-			<el-container>
-				<el-form class="event-info-form" ref="formRef" label-position="top" :model="eventForm" :rules="rules">
-					<el-row :gutter="30">
-						<el-col :span="12">
-							<el-form-item label="Title" prop="title" required>
-								<el-input v-model="eventForm.title"/>
-							</el-form-item>
-						</el-col>
-						<el-col :span="12">
-							<el-form-item label="Icon" prop="icon">
-								<el-input v-model="eventForm.icon"/>
-							</el-form-item>
-						</el-col>
-					</el-row>
-					<el-row :gutter="30">
-						<el-col :span="12">
-							<el-form-item label="Start Date" prop="start_date" required >
-								<el-date-picker v-model="eventForm.start_date" type="date" clearable style="width:100%" />
-							</el-form-item>
-						</el-col>
-						<el-col :span="12">
-							<el-form-item label="End Date" prop="end_date">
-								<el-date-picker v-model="eventForm.end_date" type="date" clearable  style="width:100%"/>
-							</el-form-item>
-						</el-col>
-					</el-row>
-				</el-form>
-			</el-container>
-			<el-container v-if="event" direction="vertical" class="customer-index-list">
-				<el-text size="large" tag="b">Customers</el-text>
-				<el-container class="list-space">
-					<el-card class="customer-item add-card" shadow="hover" @click="openModal">
-						<el-text tag="b" size="large">Add Customer</el-text>
-						<el-icon><Plus/></el-icon>
-					</el-card>
-					<CustomerItem v-for="customer in eventCustomers" :key="customer.id" :customer="customer"/>
-				</el-container>
-			</el-container>
-			<el-container direction="horizontal">
+		<el-container>
+			<el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
 				<el-row>
-					<el-col :span="24" style="text-align: end;">
-						<el-button type="primary" @click="openIndex">Cancel</el-button>
-					</el-col>
+					<el-form class="event-info-form" ref="formRef" label-position="top" :model="eventForm" :rules="rules">
+						<el-form-item label="Title" prop="title" required>
+							<el-input v-model="eventForm.title"/>
+						</el-form-item>
+						<el-form-item label="Icon" prop="icon">
+							<el-input v-model="eventForm.icon"/>
+						</el-form-item>
+						<el-form-item label="Start Date" prop="start_date" required >
+							<el-date-picker v-model="eventForm.start_date" type="date" clearable style="width:100%" />
+						</el-form-item>
+						<el-form-item label="End Date" prop="end_date">
+							<el-date-picker v-model="eventForm.end_date" type="date" clearable  style="width:100%"/>
+						</el-form-item>
+					</el-form>
+					<el-container direction="horizontal">
+						<el-row>
+							<el-col :span="24" style="text-align: end;">
+								<el-button type="primary" @click="openIndex">Cancel</el-button>
+							</el-col>
+						</el-row>
+						<el-row justify="space-evenly">
+							<el-col :span="8">
+								<el-button v-if="event" type="primary" @click="remove">Delete</el-button>
+							</el-col>
+							<el-col :span="8"/>
+							<el-col :span="8" style="text-align: end;">
+								<el-button type="primary" @click="save">
+									{{event?.id ? 'Save' : 'Create'}}
+								</el-button>
+							</el-col>
+						</el-row>
+					</el-container>
 				</el-row>
-				<el-row justify="space-evenly">
-					<el-col :span="8">
-						<el-button v-if="event" type="primary" @click="remove">Delete</el-button>
-					</el-col>
-					<el-col :span="8"/>
-					<el-col :span="8" style="text-align: end;">
-						<el-button type="primary" @click="save">
-							{{event?.id ? 'Save' : 'Create'}}
-						</el-button>
-					</el-col>
-				</el-row>
-			</el-container>
+			</el-col>
+			<el-divider class="event-info-divider" direction="vertical"/>
+			<el-col class="customer-index-list" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" v-if="event" direction="vertical">
+				<el-text size="large" tag="b">Customers</el-text>
+				<el-scrollbar height="100%">
+					<el-container class="list-space">
+						<el-card class="customer-item add-card" shadow="hover" @click="openModal">
+							<el-text tag="b" size="large">Add Customer</el-text>
+							<el-icon><Plus/></el-icon>
+						</el-card>
+						<CustomerItem v-for="customer in eventCustomers" :key="customer.id" :customer="customer" :remove="true" @removeCustomer="removeCustomer"/>
+					</el-container>
+				</el-scrollbar>
+			</el-col>
 		</el-container>
 	</MainLayout>
 	<el-dialog v-model="dialogVisible" width="30%" style="height:400px" align-center>
@@ -203,13 +196,24 @@ export default {
 	width: 100%;
 }
 
+.event-info-divider {
+	height: 100%;
+
+	border-color: black;
+}
+
 .customer-index-list {
 	flex: initial !important;
+	width: 100%;
+
+	margin-bottom: 1em;
 
 	.list-space {
 		display: grid !important;
 		grid-gap: 15px;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+		height: auto;
 	}
 }
 
