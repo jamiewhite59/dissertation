@@ -3,13 +3,10 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import { router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { Plus, Minus } from '@element-plus/icons-vue';
 
 export default {
 	components: {
 		MainLayout,
-		Plus,
-		Minus,
 	},
 	props: {
 		event: Object,

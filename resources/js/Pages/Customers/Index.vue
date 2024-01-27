@@ -1,12 +1,10 @@
 <script>
 import MainLayout from '@/Layouts/MainLayout.vue';
-import { Plus } from '@element-plus/icons-vue';
 import { router } from '@inertiajs/vue3';
 
 export default {
 	components: {
 		MainLayout,
-		Plus,
 	},
 	props: {
 		customers: Array,
