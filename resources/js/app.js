@@ -10,21 +10,23 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import 'element-plus/theme-chalk/src/dark/var.scss';
 import '../scss/theme.scss';
 
+import MainLayout from '@/Layouts/MainLayout.vue';
+
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
 	title: (title) => `${appName} - ${title}`,
 	resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
 	setup({ el, App, props, plugin, }) {
-		const app =  createApp({ render: () => h(App, props), })
-			.use(plugin)
-			.use(ElementPlus)
-			.mount(el);
-
+		const app =  createApp({ render: () => h(App, props), });
+		app.use(plugin);
+		app.use(ElementPlus);
 		for (const [key, component,] of Object.entries(ElementPlusIconsVue)) {
 			app.component(key, component);
 		}
+		app.component('MainLayout', MainLayout);
 
+		app.mount(el);
 		return app;
 	},
 	progress: {

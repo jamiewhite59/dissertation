@@ -1,13 +1,9 @@
 <script>
-import MainLayout from '@/Layouts/MainLayout.vue';
 import { router } from '@inertiajs/vue3';
 import { reactive } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default {
-	components: {
-		MainLayout,
-	},
 	props: {
 		customer: Object,
 		errors: Object,

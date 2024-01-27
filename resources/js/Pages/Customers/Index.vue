@@ -1,11 +1,7 @@
 <script>
-import MainLayout from '@/Layouts/MainLayout.vue';
 import { router } from '@inertiajs/vue3';
 
 export default {
-	components: {
-		MainLayout,
-	},
 	props: {
 		customers: Array,
 	},
