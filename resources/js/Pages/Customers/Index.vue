@@ -30,9 +30,6 @@ export default {
 		openCreate() {
 			router.get(route('customers.create'));
 		},
-		openEdit(id) {
-			router.get(route('customers.edit', id));
-		},
 	},
 };
 </script>
@@ -54,14 +51,7 @@ export default {
 			<el-main class="customer-index-list">
 				<el-empty v-if="!customers?.length" description="No Customers" />
 				<el-container v-else class="list-space">
-					<el-card class="list-card" v-for="customer in filteredCustomers" :key="customer.id" shadow="hover" @click="openEdit(customer.id)">
-						<el-descriptions :title="customer.name" :column="1">
-							<el-descriptions-item v-if="customer.company">{{ customer.company }}</el-descriptions-item>
-							<el-descriptions-item>
-								<span>{{ customer.email }}</span> <el-divider direction="vertical"/> <span>{{ customer.phone_number }}</span>
-							</el-descriptions-item>
-						</el-descriptions>
-					</el-card>
+					<CustomerItem v-for="customer in filteredCustomers" :key="customer.id" :customer="customer"/>
 				</el-container>
 			</el-main>
 		</el-container>

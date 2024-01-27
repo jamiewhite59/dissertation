@@ -17,20 +17,5 @@
 		display: grid !important;
 		grid-gap: 15px;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-
-		.space-item__item {
-			width: 24%;
-		}
-
-		.list-card {
-			text-align: center;
-			height: 100%;
-			overflow: initial;
-		}
-
-		.el-card.is-hover-shadow:hover{
-			border: 1px solid var(--el-color-primary);
-			cursor: pointer;
-		}
 	}
 }

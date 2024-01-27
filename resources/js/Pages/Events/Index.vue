@@ -25,9 +25,6 @@ export default {
 		openCreate() {
 			router.get(route('events.create'));
 		},
-		openEdit(id) {
-			router.get(route('events.edit', id));
-		},
 	},
 };
 </script>
@@ -49,11 +46,7 @@ export default {
 			<el-main class="event-index-list">
 				<el-empty v-if="!events.length" description="No Events" />
 				<el-container v-else class="list-space">
-					<el-card class="list-card" v-for="event in filteredEvents" :key="event.id" shadow="hover" @click="openEdit(event.id)">
-						<el-descriptions :title="event.title" :column="1">
-							<el-descriptions-item>Some event information</el-descriptions-item>
-						</el-descriptions>
-					</el-card>
+					<EventItem v-for="event in filteredEvents" :key="event.id" :event="event"/>
 				</el-container>
 			</el-main>
 		</el-container>
@@ -75,20 +68,6 @@ export default {
 		display: grid !important;
 		grid-gap: 15px;
 		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-
-		.space-item__item {
-			width: 24%;
-		}
-
-		.list-card {
-			text-align: center;
-			height: 120px;
-		}
-
-		.el-card.is-hover-shadow:hover{
-			border: 1px solid var(--el-color-primary);
-			cursor: pointer;
-		}
 	}
 
 }

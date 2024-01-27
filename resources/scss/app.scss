@@ -20,3 +20,9 @@ html {
 	}
 }
 
+.el-card {
+	&.is-hover-shadow:hover{
+		border: 1px solid var(--el-color-primary);
+		cursor: pointer;
+	}
+}

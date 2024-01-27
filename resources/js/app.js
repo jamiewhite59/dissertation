@@ -11,6 +11,8 @@ import 'element-plus/theme-chalk/src/dark/var.scss';
 import '../scss/theme.scss';
 
 import MainLayout from '@/Layouts/MainLayout.vue';
+import CustomerItem from '@/Components/CustomerItem.vue';
+import EventItem from '@/Components/EventItem.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -25,6 +27,8 @@ createInertiaApp({
 			app.component(key, component);
 		}
 		app.component('MainLayout', MainLayout);
+		app.component('CustomerItem', CustomerItem);
+		app.component('EventItem', EventItem);
 
 		app.mount(el);
 		return app;

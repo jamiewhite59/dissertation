@@ -158,19 +158,11 @@ export default {
 			<el-container v-if="event" direction="vertical" class="customer-index-list">
 				<el-text size="large" tag="b">Customers</el-text>
 				<el-container class="list-space">
-					<el-card class="list-card" v-for="customer in eventCustomers" :key="customer.id" shadow="hover" @click="openCustomer(customer.id)">
-						<el-descriptions :title="customer.name" :column="1">
-							<template #extra>
-								<el-button size="small" @click.stop="removeCustomer(customer.id)"><el-icon><Minus/></el-icon></el-button>
-							</template>
-							<el-descriptions-item>{{ customer.email }}</el-descriptions-item>
-							<el-descriptions-item>{{ customer.phone_number }}</el-descriptions-item>
-						</el-descriptions>
-					</el-card>
-					<el-card class="list-card add-card" shadow="hover" @click="openModal">
+					<el-card class="customer-item add-card" shadow="hover" @click="openModal">
 						<el-text tag="b" size="large">Add Customer</el-text>
 						<el-icon><Plus/></el-icon>
 					</el-card>
+					<CustomerItem v-for="customer in eventCustomers" :key="customer.id" :customer="customer"/>
 				</el-container>
 			</el-container>
 			<el-container direction="horizontal">
@@ -188,7 +180,6 @@ export default {
 						<el-button type="primary" @click="save">
 							{{event?.id ? 'Save' : 'Create'}}
 						</el-button>
-						<!-- <el-button v-else type="primary" @click="create">Create</el-button> -->
 					</el-col>
 				</el-row>
 			</el-container>
@@ -218,37 +209,7 @@ export default {
 	.list-space {
 		display: grid !important;
 		grid-gap: 15px;
-		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-
-		.space-item__item {
-			width: 24%;
-		}
-
-		.list-card {
-			text-align: center;
-			height: 120px;
-			overflow: hidden;
-
-			&.add-card {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-
-				.el-card__body {
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					align-items: center;
-
-					gap: 1em;
-				}
-			}
-		}
-
-		.el-card.is-hover-shadow:hover{
-			border: 1px solid var(--el-color-primary);
-			cursor: pointer;
-		}
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 	}
 }
 
