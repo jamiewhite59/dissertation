@@ -36,17 +36,18 @@ export default {
 	<MainLayout title="Events">
 		<el-container>
 			<el-header class="event-index-create">
-				<span>Search</span>
+				<el-container>
+					<el-button type="primary" @click="openCreate">
+						<template #icon>
+							<el-icon><Plus/></el-icon>
+						</template>
+						Create
+					</el-button>
+				</el-container>
 				<el-input v-model="search" placeholder="Search Events" clearable style="width:450px"/>
-				<el-button type="primary" @click="openCreate">
-					<template #icon>
-						<el-icon><Plus/></el-icon>
-					</template>
-					Create
-				</el-button>
 			</el-header>
 			<el-main class="event-index-list">
-				<el-empty v-if="!events.length" description="No events" />
+				<el-empty v-if="!events.length" description="No Events" />
 				<el-container v-else class="list-space">
 					<el-card class="list-card" v-for="event in filteredEvents" :key="event.id" shadow="hover" @click="openEdit(event.id)">
 						<el-descriptions :title="event.title" :column="1">
@@ -61,9 +62,10 @@ export default {
 <style lang="scss">
 .event-index-create {
 	display: flex;
-	justify-content: center;
+	justify-content: flex-end;
 	align-items: center;
 	gap: 1em;
+	height: auto;
 }
 
 .event-index-list {
