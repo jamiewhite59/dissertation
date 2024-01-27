@@ -31,44 +31,22 @@ export default {
 
 <template>
 	<MainLayout title="Events">
-		<el-container>
-			<el-header class="event-index-create">
-				<el-container>
-					<el-button type="primary" @click="openCreate">
-						<template #icon>
-							<el-icon><Plus/></el-icon>
-						</template>
-						Create
-					</el-button>
-				</el-container>
+		<OverviewLayout title="Event" :displayCards="!!filteredEvents.length" @openCreate="openCreate">
+			<template #search>
 				<el-input v-model="search" placeholder="Search Events" clearable style="width:450px"/>
-			</el-header>
-			<el-main class="event-index-list">
-				<el-empty v-if="!events.length" description="No Events" />
-				<el-container v-else class="list-space">
+			</template>
+			<template #default>
+				<el-container class="event-list-space">
 					<EventItem v-for="event in filteredEvents" :key="event.id" :event="event"/>
 				</el-container>
-			</el-main>
-		</el-container>
+			</template>
+		</OverviewLayout>
 	</MainLayout>
 </template>
 <style lang="scss">
-.event-index-create {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	gap: 1em;
-	height: auto;
-}
-
-.event-index-list {
-	flex: initial !important;
-
-	.list-space {
-		display: grid !important;
-		grid-gap: 15px;
-		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-	}
-
+.event-list-space {
+	display: grid !important;
+	grid-gap: 15px;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 }
 </style>
