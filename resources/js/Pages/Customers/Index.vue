@@ -49,7 +49,7 @@ export default {
 				<el-input v-model="search" placeholder="Search Customers" clearable style="width:450px"/>
 			</el-header>
 			<el-main class="customer-index-list">
-				<el-empty v-if="!customers?.length" description="No Customers" />
+				<el-empty v-if="!filteredCustomers?.length" description="No Customers" />
 				<el-container v-else class="list-space">
 					<CustomerItem v-for="customer in filteredCustomers" :key="customer.id" :customer="customer"/>
 				</el-container>
@@ -57,3 +57,30 @@ export default {
 		</el-container>
 	</MainLayout>
 </template>
+<style lang="scss">
+.customer-index-create {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 1em;
+	height: auto !important;
+
+	padding-bottom: 20px;
+
+	.customer-index-create-left{
+		height: auto !important;
+	}
+}
+
+.customer-index-list {
+	flex: initial !important;
+
+	padding-top: 0;
+
+	.list-space {
+		display: grid !important;
+		grid-gap: 15px;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	}
+}
+</style>
