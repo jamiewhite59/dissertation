@@ -15,7 +15,11 @@ export default {
 		filteredCustomers() {
 			if (this.search) {
 				return this.customers.filter((customer) => {
-					return customer[this.select] ? customer[this.select].toLowerCase().includes(this.search.toLowerCase()) : false;
+					let name = customer.name ? customer.name.toLowerCase().includes(this.search.toLowerCase()) : false;
+					let email = customer.email ? customer.email.toLowerCase().includes(this.search.toLowerCase()) : false;
+					let company = customer.company ? customer.company.toLowerCase().includes(this.search.toLowerCase()) : false;
+					let phone = customer.phone_number ? customer.phone_number.toLowerCase().includes(this.search.toLowerCase()) : false;
+					return  name || email || company || phone;
 				});
 			} else {
 				return this.customers;
@@ -37,30 +41,25 @@ export default {
 	<MainLayout title="Customers">
 		<el-container>
 			<el-header class="customer-index-create">
-				<span>Search</span>
-				<el-input v-model="search" placeholder="Search Customers" clearable style="width:450px">
-					<template #prepend>
-						<el-select v-model="select" placholder="Filter By" style="width:150px">
-							<el-option label="Name" value="name"/>
-							<el-option label="Email" value="email"/>
-							<el-option label="Company" value="company"/>
-						</el-select>
-					</template>
-				</el-input>
-				<el-button type="primary" @click="openCreate">
-					<template #icon>
-						<el-icon><Plus/></el-icon>
-					</template>
-					Create
-				</el-button>
+				<el-container class="customer-index-create-left">
+					<el-button type="primary" @click="openCreate">
+						<template #icon>
+							<el-icon><Plus/></el-icon>
+						</template>
+						Create
+					</el-button>
+				</el-container>
+				<el-input v-model="search" placeholder="Search Customers" clearable style="width:450px"/>
 			</el-header>
 			<el-main class="customer-index-list">
-				<el-empty v-if="!customers?.length" description="No customers" />
+				<el-empty v-if="!customers?.length" description="No Customers" />
 				<el-container v-else class="list-space">
 					<el-card class="list-card" v-for="customer in filteredCustomers" :key="customer.id" shadow="hover" @click="openEdit(customer.id)">
 						<el-descriptions :title="customer.name" :column="1">
-							<el-descriptions-item>{{ customer.email }}</el-descriptions-item>
-							<el-descriptions-item>{{ customer.phone_number }}</el-descriptions-item>
+							<el-descriptions-item v-if="customer.company">{{ customer.company }}</el-descriptions-item>
+							<el-descriptions-item>
+								<span>{{ customer.email }}</span> <el-divider direction="vertical"/> <span>{{ customer.phone_number }}</span>
+							</el-descriptions-item>
 						</el-descriptions>
 					</el-card>
 				</el-container>

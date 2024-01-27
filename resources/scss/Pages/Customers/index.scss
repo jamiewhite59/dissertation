@@ -1,8 +1,13 @@
 .customer-index-create {
 	display: flex;
-	justify-content: center;
+	justify-content: flex-end;
 	align-items: center;
 	gap: 1em;
+	height: auto !important;
+
+	.customer-index-create-left{
+		height: auto !important;
+	}
 }
 
 .customer-index-list {
@@ -11,7 +16,7 @@
 	.list-space {
 		display: grid !important;
 		grid-gap: 15px;
-		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 
 		.space-item__item {
 			width: 24%;
@@ -19,7 +24,8 @@
 
 		.list-card {
 			text-align: center;
-			height: 120px;
+			height: 100%;
+			overflow: initial;
 		}
 
 		.el-card.is-hover-shadow:hover{
