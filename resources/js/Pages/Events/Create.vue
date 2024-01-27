@@ -173,20 +173,22 @@ export default {
 					</el-card>
 				</el-container>
 			</el-container>
-			<el-container direction="vertical">
+			<el-container direction="horizontal">
 				<el-row>
 					<el-col :span="24" style="text-align: end;">
-						<el-button @click="openIndex">Cancel</el-button>
+						<el-button type="primary" @click="openIndex">Cancel</el-button>
 					</el-col>
 				</el-row>
 				<el-row justify="space-evenly">
 					<el-col :span="8">
-						<el-button v-if="event" @click="remove">Delete</el-button>
+						<el-button v-if="event" type="primary" @click="remove">Delete</el-button>
 					</el-col>
 					<el-col :span="8"/>
 					<el-col :span="8" style="text-align: end;">
-						<el-button v-if="event" @click="save">Save</el-button>
-						<el-button v-else @click="create">Create</el-button>
+						<el-button type="primary" @click="save">
+							{{event?.id ? 'Save' : 'Create'}}
+						</el-button>
+						<!-- <el-button v-else type="primary" @click="create">Create</el-button> -->
 					</el-col>
 				</el-row>
 			</el-container>
@@ -225,6 +227,7 @@ export default {
 		.list-card {
 			text-align: center;
 			height: 120px;
+			overflow: hidden;
 
 			&.add-card {
 				display: flex;

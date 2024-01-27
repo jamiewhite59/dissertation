@@ -111,20 +111,20 @@ export default {
 					</el-form-item>
 				</el-form>
 			</el-container>
-			<el-container direction="vertical">
+			<el-container direction="horizontal">
 				<el-row>
 					<el-col :span="24" style="text-align: end;">
-						<el-button @click="openIndex">Cancel</el-button>
+						<el-button type="primary" @click="openIndex">Cancel</el-button>
 					</el-col>
 				</el-row>
 				<el-row justify="space-evenly">
 					<el-col :span="8">
-						<el-button v-if="customer" @click="remove">Delete</el-button>
+						<el-button v-if="customer" type="primary" @click="remove">Delete</el-button>
 					</el-col>
 					<el-col :span="8"/>
 					<el-col :span="8" style="text-align: end;">
-						<el-button v-if="customer" @click="save">Save</el-button>
-						<el-button v-else @click="create">Create</el-button>
+						<el-button v-if="customer" type="primary" @click="save">Save</el-button>
+						<el-button v-else type="primary" @click="create">Create</el-button>
 					</el-col>
 				</el-row>
 			</el-container>
