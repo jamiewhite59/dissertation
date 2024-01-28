@@ -19,7 +19,7 @@ export default {
 	<Head :title="title" />
 	<div class="main-layout">
 		<el-container class="main-container">
-			<el-aside class="main-menu" width="250px">
+			<el-aside class="main-menu">
 				<div class="logo-container">
 					<img class="logo" src="../../logo.png">
 				</div>
@@ -38,9 +38,78 @@ export default {
 	</div>
 </template>
 
-<style scoped>
-	.page-title {
-		color: var(--el-color-black);
-		font-size: 2em;
+<style lang="scss">
+.main-layout {
+	height: 100%;
+
+	.main-header {
+		display: flex;
+
+		justify-content: space-between;
+		align-items: center;
+
+		background-color: var(--el-color-white);
+
+		.page-title {
+			color: var(--el-color-black);
+			font-size: 2em;
+		}
+
+		.user-avatar {
+			.el-icon {
+				height: 1.5em;
+				width: 2em;
+
+				svg {
+					height: 2em;
+					width: 2em;
+				}
+			}
+		}
 	}
+
+	.main-main {
+		background-color: rgb(224, 223, 223);
+	}
+
+	.main-container {
+		height: 100%;
+
+		.main-menu {
+			height: 100%;
+
+			background-color: var(--el-menu-bg-color);
+
+			.logo-container {
+				display: flex;
+				justify-content: center;
+
+				padding-top: 1em;
+				padding-bottom: 1em;
+
+				.logo {
+					height: 75px;
+
+					object-fit: cover;
+				}
+			}
+
+			.el-menu {
+				border-right: 0;
+
+				.el-menu-item:hover {
+					color: var(--el-menu-hover-text-color);
+				}
+
+				.is-disabled {
+					color: var(--el-menu-text-color) !important;
+				}
+
+				.el-sub-menu__title:hover {
+					color: var(--el-menu-hover-text-color) !important;
+				}
+			}
+		}
+	}
+}
 </style>
