@@ -18,14 +18,14 @@ export default {
 <template>
 	<Head :title="title" />
 	<div class="main-layout">
-		<el-container>
-			<el-aside width="250px">
+		<el-container class="main-container">
+			<el-aside class="main-menu" width="250px">
 				<div class="logo-container">
 					<img class="logo" src="../../logo.png">
 				</div>
 				<sidebar/>
 			</el-aside>
-			<el-container>
+			<el-container class="main-content">
 				<el-header class="main-header" height="100px">
 					<el-text class="page-title" size="large" tag="b">{{title}}</el-text>
 					<el-avatar class="user-avatar">

@@ -13,7 +13,7 @@ export default {
 };
 </script>
 <template>
-	<el-container>
+	<el-container class="overview-container">
 		<el-header class="overview-create">
 			<el-container>
 				<el-button type="primary" @click="$emit('openCreate')">
@@ -32,6 +32,10 @@ export default {
 	</el-container>
 </template>
 <style lang="scss">
+.overview-container {
+	height: 100%;
+}
+
 .overview-create {
 	display: flex;
 	justify-content: flex-end;
