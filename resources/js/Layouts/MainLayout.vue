@@ -77,6 +77,8 @@ export default {
 
 		.main-menu {
 			height: 100%;
+			width: 20%;
+			min-width: 175px;
 
 			background-color: var(--el-menu-bg-color);
 
