@@ -126,7 +126,7 @@ export default {
 
 <template>
 	<MainLayout title="Events">
-		<el-container>
+		<el-container class="event-container">
 			<el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
 				<el-row style="height:100%">
 					<el-form class="event-info-form" ref="formRef" label-position="top" :model="eventForm" :rules="rules">
@@ -159,15 +159,17 @@ export default {
 			<el-divider class="event-info-divider" direction="vertical"/>
 			<el-col class="customer-index-list" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" v-if="event" direction="vertical">
 				<el-text size="large" tag="b">Customers</el-text>
-				<el-scrollbar class="customer-scrollbar" height="100%">
-					<el-container class="list-space">
-						<el-card class="customer-item add-card" shadow="hover" @click="openModal">
-							<el-text tag="b" size="large">Add Customer</el-text>
-							<el-icon><Plus/></el-icon>
-						</el-card>
-						<CustomerItem v-for="customer in eventCustomers" :key="customer.id" :customer="customer" :remove="true" @removeCustomer="removeCustomer"/>
-					</el-container>
-				</el-scrollbar>
+				<el-container class="customer-item-wrapper">
+					<el-scrollbar class="customer-scrollbar" height="100%">
+						<el-container class="list-space">
+							<el-card class="customer-item add-card" shadow="hover" @click="openModal">
+								<el-text tag="b" size="large">Add Customer</el-text>
+								<el-icon><Plus/></el-icon>
+							</el-card>
+							<CustomerItem v-for="customer in eventCustomers" :key="customer.id" :customer="customer" :remove="true" @removeCustomer="removeCustomer"/>
+						</el-container>
+					</el-scrollbar>
+				</el-container>
 			</el-col>
 		</el-container>
 	</MainLayout>
@@ -185,38 +187,50 @@ export default {
 	</el-dialog>
 </template>
 <style lang="scss">
-.event-info-form {
-	width: 100%;
-}
-
-.event-info-divider {
+.event-container {
 	height: 100%;
 
-	border-color: black;
-
-	margin: 0 15px;
-}
-
-.customer-index-list {
-	flex: initial !important;
-	width: 100%;
-
-	margin-bottom: 1em;
-
-	.customer-scrollbar {
-		margin-top: 1em;
+	.event-info-form {
+		width: 100%;
 	}
 
-	.list-space {
-		display: grid !important;
-		grid-gap: 15px;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	.event-info-divider {
+		height: 100%;
 
-		height: auto;
+		border-color: black;
+
+		margin: 0 15px;
+	}
+
+	.customer-index-list {
+		flex: initial !important;
+		width: 100%;
 
 		margin-bottom: 1em;
+
+		.customer-item-wrapper {
+			height: 100%;
+			overflow: hidden;
+
+			.customer-scrollbar {
+				margin-top: 1em;
+
+				width: 100%;
+			}
+
+			.list-space {
+				display: grid !important;
+				grid-gap: 15px;
+				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+				height: auto;
+
+				margin-bottom: 1em;
+			}
+		}
 	}
 }
+
 
 .el-dialog {
 	.customer-search {
