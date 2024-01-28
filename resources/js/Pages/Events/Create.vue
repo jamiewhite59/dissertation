@@ -128,7 +128,7 @@ export default {
 	<MainLayout title="Events">
 		<el-container>
 			<el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-				<el-row>
+				<el-row style="height:100%">
 					<el-form class="event-info-form" ref="formRef" label-position="top" :model="eventForm" :rules="rules">
 						<el-form-item label="Title" prop="title" required>
 							<el-input v-model="eventForm.title"/>
@@ -143,30 +143,23 @@ export default {
 							<el-date-picker v-model="eventForm.end_date" type="date" clearable  style="width:100%"/>
 						</el-form-item>
 					</el-form>
-					<el-container direction="horizontal">
-						<el-row>
-							<el-col :span="24" style="text-align: end;">
-								<el-button type="primary" @click="openIndex">Cancel</el-button>
-							</el-col>
-						</el-row>
-						<el-row justify="space-evenly">
-							<el-col :span="8">
-								<el-button v-if="event" type="primary" @click="remove">Delete</el-button>
-							</el-col>
-							<el-col :span="8"/>
-							<el-col :span="8" style="text-align: end;">
-								<el-button type="primary" @click="save">
-									{{event?.id ? 'Save' : 'Create'}}
-								</el-button>
-							</el-col>
-						</el-row>
-					</el-container>
+					<el-row style="width:100%;align-items:flex-end;" justify="space-between">
+						<el-col :span="8">
+							<el-button v-if="event" type="danger" @click="remove">Delete</el-button>
+						</el-col>
+						<el-col style="text-align:right;" :span="16">
+							<el-button type="primary" @click="openIndex">Cancel</el-button>
+							<el-button type="primary" @click="save">
+								{{event?.id ? 'Save' : 'Create'}}
+							</el-button>
+						</el-col>
+					</el-row>
 				</el-row>
 			</el-col>
 			<el-divider class="event-info-divider" direction="vertical"/>
 			<el-col class="customer-index-list" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" v-if="event" direction="vertical">
 				<el-text size="large" tag="b">Customers</el-text>
-				<el-scrollbar height="100%">
+				<el-scrollbar class="customer-scrollbar" height="100%">
 					<el-container class="list-space">
 						<el-card class="customer-item add-card" shadow="hover" @click="openModal">
 							<el-text tag="b" size="large">Add Customer</el-text>
@@ -200,6 +193,8 @@ export default {
 	height: 100%;
 
 	border-color: black;
+
+	margin: 0 15px;
 }
 
 .customer-index-list {
@@ -208,12 +203,18 @@ export default {
 
 	margin-bottom: 1em;
 
+	.customer-scrollbar {
+		margin-top: 1em;
+	}
+
 	.list-space {
 		display: grid !important;
 		grid-gap: 15px;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 
 		height: auto;
+
+		margin-bottom: 1em;
 	}
 }
 
