@@ -23,7 +23,7 @@ export default {
 				<div class="logo-container">
 					<img class="logo" src="../../logo.png">
 				</div>
-				<sidebar/>
+				<Sidebar/>
 			</el-aside>
 			<el-container class="main-content">
 				<el-header class="main-header" height="100px">

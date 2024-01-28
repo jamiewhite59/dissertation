@@ -46,20 +46,15 @@ export default {
 		},
 	},
 	methods: {
-		create() {
-			this.validate()
-				.then((valid) => {
-					if (valid) {
-						router.post(route('customers.store', this.customerForm));
-					}
-				})
-			;
-		},
 		save() {
 			this.validate()
 				.then((valid) => {
 					if (valid) {
-						router.patch(route('customers.update', this.customer.id), this.customerForm);
+						if (this.customer) {
+							router.patch(route('customers.update', this.customer.id), this.customerForm);
+						} else {
+							router.post(route('customers.store', this.customerForm));
+						}
 					}
 				});
 		},
@@ -123,8 +118,7 @@ export default {
 					</el-col>
 					<el-col :span="8"/>
 					<el-col :span="8" style="text-align: end;">
-						<el-button v-if="customer" type="primary" @click="save">Save</el-button>
-						<el-button v-else type="primary" @click="create">Create</el-button>
+						<el-button type="primary" @click="save">{{customer ? 'Save' : 'Create'}}</el-button>
 					</el-col>
 				</el-row>
 			</el-container>
