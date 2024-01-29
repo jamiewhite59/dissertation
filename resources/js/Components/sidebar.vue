@@ -32,29 +32,29 @@ export default {
 			<el-icon><Coordinate /></el-icon>
 			<span>Customers</span>
 		</el-menu-item>
-		<el-sub-menu index="3" disabled>
+		<el-sub-menu index="3">
 			<template #title>
 				<el-icon><Document /></el-icon>
 				<span>Items</span>
 			</template>
 			<el-menu-item index="3-1">
-				<el-icon><Tickets/></el-icon>
+				<el-icon><Tickets /></el-icon>
 				Items
 			</el-menu-item>
 			<el-menu-item index="3-2">
-				<el-icon><TakeawayBox/></el-icon>
+				<el-icon><TakeawayBox /></el-icon>
 				Categories
 			</el-menu-item>
 			<el-menu-item index="3-3">
-				<el-icon><Folder/></el-icon>
+				<el-icon><Folder /></el-icon>
 				Groups
 			</el-menu-item>
 			<el-menu-item index="3-4">
-				<el-icon><Flag/></el-icon>
+				<el-icon><Flag /></el-icon>
 				Post-Event Actions
 			</el-menu-item>
 			<el-menu-item index="3-5">
-				<el-icon><Guide/></el-icon>
+				<el-icon><Guide /></el-icon>
 				Periodic Actions
 			</el-menu-item>
 		</el-sub-menu>
