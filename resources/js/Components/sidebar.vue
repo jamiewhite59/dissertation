@@ -12,11 +12,8 @@ export default {
 		User,
 	},
 	methods: {
-		openEvents() {
-			router.visit(route('events.index'));
-		},
-		openCustomers() {
-			router.visit(route('customers.index'));
+		openIndex(name) {
+			router.visit(route(name));
 		},
 	},
 };
@@ -24,11 +21,11 @@ export default {
 
 <template>
 	<el-menu>
-		<el-menu-item index="1" @click="openEvents()">
+		<el-menu-item index="1" @click="openIndex('events.index')">
 			<el-icon><Postcard /></el-icon>
 			<span>Events</span>
 		</el-menu-item>
-		<el-menu-item index="2" @click="openCustomers()">
+		<el-menu-item index="2" @click="openIndex('customers.index')">
 			<el-icon><Coordinate /></el-icon>
 			<span>Customers</span>
 		</el-menu-item>
@@ -37,7 +34,7 @@ export default {
 				<el-icon><Document /></el-icon>
 				<span>Items</span>
 			</template>
-			<el-menu-item index="3-1">
+			<el-menu-item index="3-1" @click="openIndex('items.index')">
 				<el-icon><Tickets /></el-icon>
 				Items
 			</el-menu-item>
