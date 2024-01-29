@@ -126,52 +126,40 @@ export default {
 
 <template>
 	<MainLayout title="Events">
-		<el-container class="event-container">
-			<el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
-				<el-row style="height:100%">
-					<el-form class="event-info-form" ref="formRef" label-position="top" :model="eventForm" :rules="rules">
-						<el-form-item label="Title" prop="title" required>
-							<el-input v-model="eventForm.title"/>
-						</el-form-item>
-						<el-form-item label="Icon" prop="icon">
-							<el-input v-model="eventForm.icon"/>
-						</el-form-item>
-						<el-form-item label="Start Date" prop="start_date" required >
-							<el-date-picker v-model="eventForm.start_date" type="date" clearable style="width:100%" />
-						</el-form-item>
-						<el-form-item label="End Date" prop="end_date">
-							<el-date-picker v-model="eventForm.end_date" type="date" clearable  style="width:100%"/>
-						</el-form-item>
-					</el-form>
-					<el-row style="width:100%;align-items:flex-end;" justify="space-between">
-						<el-col :span="8">
-							<el-button v-if="event" type="danger" @click="remove">Delete</el-button>
-						</el-col>
-						<el-col style="text-align:right;" :span="16">
-							<el-button type="primary" @click="openIndex">Cancel</el-button>
-							<el-button type="primary" @click="save">
-								{{event?.id ? 'Save' : 'Create'}}
-							</el-button>
-						</el-col>
-					</el-row>
-				</el-row>
-			</el-col>
-			<el-divider class="event-info-divider" direction="vertical"/>
-			<el-col class="customer-index-list" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" v-if="event" direction="vertical">
-				<el-text size="large" tag="b">Customers</el-text>
-				<el-container class="customer-item-wrapper">
-					<el-scrollbar class="customer-scrollbar" height="100%">
-						<el-container class="list-space">
-							<el-card class="customer-item add-card" shadow="hover" @click="openModal">
-								<el-text tag="b" size="large">Add Customer</el-text>
-								<el-icon><Plus/></el-icon>
-							</el-card>
-							<CustomerItem v-for="customer in eventCustomers" :key="customer.id" :customer="customer" :remove="true" @removeCustomer="removeCustomer"/>
-						</el-container>
-					</el-scrollbar>
-				</el-container>
-			</el-col>
-		</el-container>
+		<CreateLayout :existing="event" @remove="remove" @openIndex="openIndex" @save="save">
+			<template #form>
+				<el-form class="create-form" ref="formRef" label-position="top" :model="eventForm" :rules="rules">
+					<el-form-item label="Title" prop="title" required>
+						<el-input v-model="eventForm.title"/>
+					</el-form-item>
+					<el-form-item label="Icon" prop="icon">
+						<el-input v-model="eventForm.icon"/>
+					</el-form-item>
+					<el-form-item label="Start Date" prop="start_date" required >
+						<el-date-picker v-model="eventForm.start_date" type="date" clearable style="width:100%" />
+					</el-form-item>
+					<el-form-item label="End Date" prop="end_date">
+						<el-date-picker v-model="eventForm.end_date" type="date" clearable  style="width:100%"/>
+					</el-form-item>
+				</el-form>
+			</template>
+			<template #default>
+				<el-col class="customer-index-list" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" v-if="event" direction="vertical">
+					<el-text size="large" tag="b">Customers</el-text>
+					<el-container class="customer-item-wrapper">
+						<el-scrollbar class="customer-scrollbar" height="100%">
+							<el-container class="list-space">
+								<el-card class="customer-item add-card" shadow="hover" @click="openModal">
+									<el-text tag="b" size="large">Add Customer</el-text>
+									<el-icon><Plus/></el-icon>
+								</el-card>
+								<CustomerItem v-for="customer in eventCustomers" :key="customer.id" :customer="customer" :remove="true" @removeCustomer="removeCustomer"/>
+							</el-container>
+						</el-scrollbar>
+					</el-container>
+				</el-col>
+			</template>
+		</CreateLayout>
 	</MainLayout>
 	<el-dialog v-model="dialogVisible" width="30%" style="height:400px" align-center>
 		<template #header>Customers</template>
@@ -187,50 +175,33 @@ export default {
 	</el-dialog>
 </template>
 <style lang="scss">
-.event-container {
-	height: 100%;
+.customer-index-list {
+	flex: initial !important;
+	width: 100%;
 
-	.event-info-form {
-		width: 100%;
-	}
+	margin-bottom: 1em;
 
-	.event-info-divider {
+	.customer-item-wrapper {
 		height: 100%;
+		overflow: hidden;
 
-		border-color: black;
+		.customer-scrollbar {
+			margin-top: 1em;
 
-		margin: 0 15px;
-	}
+			width: 100%;
+		}
 
-	.customer-index-list {
-		flex: initial !important;
-		width: 100%;
+		.list-space {
+			display: grid !important;
+			grid-gap: 15px;
+			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 
-		margin-bottom: 1em;
+			height: auto;
 
-		.customer-item-wrapper {
-			height: 100%;
-			overflow: hidden;
-
-			.customer-scrollbar {
-				margin-top: 1em;
-
-				width: 100%;
-			}
-
-			.list-space {
-				display: grid !important;
-				grid-gap: 15px;
-				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-
-				height: auto;
-
-				margin-bottom: 1em;
-			}
+			margin-bottom: 1em;
 		}
 	}
 }
-
 
 .el-dialog {
 	.customer-search {
