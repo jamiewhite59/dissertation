@@ -41,19 +41,19 @@ export default {
 				<el-icon><Tickets /></el-icon>
 				Items
 			</el-menu-item>
-			<el-menu-item index="3-2">
+			<el-menu-item index="3-2" disabled>
 				<el-icon><TakeawayBox /></el-icon>
 				Categories
 			</el-menu-item>
-			<el-menu-item index="3-3">
+			<el-menu-item index="3-3" disabled>
 				<el-icon><Folder /></el-icon>
 				Groups
 			</el-menu-item>
-			<el-menu-item index="3-4">
+			<el-menu-item index="3-4" disabled>
 				<el-icon><Flag /></el-icon>
 				Post-Event Actions
 			</el-menu-item>
-			<el-menu-item index="3-5">
+			<el-menu-item index="3-5" disabled>
 				<el-icon><Guide /></el-icon>
 				Periodic Actions
 			</el-menu-item>
