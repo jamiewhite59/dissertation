@@ -107,7 +107,7 @@ export default {
 			</template>
 			<template #default>
 				<el-col class="item-content" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" direction="vertical">
-					<el-text>CONTENT</el-text>
+					<el-text>Pieces for this item?</el-text>
 				</el-col>
 			</template>
 		</CreateLayout>
