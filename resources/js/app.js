@@ -12,6 +12,8 @@ import '../scss/theme.scss';
 
 import MainLayout from '@/Layouts/MainLayout.vue';
 import OverviewLayout from '@/Layouts/OverviewLayout.vue';
+import CreateLayout from '@/Layouts/CreateLayout.vue';
+
 import CustomerItem from '@/Components/CustomerItem.vue';
 import EventItem from '@/Components/EventItem.vue';
 
@@ -29,6 +31,7 @@ createInertiaApp({
 		}
 		app.component('MainLayout', MainLayout);
 		app.component('OverviewLayout', OverviewLayout);
+		app.component('CreateLayout', CreateLayout);
 		app.component('CustomerItem', CustomerItem);
 		app.component('EventItem', EventItem);
 
