@@ -45,14 +45,14 @@ export default {
 	<el-card class="event-item" shadow="hover" @click="openEdit(event.id)">
 		<el-descriptions :title="event.title" :column="1">
 			<template #extra>
-				<el-tag :type="status" effect="dark"/>
+				<el-tag :type="status" size="small" effect="dark"/>
 			</template>
 			<el-descriptions-item>
-				<el-text tag="b">Start Date</el-text>
+				<el-text tag="b">Start</el-text>
 				{{ startDate }}
 			</el-descriptions-item>
 			<el-descriptions-item>
-				<el-text tag="b">End Date</el-text>
+				<el-text tag="b">End</el-text>
 				{{ endDate }}
 			</el-descriptions-item>
 		</el-descriptions>

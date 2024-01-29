@@ -1,13 +1,11 @@
 <script>
 import Sidebar from '@/Components/Sidebar.vue';
 import { Head } from '@inertiajs/vue3';
-import { UserFilled } from '@element-plus/icons-vue';
 
 export default {
 	components: {
 		Sidebar,
 		Head,
-		UserFilled,
 	},
 	props: {
 		title: String,
