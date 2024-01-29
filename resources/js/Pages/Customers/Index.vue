@@ -38,7 +38,7 @@ export default {
 	<MainLayout title="Customers">
 		<OverviewLayout title="Customer" :displayCards="!!filteredCustomers.length" @openCreate="openCreate">
 			<template #search>
-				<el-input v-model="search" placeholder="Search Customers" clearable style="width:450px"/>
+				<el-input class="overview-search" v-model="search" placeholder="Search Customers" clearable style="width:450px"/>
 			</template>
 			<template #cards>
 				<el-container class="customer-list-space">

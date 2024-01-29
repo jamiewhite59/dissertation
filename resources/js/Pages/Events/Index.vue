@@ -33,7 +33,7 @@ export default {
 	<MainLayout title="Events">
 		<OverviewLayout title="Event" :displayCards="!!filteredEvents.length" @openCreate="openCreate">
 			<template #search>
-				<el-input v-model="search" placeholder="Search Events" clearable style="width:450px"/>
+				<el-input class="overview-search" v-model="search" placeholder="Search Events" clearable />
 			</template>
 			<template #cards>
 				<el-container class="event-list-space">

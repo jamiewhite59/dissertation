@@ -47,6 +47,11 @@ export default {
 
 	padding-bottom: 20px;
 
+	.overview-search {
+		max-width: 450px;
+
+		padding-left: 1em;
+	}
 }
 
 .overview-list {
