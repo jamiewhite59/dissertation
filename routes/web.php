@@ -39,18 +39,20 @@ use Inertia\Inertia;
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
+// Route::get('/items', [ItemController::class, 'index'])->name('items.index');
+// Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
+// Route::post('/items', [ItemController::class, 'store'])->name('items.store');
+// Route::get('/items/{id}/edit', [ItemController::class, 'edit'])->name('items.edit');
+// Route::patch('/items/{id}', [ItemController::class, 'update'])->name('items.update');
+// Route::delete('/items/{id}', [ItemController::class, 'destroy'])->name('items.destroy');
+
 Route::resource('events', EventController::class);
 Route::put('/events/{event}/addCustomer', [EventController::class, 'addCustomer'])->name('events.addCustomer');
 Route::put('/events/{event}/removeCustomer', [EventController::class, 'removeCustomer'])->name('events.removeCustomer');
 
 Route::resource('customers', CustomerController::class);
+Route::resource('items', ItemController::class);
 
-Route::get('/items', [ItemController::class, 'index'])->name('items.index');
-Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
-Route::post('/items', [ItemController::class, 'store'])->name('items.store');
-Route::get('/items/{id}/edit', [ItemController::class, 'edit'])->name('items.edit');
-Route::patch('/items/{id}', [ItemController::class, 'update'])->name('items.update');
-Route::delete('/items/{id}', [ItemController::class, 'destroy'])->name('items.destroy');
 
 Route::get('/test', [TestController::class, 'test'])->name('test');
 
