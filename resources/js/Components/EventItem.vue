@@ -27,7 +27,5 @@ export default {
 .event-item {
 	text-align: center;
 	height: 120px;
-
-
 }
 </style>

@@ -36,9 +36,11 @@ class CustomerController extends Controller
 
     public function edit(Request $request, $id): Response {
         $customer = Customer::find($id);
+        $customerEvents = $customer->events;
 
         return Inertia::render('Customers/Create', [
             'customer' => $customer,
+            'customerEvents' => $customerEvents,
         ]);
     }
 
