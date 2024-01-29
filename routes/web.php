@@ -46,6 +46,7 @@ Route::put('/events/{event}/removeCustomer', [EventController::class, 'removeCus
 Route::resource('customers', CustomerController::class);
 
 Route::get('/items', [ItemController::class, 'index'])->name('items.index');
+Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
 
 Route::get('/test', [TestController::class, 'test'])->name('test');
 
