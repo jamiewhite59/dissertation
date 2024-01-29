@@ -40,7 +40,7 @@ export default {
 			<template #search>
 				<el-input v-model="search" placeholder="Search Customers" clearable style="width:450px"/>
 			</template>
-			<template #default>
+			<template #cards>
 				<el-container class="customer-list-space">
 					<CustomerItem v-for="customer in filteredCustomers" :key="customer.id" :customer="customer"/>
 				</el-container>

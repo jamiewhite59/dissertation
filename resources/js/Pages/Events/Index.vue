@@ -35,7 +35,7 @@ export default {
 			<template #search>
 				<el-input v-model="search" placeholder="Search Events" clearable style="width:450px"/>
 			</template>
-			<template #default>
+			<template #cards>
 				<el-container class="event-list-space">
 					<EventItem v-for="event in filteredEvents" :key="event.id" :event="event"/>
 				</el-container>

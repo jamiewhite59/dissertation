@@ -25,10 +25,12 @@ export default {
 			</el-container>
 			<slot name="search"></slot>
 		</el-header>
-		<el-main class="overview-list">
-			<slot v-if="displayCards"></slot>
-			<el-empty v-else :description="'No' + title +'s'" />
-		</el-main>
+		<slot>
+			<el-main class="overview-list">
+				<slot name="cards" v-if="displayCards"></slot>
+				<el-empty v-else :description="'No' + title +'s'" />
+			</el-main>
+		</slot>
 	</el-container>
 </template>
 <style lang="scss">
