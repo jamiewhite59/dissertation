@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): Response
     {
-        //
+        $items = Item::all();
+
+        return Inertia::render('Items/Index', [
+            'items' => $items,
+        ]);
     }
 
     /**

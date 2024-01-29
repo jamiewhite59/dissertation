@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
@@ -43,6 +44,8 @@ Route::put('/events/{event}/addCustomer', [EventController::class, 'addCustomer'
 Route::put('/events/{event}/removeCustomer', [EventController::class, 'removeCustomer'])->name('events.removeCustomer');
 
 Route::resource('customers', CustomerController::class);
+
+Route::get('/items', [ItemController::class, 'index'])->name('items.index');
 
 Route::get('/test', [TestController::class, 'test'])->name('test');
 
