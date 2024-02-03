@@ -41,19 +41,23 @@ export default {
 				<el-input v-model="search" placeholder="Search Items" clearable style="width:450px"/>
 			</template>
 			<template #default>
-				<el-row justify="center">
-					<el-col :span="16">
-						<el-table :data="filteredItems" @row-click="openEdit">
-							<el-table-column prop="title" label="Title" sortable/>
-							<el-table-column prop="stock_type" label="Stock Type" sortable/>
-							<el-table-column prop="description" label="Description"/>
-						</el-table>
-					</el-col>
-				</el-row>
+				<el-container class="item-table-container">
+					<el-table :data="filteredItems" height="100%" @row-click="openEdit">
+						<el-table-column prop="title" label="Title" sortable/>
+						<el-table-column prop="stock_type" label="Stock Type" sortable/>
+						<el-table-column prop="description" label="Description"/>
+					</el-table>
+				</el-container>
 			</template>
 		</OverviewLayout>
 	</MainLayout>
 </template>
 <style lang="scss">
+.item-table-container {
+	height: 100%;
 
+	padding: 0 20px;
+
+	overflow: hidden;
+}
 </style>
