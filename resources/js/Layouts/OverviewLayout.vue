@@ -23,6 +23,7 @@ export default {
 					Create
 				</el-button>
 			</el-container>
+			<slot name="extra"></slot>
 			<slot name="search"></slot>
 		</el-header>
 		<slot>
