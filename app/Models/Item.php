@@ -17,6 +17,9 @@ class Item extends Model
         return $this->hasMany(EventItem::class);
     }
 
+    public function pieces(): HasMany {
+        return $this->hasMany(Piece::class);
+    }
 
     public function events(): HasManyThrough {
         return $this->hasManyThrough(Event::class, EventItem::class);
