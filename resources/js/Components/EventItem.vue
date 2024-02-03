@@ -33,6 +33,16 @@ export default {
 				return 'danger';
 			}
 		},
+		tooltipValue() {
+			switch (this.status) {
+			case 'info':
+				return 'Upcoming';
+			case 'success':
+				return 'Active';
+			default:
+				return 'Complete';
+			}
+		},
 	},
 	methods: {
 		openEdit(id) {
@@ -45,7 +55,13 @@ export default {
 	<el-card class="event-item" shadow="hover" @click="openEdit(event.id)">
 		<el-descriptions :title="event.title" :column="1">
 			<template #extra>
-				<el-tag :type="status" size="small" effect="dark"/>
+				<el-tooltip
+					effect="light"
+					:content="tooltipValue"
+					placement="top"
+				>
+					<el-tag :type="status" size="small" effect="dark"/>
+				</el-tooltip>
 			</template>
 			<el-descriptions-item>
 				<el-text tag="b">Start</el-text>
