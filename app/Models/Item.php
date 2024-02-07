@@ -13,6 +13,8 @@ class Item extends Model
     use HasFactory;
     use HasUuids;
 
+    protected $primaryKey = 'id';
+
     public function eventItems(): HasMany {
         return $this->hasMany(EventItem::class);
     }

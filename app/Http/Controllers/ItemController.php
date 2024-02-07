@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ItemFormRequest;
+use App\Http\Requests\PieceFormRequest;
 use App\Models\Item;
+use App\Models\Piece;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -50,9 +52,11 @@ class ItemController extends Controller
      */
     public function edit(Request $request, $id): Response {
         $item = Item::find($id);
+        $pieces = $item->pieces;
 
         return Inertia::render('Items/Create', [
             'item' => $item,
+            'pieces' => $pieces,
         ]);
     }
 
@@ -78,5 +82,21 @@ class ItemController extends Controller
         Item::destroy($id);
 
         return redirect('/items');
+    }
+
+    public function createPiece(PieceFormRequest $request): RedirectResponse {
+        $piece = new Piece;
+
+        $piece->item_id = $request->item_id;
+        $piece->code = $request->code;
+        $piece->save();
+
+        return redirect()->route('items.edit', $request->item_id);
+    }
+
+    public function destroyPiece(Request $request, $id): RedirectResponse {
+        Piece::destroy($id);
+
+        return back();
     }
 }
