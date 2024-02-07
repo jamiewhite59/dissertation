@@ -68,7 +68,7 @@ class EventController extends Controller
     public function addCustomer(Request $request, $id): RedirectResponse {
         $event = Event::find($id);
 
-        //TODO: this
+        //TODO: Server side validation to prevent a customer being added to the same event twice.
          $eventCustomers = $event->customers;
         foreach ($eventCustomers as &$customer) {
             if ($customer->id == $request->id) {
