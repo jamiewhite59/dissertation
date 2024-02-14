@@ -9,6 +9,8 @@ export default {
 		customers: Array,
 		errors: Object,
 		eventCustomers: Array,
+		eventItems: Array,
+		items: Array,
 	},
 	data() {
 		return {
@@ -121,6 +123,14 @@ export default {
 		removeCustomer(id) {
 			router.put(route('events.removeCustomer', this.event.id), {id: id,});
 		},
+		addItem() {
+			let someData = {
+				event_id: '9b2bad2f-799a-43c0-8a95-d76af663d71c',
+				item_id: '9b35bb0c-07a2-4529-9ad3-3f69576cbbb6',
+			};
+
+			router.put(route('events.addItem', this.event.id), someData);
+		},
 	},
 };
 </script>
@@ -128,7 +138,16 @@ export default {
 <template>
 	<MainLayout :title="event ? event.title : 'Events'">
 		<el-tabs v-model="activeTab">
-			<el-tab-pane label="Items" name="items">Items</el-tab-pane>
+			<el-tab-pane label="Items" name="items">
+				<el-container direction="vertical">
+					<el-button type="primary" @click="addItem">Add Arbitrary Item</el-button>
+					<div>{{ eventItems }}</div>
+					<!-- <el-table>
+						<el-table-column :prop="title" label="Item"/>
+						<el-table-column :prop="stock_type" label="Stock Type"/>
+					</el-table> -->
+				</el-container>
+			</el-tab-pane>
 			<el-tab-pane label="Information" name="information">
 				<CreateLayout :existing="event" @remove="remove" @openIndex="openIndex" @save="save">
 					<template #form>

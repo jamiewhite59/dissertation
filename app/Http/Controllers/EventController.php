@@ -43,8 +43,6 @@ class EventController extends Controller
         $items = Item::all();
         $eventItems = $event->eventItems;
 
-        dd($eventItems);
-
         return Inertia::render('Events/Create', [
             'event' => $event,
             'customers' => $customers,

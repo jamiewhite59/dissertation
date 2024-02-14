@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventItemController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PieceController;
 use App\Http\Controllers\ProfileController;
@@ -50,6 +51,7 @@ use Inertia\Inertia;
 Route::resource('events', EventController::class);
 Route::put('/events/{event}/addCustomer', [EventController::class, 'addCustomer'])->name('events.addCustomer');
 Route::put('/events/{event}/removeCustomer', [EventController::class, 'removeCustomer'])->name('events.removeCustomer');
+Route::put('/events/{event}/addItem', [EventItemController::class, 'create'])->name('events.addItem');
 
 Route::resource('customers', CustomerController::class);
 
