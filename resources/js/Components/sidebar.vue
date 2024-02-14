@@ -39,6 +39,10 @@ export default {
 				Items
 			</el-menu-item>
 			<el-menu-item index="3-2" disabled>
+				<el-icon><Postcard /></el-icon>
+				Pieces
+			</el-menu-item>
+			<el-menu-item index="3-2" disabled>
 				<el-icon><TakeawayBox /></el-icon>
 				Categories
 			</el-menu-item>
