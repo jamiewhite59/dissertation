@@ -126,7 +126,7 @@ export default {
 </script>
 
 <template>
-	<MainLayout title="Events">
+	<MainLayout :title="event ? event.title : 'Events'">
 		<el-tabs v-model="activeTab">
 			<el-tab-pane label="Items" name="items">Items</el-tab-pane>
 			<el-tab-pane label="Information" name="information">
