@@ -37,6 +37,7 @@ export default {
 				],
 			}),
 			dialogVisible: false,
+			selectedPiece: null,
 		};
 	},
 	watch: {
@@ -101,18 +102,20 @@ export default {
 					return false;
 				});
 		},
-		createPiece() {
+		savePiece() {
 			this.validatePieceForm()
 				.then((valid) => {
 					if (valid) {
+						if (this.selectedPiece) {
+							router.patch(route('items.updatePiece', this.selectedPiece.id), this.pieceForm);
+						} else {
+							router.put(route('items.createPiece', this.item.id), this.pieceForm);
+						}
 						this.dialogVisible = false;
-						console.debug('piece form', this.pieceForm);
-						router.put(route('items.createPiece', this.item.id), this.pieceForm);
 					}
 				});
 		},
 		destroyPiece(id) {
-			console.debug('destroying piece with id', id);
 			ElMessageBox.confirm(
 				'Are you sure you want to permanently delete this piece?',
 				'Delete Piece',
@@ -124,6 +127,16 @@ export default {
 			).then(() => {
 				router.delete(route('items.destroyPiece', id));
 			}).catch(() => {});
+		},
+		selectPiece(piece) {
+			this.selectedPiece = piece;
+			this.pieceForm.code = piece.code;
+			this.dialogVisible = true;
+		},
+		hideDialog() {
+			this.dialogVisible = false;
+			this.selectedPiece = null;
+			this.pieceForm.code = '';
 		},
 	},
 };
@@ -152,19 +165,27 @@ export default {
 			</template>
 			<template #default>
 				<el-col class="item-content" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" direction="vertical">
-					<el-container v-if="item.stock_type === 'hire'">
-						<el-container>
-							<el-button type="primary" @click="dialogVisible = true">Create piece</el-button>
-							<div v-for="piece in pieces" :key="piece.id" @click="destroyPiece(piece.id)">{{ piece.code }}</div>
+					<template v-if="item.stock_type === 'hire'">
+						<el-text size="large" tag="b">Pieces</el-text>
+						<el-container class="item-piece-wrapper">
+							<el-scrollbar class="piece-scrollbar" height="100%">
+								<el-container class="list-space">
+									<el-card class="piece-item add-card" shadow="hover" @click="dialogVisible = true">
+										<el-text tag="b" size="large">Add Piece</el-text>
+										<el-icon><Plus/></el-icon>
+									</el-card>
+									<PieceItem v-for="piece in pieces" :key="piece.id" :piece="piece" @click="selectPiece(piece)" @removePiece="destroyPiece" />
+								</el-container>
+							</el-scrollbar>
 						</el-container>
-					</el-container>
+					</template>
 					<el-text v-else>Single piece with a quantity?</el-text>
 				</el-col>
 			</template>
 		</CreateLayout>
 	</MainLayout>
-	<el-dialog v-model="dialogVisible" width="30%" align-center>
-		<template #header>Create Piece</template>
+	<el-dialog v-model="dialogVisible" width="30%" align-center @closed="hideDialog">
+		<template #header>{{ selectedPiece ? 'Edit Piece' : 'Create Piece' }}</template>
 		<template #default>
 			<el-form ref="pieceFormRef" label-position="top" :model="pieceForm" :rules="pieceRules">
 				<el-form-item label="Identifying Code" prop="code">
@@ -173,8 +194,8 @@ export default {
 			</el-form>
 		</template>
 		<template #footer>
-			<el-button type="primary" @click="dialogVisible = false">Cancel</el-button>
-			<el-button type="primary" @click="createPiece">Create</el-button>
+			<el-button type="primary" @click="hideDialog">Cancel</el-button>
+			<el-button type="primary" @click="savePiece">{{ selectedPiece ? 'Save' : 'Create' }}</el-button>
 		</template>
 	</el-dialog>
 </template>
@@ -184,5 +205,26 @@ export default {
 	width: 100%;
 
 	margin-bottom: 1em;
+
+	.item-piece-wrapper {
+		height: 100%;
+		overflow: hidden;
+
+		.piece-scrollbar {
+			margin-top: 1em;
+
+			width: 100%;
+		}
+
+		.list-space {
+			display: grid !important;
+			grid-gap: 15px;
+			grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+			height: auto;
+
+			margin-bottom: 1em;
+		}
+	}
 }
 </style>
