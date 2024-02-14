@@ -69,6 +69,8 @@ class ItemController extends Controller
         $item->title = $request->title;
         $item->description = $request->description;
         $item->image = $request->image;
+
+        //TODO: if stock type is changed whilst there are pieces attached to the item then do not allow saving
         $item->stock_type = $request->stock_type;
         $item->save();
 
