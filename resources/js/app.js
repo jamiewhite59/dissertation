@@ -16,6 +16,7 @@ import CreateLayout from '@/Layouts/CreateLayout.vue';
 
 import CustomerItem from '@/Components/CustomerItem.vue';
 import EventItem from '@/Components/EventItem.vue';
+import PieceItem from '@/Components/PieceItem.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -34,6 +35,7 @@ createInertiaApp({
 		app.component('CreateLayout', CreateLayout);
 		app.component('CustomerItem', CustomerItem);
 		app.component('EventItem', EventItem);
+		app.component('PieceItem', PieceItem);
 
 		app.mount(el);
 		return app;
