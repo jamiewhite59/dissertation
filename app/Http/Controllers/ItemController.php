@@ -99,4 +99,13 @@ class ItemController extends Controller
 
         return back();
     }
+
+    public function updatePiece(PieceFormRequest $request, $id): RedirectResponse {
+        $piece = Piece::find($id);
+
+        $piece->code = $request->code;
+        $piece->save();
+
+        return back();
+    }
 }

@@ -56,6 +56,7 @@ Route::resource('customers', CustomerController::class);
 Route::resource('items', ItemController::class);
 Route::put('/items/{item}/createPiece', [ItemController::class, 'createPiece'])->name('items.createPiece');
 Route::delete('/items/{item}/destroyPiece', [ItemController::class, 'destroyPiece'])->name('items.destroyPiece');
+Route::patch('/items/{item}/updatePiece', [ItemController::class, 'updatePiece'])->name('items.updatePiece');
 
 
 Route::get('/test', [TestController::class, 'test'])->name('test');
