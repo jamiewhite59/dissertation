@@ -11,7 +11,7 @@ class EventItemController extends Controller {
 
         $eventItem->item_id = $request->item_id;
         $eventItem->event_id = $request->event_id;
-        $eventItem->status = 'allocated';
+        $eventItem->status = 'reserved';
         $eventItem->save();
     }
 
@@ -19,6 +19,7 @@ class EventItemController extends Controller {
         $eventItem = EventItem::find($request->eventItem_id);
 
         $eventItem->piece_id = $request->piece_id;
+        $eventItem->status = 'allocated';
         $eventItem->save();
     }
 
@@ -26,6 +27,7 @@ class EventItemController extends Controller {
         $eventItem = EventItem::find($request->eventItem_id);
 
         $eventItem->piece_id = null;
+        $eventItem->status = 'reserved';
         $eventItem->save();
     }
 }
