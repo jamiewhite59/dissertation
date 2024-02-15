@@ -21,11 +21,7 @@ class EventItem extends Model
         return $this->hasOne(Event::class);
     }
 
-    public function eventItemPiece(): HasOne {
-        return $this->hasOne(EventItemPiece::class);
-    }
-
-    public function pieces(): HasManyThrough {
-        return $this->hasManyThrough(Piece::class, EventItemPiece::class);
+    public function piece(): HasOne {
+        return $this->hasOne(Piece::class);
     }
 }

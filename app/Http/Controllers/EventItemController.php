@@ -14,4 +14,18 @@ class EventItemController extends Controller {
         $eventItem->status = 'allocated';
         $eventItem->save();
     }
+
+    public function addPiece(Request $request) {
+        $eventItem = EventItem::find($request->eventItem_id);
+
+        $eventItem->piece_id = $request->piece_id;
+        $eventItem->save();
+    }
+
+    public function removePiece(Request $request) {
+        $eventItem = EventItem::find($request->eventItem_id);
+
+        $eventItem->piece_id = null;
+        $eventItem->save();
+    }
 }
