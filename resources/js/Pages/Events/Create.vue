@@ -34,6 +34,7 @@ export default {
 			dialogVisible: false,
 			search: '',
 			activeTab: 'items',
+			tableSelection: Array,
 		};
 	},
 	computed: {
@@ -147,8 +148,8 @@ export default {
 					<el-table :data="eventItems" @selection-change="handleTableSelectionChange">
 						<el-table-column type="selection" width="55" />
 						<el-table-column prop="item_title" label="Title" />
-						<el-table-column prop="status" label="Status" />
 						<el-table-column prop="item_stock_type" label="Stock Type" />
+						<el-table-column prop="status" label="Status" />
 					</el-table>
 				</el-container>
 			</el-tab-pane>
