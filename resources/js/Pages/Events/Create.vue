@@ -135,6 +135,24 @@ export default {
 		handleTableSelectionChange(val) {
 			this.tableSelection.value = val;
 		},
+		addPiece() {
+			let someData = {
+				piece_id: '9b4725e3-3f97-4f97-a830-bb1f0442a904',
+				eventItem_id: '9b55d784-4ebb-4796-b12b-70a21cf668dd',
+			};
+
+			router.put(route('events.addItemPiece', this.event.id), someData);
+		},
+		removePiece() {
+			let someData = {
+				eventItem_id: '9b55d784-4ebb-4796-b12b-70a21cf668dd',
+			};
+
+			router.put(route('events.removeItemPiece', this.event.id), someData);
+		},
+	},
+	mounted() {
+		console.debug('info', this.eventItems);
 	},
 };
 </script>
@@ -145,10 +163,13 @@ export default {
 			<el-tab-pane label="Items" name="items">
 				<el-container direction="vertical">
 					<el-button type="primary" @click="addItem">Add Arbitrary Item</el-button>
+					<el-button type="warning" @click="addPiece">Add piece to event item</el-button>
+					<el-button type="danger" @click="removePiece">Remove piece from event item</el-button>
 					<el-table :data="eventItems" @selection-change="handleTableSelectionChange">
 						<el-table-column type="selection" width="55" />
 						<el-table-column prop="item_title" label="Title" />
 						<el-table-column prop="item_stock_type" label="Stock Type" />
+						<el-table-column prop="piece_code" label="Code" />
 						<el-table-column prop="status" label="Status" />
 					</el-table>
 				</el-container>
