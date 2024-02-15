@@ -151,9 +151,6 @@ export default {
 			router.put(route('events.removeItemPiece', this.event.id), someData);
 		},
 	},
-	mounted() {
-		console.debug('info', this.eventItems);
-	},
 };
 </script>
 
