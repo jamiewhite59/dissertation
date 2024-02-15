@@ -22,7 +22,8 @@ class Event extends Model
     public function eventItems() {
         return DB::table('event_items')
         ->join('items', 'event_items.item_id', '=', 'items.id')
-        ->select('event_items.*', 'items.title as item_title', 'items.stock_type as item_stock_type')
+        ->leftJoin('pieces', 'event_items.piece_id', '=', 'pieces.id')
+        ->select('event_items.*', 'items.title as item_title', 'items.stock_type as item_stock_type', 'pieces.code as piece_code')
         ->get();
     }
 
