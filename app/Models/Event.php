@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Facades\DB;
 
 class Event extends Model
 {
@@ -19,8 +19,11 @@ class Event extends Model
         return $this->belongsToMany(Customer::class, 'event_customer');
     }
 
-    public function eventItems(): HasMany {
-        return $this->hasMany(EventItem::class);
+    public function eventItems() {
+        return DB::table('event_items')
+        ->join('items', 'event_items.item_id', '=', 'items.id')
+        ->select('event_items.*', 'items.title as item_title', 'items.stock_type as item_stock_type')
+        ->get();
     }
 
     public function items(): HasManyThrough {

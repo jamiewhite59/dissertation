@@ -131,6 +131,9 @@ export default {
 
 			router.put(route('events.addItem', this.event.id), someData);
 		},
+		handleTableSelectionChange(val) {
+			this.tableSelection.value = val;
+		},
 	},
 };
 </script>
@@ -141,11 +144,12 @@ export default {
 			<el-tab-pane label="Items" name="items">
 				<el-container direction="vertical">
 					<el-button type="primary" @click="addItem">Add Arbitrary Item</el-button>
-					<div>{{ eventItems }}</div>
-					<!-- <el-table>
-						<el-table-column :prop="title" label="Item"/>
-						<el-table-column :prop="stock_type" label="Stock Type"/>
-					</el-table> -->
+					<el-table :data="eventItems" @selection-change="handleTableSelectionChange">
+						<el-table-column type="selection" width="55" />
+						<el-table-column prop="item_title" label="Title" />
+						<el-table-column prop="status" label="Status" />
+						<el-table-column prop="item_stock_type" label="Stock Type" />
+					</el-table>
 				</el-container>
 			</el-tab-pane>
 			<el-tab-pane label="Information" name="information">
