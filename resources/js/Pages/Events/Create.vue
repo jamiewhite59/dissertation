@@ -138,7 +138,11 @@ export default {
 			this.tableSelection.value = val;
 		},
 		allocatePiece() {
-			router.put(route('events.addItemPiece', this.event.id), {piece_code: this.actionInput});
+			let data = {
+				event_id: this.event.id,
+				piece_code: this.actionInput,
+			}
+			router.put(route('events.addItemPiece', this.event.id), data);
 			this.actionInput = '';
 		},
 		removePiece() {

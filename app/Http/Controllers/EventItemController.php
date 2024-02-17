@@ -19,16 +19,16 @@ class EventItemController extends Controller {
 
     public function addPiece(EventItemRequest $request) {
         $piece = Piece::firstWhere('code', $request->piece_code);
-        $availablePiece = EventItem::where('piece_id', $piece->id)->get();
+        $availablePiece = EventItem::where('event_id', $request->event_id)->where('piece_id', $piece->id)->get();
         if (count($availablePiece) > 0) {
-            //TODO: throw/ display error saying piece already allocated to this project
+            //TODO: throw/ display error saying piece already allocated to this event
             dd('Piece already allocated to event');
             return;
         }
 
-        $eventItem = EventItem::where('piece_id', null)->where('item_id', $piece->item->id)->firstOr(function() {
+        $eventItem = EventItem::where('event_id', $request->event_id)->where('piece_id', null)->where('item_id', $piece->item->id)->firstOr(function() {
             //TODO: throw/display error saying no items require this piece
-            dd('No items require this piece');
+            dd('No items require this piece in this event');
             return;
         });
 
