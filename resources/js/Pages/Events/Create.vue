@@ -185,7 +185,7 @@ export default {
 	<MainLayout :title="event ? event.title : 'Events'" :errors="errors">
 		<el-tabs v-model="activeTab">
 			<el-tab-pane class="items-pane" label="Items" name="items">
-				<el-container direction="vertical">
+				<el-container class="items-pane-container" direction="vertical">
 					<el-container direction="horizontal">
 						<el-button-group class="item-group">
 							<el-button type="primary" @click="openItemDialog">Add Item</el-button>
@@ -337,7 +337,6 @@ export default {
 	}
 }
 
-
 .customer-index-list {
 	flex: initial !important;
 	width: 100%;
@@ -367,8 +366,6 @@ export default {
 		}
 	}
 }
-
-
 
 .el-dialog {
 	.customer-search {
