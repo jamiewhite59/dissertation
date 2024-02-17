@@ -137,6 +137,11 @@ export default {
 
 			router.put(route('events.removeItemPiece', this.event.id), someData);
 		},
+		checkCodeInput(event) {
+			if (event.keyCode === 13) {
+				this.allocatePiece();
+			}
+		}
 	},
 };
 </script>
@@ -154,7 +159,7 @@ export default {
 							<el-option label="Complete" value="complete"></el-option>
 						</el-select>
 						<el-container v-if="actionValue === 'allocate'" direction="horizontal">
-							<el-input v-model="actionInput"></el-input>
+							<el-input v-model="actionInput" @keypress="checkCodeInput"></el-input>
 							<el-button type="primary" @click="allocatePiece">Allocate</el-button>
 						</el-container>
 						<el-container v-else-if="actionValue === 'check-out'" direction="horizontal">
