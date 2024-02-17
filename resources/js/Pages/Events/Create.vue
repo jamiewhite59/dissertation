@@ -191,7 +191,7 @@ export default {
 							<el-button type="primary" @click="openItemDialog">Add Item</el-button>
 							<el-button type="primary" @click="removeItems">Remove Item</el-button>
 						</el-button-group>
-						<el-container>
+						<el-container class="item-action-container">
 							<el-input v-model="actionInput" @keypress="checkCodeInput">
 								<template #prepend>
 									<el-dropdown class="item-function-dropdown" split-button type="primary" trigger="click" @click="itemAction">
@@ -207,14 +207,15 @@ export default {
 							</el-input>
 						</el-container>
 					</el-container>
-					<el-divider />
-					<el-table :data="eventItems" @selection-change="handleTableSelectionChange">
-						<el-table-column type="selection" width="55" />
-						<el-table-column prop="item_title" label="Title" />
-						<el-table-column prop="item_stock_type" label="Stock Type" />
-						<el-table-column prop="piece_code" label="Code" />
-						<el-table-column prop="status" label="Status" />
-					</el-table>
+					<el-container class="items-table-container">
+						<el-table :data="eventItems" height="100%" @selection-change="handleTableSelectionChange">
+							<el-table-column type="selection" width="55" />
+							<el-table-column prop="item_title" label="Title" />
+							<el-table-column prop="item_stock_type" label="Stock Type" />
+							<el-table-column prop="piece_code" label="Code" />
+							<el-table-column prop="status" label="Status" />
+						</el-table>
+					</el-container>
 				</el-container>
 			</el-tab-pane>
 			<el-tab-pane label="Information" name="information">
@@ -300,6 +301,40 @@ export default {
 	#pane-information {
 		height: 100%;
 	}
+
+	#pane-items {
+		height: 100%;
+
+		.item-action-container {
+			margin-bottom: 15px;
+		}
+
+		.items-pane-container {
+			height: 100%;
+
+			.items-table-container {
+				height: 94%;
+			}
+		}
+
+		.item-group {
+			margin-right: 1em;
+		}
+
+		.item-function-dropdown {
+			width: 180px;
+
+			.el-button-group {
+				display: flex;
+
+				width: 100%;
+
+				button:first-child {
+					flex:1;
+				}
+			}
+		}
+	}
 }
 
 
@@ -333,25 +368,7 @@ export default {
 	}
 }
 
-.items-pane {
-	.item-group {
-		margin-right: 1em;
-	}
 
-	.item-function-dropdown {
-		width: 180px;
-
-		.el-button-group {
-			display: flex;
-
-			width: 100%;
-
-			button:first-child {
-				flex:1;
-			}
-		}
-	}
-}
 
 .el-dialog {
 	.customer-search {
