@@ -15,15 +15,14 @@ export default {
 	watch: {
 		errors() {
 			if (Object.keys(this.errors).length) {
-				let message = '';
 				Object.values(this.errors).forEach((err) => {
-					message = message.concat('<li>', err, '</li>');
-				});
-				ElMessage.error({
-					dangerouslyUseHTMLString: true,
-					message: '<strong>Error saving form</strong><ul>' + message + '</ul>',
-					grouping: true,
-				});
+					ElMessage.error({
+						dangerouslyUseHTMLString: true,
+						message: '<strong>Error: </strong>' + err,
+						grouping: true,
+					});
+				})
+
 			}
 		},
 	},
