@@ -20,7 +20,7 @@ export default {
 				end_date: this.event ? this.event.end_date: null,
 				icon: this.event ? this.event.icon : '',
 			}),
-			rules: reactive({
+			eventFormRules: reactive({
 				title: [
 					{ required: true, message: 'Title is required', trigger: 'blur', },
 				],
@@ -176,7 +176,7 @@ export default {
 					<template #form>
 						<el-container direction="vertical">
 							<el-text class="form-title" size="large" tag="b">Details</el-text>
-							<el-form class="create-form" ref="formRef" label-position="top" :model="eventForm" :rules="rules">
+							<el-form class="create-form" ref="formRef" label-position="top" :model="eventForm" :rules="eventFormRules">
 								<el-form-item label="Title" prop="title" required>
 									<el-input v-model="eventForm.title"/>
 								</el-form-item>
