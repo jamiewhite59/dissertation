@@ -45,6 +45,7 @@ export default {
 					<el-table :data="filteredItems" height="100%" @row-click="openEdit">
 						<el-table-column prop="title" label="Title" sortable/>
 						<el-table-column prop="stock_type" label="Stock Type" sortable/>
+						<el-table-column prop="quantity" label="Quantity" />
 						<el-table-column prop="description" label="Description"/>
 					</el-table>
 				</el-container>
