@@ -271,6 +271,18 @@ export default {
 			</el-scrollbar>
 		</template>
 	</el-dialog>
+	<el-dialog v-model="itemDialogVisible" width="30%" style="height:400px;" align-center>
+		<template #header>Items</template>
+		<template #default>
+			<el-input class="customer-search" v-model="itemSearch" placeholder="Search Items" clearable />
+			<el-scrollbar max-height="250px">
+				<el-row class="customer-row" v-for="item in items" :key="item.id" style="marginBottom:10px;">
+					<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus/></el-icon></el-button></el-col>
+					<el-col class="customer-name" :span="21"><el-text>{{ item.title }}</el-text></el-col>
+				</el-row>
+			</el-scrollbar>
+		</template>
+	</el-dialog>
 </template>
 <style lang="scss">
 
