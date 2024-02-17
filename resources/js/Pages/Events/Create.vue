@@ -158,19 +158,19 @@ export default {
 							<el-option label="Check-In" value="check-in"></el-option>
 							<el-option label="Complete" value="complete"></el-option>
 						</el-select>
-						<el-container v-if="actionValue === 'allocate'" direction="horizontal">
+						<template v-if="actionValue === 'allocate'" direction="horizontal">
 							<el-input v-model="actionInput" @keypress="checkCodeInput"></el-input>
 							<el-button type="primary" @click="allocatePiece">Allocate</el-button>
-						</el-container>
-						<el-container v-else-if="actionValue === 'check-out'" direction="horizontal">
+						</template>
+						<template v-else-if="actionValue === 'check-out'" direction="horizontal">
 							<div>Check out section</div>
-						</el-container>
-						<el-container v-else-if="actionValue === 'check-in'" direction="horizontal">
+						</template>
+						<template v-else-if="actionValue === 'check-in'" direction="horizontal">
 							<div>Check in section</div>
-						</el-container>
-						<el-container v-else-if="actionValue === 'complete'" direction="horizontal">
+						</template>
+						<template v-else-if="actionValue === 'complete'" direction="horizontal">
 							<div>Complete section</div>
-						</el-container>
+						</template>
 					</el-container>
 					<el-divider />
 					<el-table :data="eventItems" @selection-change="handleTableSelectionChange">
