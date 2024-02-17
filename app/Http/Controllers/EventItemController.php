@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventItemRequest;
 use Illuminate\Http\Request;
 use App\Models\EventItem;
+use App\Models\Piece;
 
 class EventItemController extends Controller {
     public function create(Request $request) {
@@ -15,10 +17,22 @@ class EventItemController extends Controller {
         $eventItem->save();
     }
 
-    public function addPiece(Request $request) {
-        $eventItem = EventItem::find($request->eventItem_id);
+    public function addPiece(EventItemRequest $request) {
+        $piece = Piece::firstWhere('code', $request->piece_code);
+        $availablePiece = EventItem::where('piece_id', $piece->id)->get();
+        if (count($availablePiece) > 0) {
+            //TODO: throw/ display error saying piece already allocated to this project
+            dd('Piece already allocated to event');
+            return;
+        }
 
-        $eventItem->piece_id = $request->piece_id;
+        $eventItem = EventItem::where('piece_id', null)->where('item_id', $piece->item->id)->firstOr(function() {
+            //TODO: throw/display error saying no items require this piece
+            dd('No items require this piece');
+            return;
+        });
+
+        $eventItem->piece_id = $piece->id;
         $eventItem->status = 'allocated';
         $eventItem->save();
     }

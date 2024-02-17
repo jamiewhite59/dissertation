@@ -35,6 +35,8 @@ export default {
 			search: '',
 			activeTab: 'items',
 			tableSelection: Array,
+			actionValue: 'allocate',
+			actionInput: '',
 		};
 	},
 	computed: {
@@ -135,13 +137,9 @@ export default {
 		handleTableSelectionChange(val) {
 			this.tableSelection.value = val;
 		},
-		addPiece() {
-			let someData = {
-				piece_id: '9b4725e3-3f97-4f97-a830-bb1f0442a904',
-				eventItem_id: '9b55d784-4ebb-4796-b12b-70a21cf668dd',
-			};
-
-			router.put(route('events.addItemPiece', this.event.id), someData);
+		allocatePiece() {
+			router.put(route('events.addItemPiece', this.event.id), {piece_code: this.actionInput});
+			this.actionInput = '';
 		},
 		removePiece() {
 			let someData = {
@@ -159,9 +157,28 @@ export default {
 		<el-tabs v-model="activeTab">
 			<el-tab-pane label="Items" name="items">
 				<el-container direction="vertical">
-					<el-button type="primary" @click="addItem">Add Arbitrary Item</el-button>
-					<el-button type="warning" @click="addPiece">Add piece to event item</el-button>
-					<el-button type="danger" @click="removePiece">Remove piece from event item</el-button>
+					<el-container direction="horizontal">
+						<el-select v-model="actionValue" style="width: 200px;">
+							<el-option label="Allocate" value="allocate"></el-option>
+							<el-option label="Check-Out" value="check-out"></el-option>
+							<el-option label="Check-In" value="check-in"></el-option>
+							<el-option label="Complete" value="complete"></el-option>
+						</el-select>
+						<el-container v-if="actionValue === 'allocate'" direction="horizontal">
+							<el-input v-model="actionInput"></el-input>
+							<el-button type="primary" @click="allocatePiece">Allocate</el-button>
+						</el-container>
+						<el-container v-else-if="actionValue === 'check-out'" direction="horizontal">
+							<div>Check out section</div>
+						</el-container>
+						<el-container v-else-if="actionValue === 'check-in'" direction="horizontal">
+							<div>Check in section</div>
+						</el-container>
+						<el-container v-else-if="actionValue === 'complete'" direction="horizontal">
+							<div>Complete section</div>
+						</el-container>
+					</el-container>
+					<el-divider />
 					<el-table :data="eventItems" @selection-change="handleTableSelectionChange">
 						<el-table-column type="selection" width="55" />
 						<el-table-column prop="item_title" label="Title" />
