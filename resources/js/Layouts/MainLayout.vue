@@ -1,6 +1,7 @@
 <script>
 import Sidebar from '@/Components/Sidebar.vue';
 import { Head } from '@inertiajs/vue3';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 export default {
 	components: {
@@ -9,6 +10,22 @@ export default {
 	},
 	props: {
 		title: String,
+		errors: Object,
+	},
+	watch: {
+		errors() {
+			if (Object.keys(this.errors).length) {
+				let message = '';
+				Object.values(this.errors).forEach((err) => {
+					message = message.concat('<li>', err, '</li>');
+				});
+				ElMessage.error({
+					dangerouslyUseHTMLString: true,
+					message: '<strong>Error saving form</strong><ul>' + message + '</ul>',
+					grouping: true,
+				});
+			}
+		},
 	},
 };
 </script>

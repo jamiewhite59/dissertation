@@ -40,21 +40,6 @@ export default {
 			selectedPiece: null,
 		};
 	},
-	watch: {
-		errors() {
-			if (Object.keys(this.errors).length) {
-				let message = '';
-				Object.values(this.errors).forEach((err) => {
-					message = message.concat('<li>', err, '</li>');
-				});
-				ElMessage.error({
-					dangerouslyUseHTMLString: true,
-					message: '<strong>Error saving form</strong><ul>' + message + '</ul>',
-					grouping: true,
-				});
-			}
-		},
-	},
 	methods: {
 		remove() {
 			ElMessageBox.confirm(
@@ -142,7 +127,7 @@ export default {
 };
 </script>
 <template>
-	<MainLayout title="Items">
+	<MainLayout title="Items" :errors="errors">
 		<CreateLayout :existing="item" @remove="remove" @openIndex="openIndex" @save="save">
 			<template #form>
 				<el-form class="create-form" ref="itemFormRef" label-position="top" :model="itemForm" :rules="itemRules">

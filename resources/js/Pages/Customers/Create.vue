@@ -31,21 +31,6 @@ export default {
 			}),
 		};
 	},
-	watch: {
-		errors() {
-			if (Object.keys(this.errors).length) {
-				let message = '';
-				Object.values(this.errors).forEach((err) => {
-					message = message.concat('<li>', err, '</li>');
-				});
-				ElMessage.error({
-					dangerouslyUseHTMLString: true,
-					message: '<strong>Error saving form</strong><ul>' + message + '</ul>',
-					grouping: true,
-				});
-			}
-		},
-	},
 	methods: {
 		save() {
 			this.validate()
@@ -89,7 +74,7 @@ export default {
 </script>
 
 <template>
-	<MainLayout title="Customers">
+	<MainLayout title="Customers" :errors="errors">
 		<CreateLayout :existing="customer" @remove="remove" @openIndex="openIndex" @save="save">
 			<template #form>
 				<el-form class="create-form" ref="formRef" label-position="top" :model="customerForm" :rules="rules">
