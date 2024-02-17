@@ -31,11 +31,13 @@ export default {
 					{ validator: this.validateEndDate, trigger: 'blur', },
 				],
 			}),
-			dialogVisible: false,
-			search: '',
+			customerDialogVisible: false,
+			itemDialogVisible: false,
+			customerSearch: '',
+			itemSearch: '',
 			activeTab: 'items',
 			tableSelection: Array,
-			actionValue: 'allocate',
+			actionValue: 'Allocate',
 			actionInput: '',
 		};
 	},
@@ -43,9 +45,9 @@ export default {
 		filteredCustomers() {
 			var eventCustomerIds = this.eventCustomers.map((customer) => customer.id);
 			var availableCustomers = this.customers.filter((customer) => !eventCustomerIds.includes(customer.id));
-			if (this.search) {
+			if (this.customerSearch) {
 				return availableCustomers.filter((customer) =>
-					customer.name.toLowerCase().includes(this.search.toLowerCase()));
+					customer.name.toLowerCase().includes(this.customerSearch.toLowerCase()));
 			} else {
 				return availableCustomers;
 			}
@@ -101,23 +103,26 @@ export default {
 		openCustomer(id) {
 			router.get((route('customers.edit', id)));
 		},
-		openModal() {
-			this.dialogVisible = true;
+		openCustomerDialog() {
+			this.customerDialogVisible = true;
+		},
+		openItemDialog() {
+			this.itemDialogVisible = true;
 		},
 		addCustomer(id) {
-			this.dialogVisible = false;
+			this.customerDialogVisible = false;
 			router.put(route('events.addCustomer', this.event.id), {id: id,});
 		},
 		removeCustomer(id) {
 			router.put(route('events.removeCustomer', this.event.id), {id: id,});
 		},
-		addItem() {
-			let someData = {
-				event_id: '9b2bad2f-799a-43c0-8a95-d76af663d71c',
-				item_id: '9b35bb0c-07a2-4529-9ad3-3f69576cbbb6',
+		addItem(item_id) {
+			let data = {
+				event_id: this.event.id,
+				item_id: item_id,
 			};
 
-			router.put(route('events.addItem', this.event.id), someData);
+			router.put(route('events.addItem', this.event.id), data);
 		},
 		handleTableSelectionChange(val) {
 			this.tableSelection.value = val;
@@ -126,9 +131,18 @@ export default {
 			let data = {
 				event_id: this.event.id,
 				piece_code: this.actionInput,
-			}
+			};
 			router.put(route('events.addItemPiece', this.event.id), data);
 			this.actionInput = '';
+		},
+		checkoutPiece() {
+			console.debug('TODO: checkout piece');
+		},
+		checkinPiece() {
+			console.debug('TODO: checkin piece');
+		},
+		completePiece() {
+			console.debug('TODO: complete piece');
 		},
 		removePiece() {
 			let someData = {
@@ -141,7 +155,28 @@ export default {
 			if (event.keyCode === 13) {
 				this.allocatePiece();
 			}
-		}
+		},
+		removeItems() {
+			console.debug('TODO: remove some items');
+		},
+		itemAction() {
+			switch (this.actionValue) {
+				case 'Allocate':
+					this.allocatePiece();
+					break;
+				case 'Check-Out':
+					this.checkoutPiece();
+					break;
+				case 'Check-In':
+					this.checkinPiece();
+					break;
+				case 'Complete':
+					this.completePiece();
+					break;
+				default:
+					console.warn('Probably shouldnt be here lol');
+			}
+		},
 	},
 };
 </script>
@@ -149,28 +184,28 @@ export default {
 <template>
 	<MainLayout :title="event ? event.title : 'Events'" :errors="errors">
 		<el-tabs v-model="activeTab">
-			<el-tab-pane label="Items" name="items">
+			<el-tab-pane class="items-pane" label="Items" name="items">
 				<el-container direction="vertical">
 					<el-container direction="horizontal">
-						<el-select v-model="actionValue" style="width: 200px;">
-							<el-option label="Allocate" value="allocate"></el-option>
-							<el-option label="Check-Out" value="check-out"></el-option>
-							<el-option label="Check-In" value="check-in"></el-option>
-							<el-option label="Complete" value="complete"></el-option>
-						</el-select>
-						<template v-if="actionValue === 'allocate'" direction="horizontal">
-							<el-input v-model="actionInput" @keypress="checkCodeInput"></el-input>
-							<el-button type="primary" @click="allocatePiece">Allocate</el-button>
-						</template>
-						<template v-else-if="actionValue === 'check-out'" direction="horizontal">
-							<div>Check out section</div>
-						</template>
-						<template v-else-if="actionValue === 'check-in'" direction="horizontal">
-							<div>Check in section</div>
-						</template>
-						<template v-else-if="actionValue === 'complete'" direction="horizontal">
-							<div>Complete section</div>
-						</template>
+						<el-button-group class="item-group">
+							<el-button type="primary" @click="openItemDialog">Add Item</el-button>
+							<el-button type="primary" @click="removeItems">Remove Item</el-button>
+						</el-button-group>
+						<el-container>
+							<el-input v-model="actionInput" @keypress="checkCodeInput">
+								<template #prepend>
+									<el-dropdown class="item-function-dropdown" split-button type="primary" trigger="click" @click="itemAction">
+									{{ actionValue }}
+									<template #dropdown>
+										<el-dropdown-item @click="actionValue='Allocate'">Allocate</el-dropdown-item>
+										<el-dropdown-item @click="actionValue='Check-Out'">Check-Out</el-dropdown-item>
+										<el-dropdown-item @click="actionValue='Check-In'">Check-In</el-dropdown-item>
+										<el-dropdown-item @click="actionValue='Complete'">Complete</el-dropdown-item>
+									</template>
+								</el-dropdown>
+								</template>
+							</el-input>
+						</el-container>
 					</el-container>
 					<el-divider />
 					<el-table :data="eventItems" @selection-change="handleTableSelectionChange">
@@ -209,7 +244,7 @@ export default {
 							<el-container class="customer-item-wrapper">
 								<el-scrollbar class="customer-scrollbar" height="100%">
 									<el-container class="list-space">
-										<el-card class="customer-item add-card" shadow="hover" @click="openModal">
+										<el-card class="customer-item add-card" shadow="hover" @click="openCustomerDialog">
 											<el-text tag="b" size="large">Add Customer</el-text>
 											<el-icon><Plus/></el-icon>
 										</el-card>
@@ -224,10 +259,10 @@ export default {
 		</el-tabs>
 
 	</MainLayout>
-	<el-dialog v-model="dialogVisible" width="30%" style="height:400px" align-center>
+	<el-dialog v-model="customerDialogVisible" width="30%" style="height:400px" align-center>
 		<template #header>Customers</template>
 		<template #default>
-			<el-input class="customer-search" v-model="search" placeholder="Search Customers" clearable/>
+			<el-input class="customer-search" v-model="customerSearch" placeholder="Search Customers" clearable/>
 			<el-scrollbar max-height="250px">
 				<el-row class="customer-row" v-for="customer in filteredCustomers" :key="customer.id" style="marginBottom:10px">
 					<el-col :span="3"><el-button size="small" @click="addCustomer(customer.id)"><el-icon><Plus/></el-icon></el-button></el-col>
@@ -282,6 +317,26 @@ export default {
 			height: auto;
 
 			margin-bottom: 1em;
+		}
+	}
+}
+
+.items-pane {
+	.item-group {
+		margin-right: 1em;
+	}
+
+	.item-function-dropdown {
+		width: 180px;
+
+		.el-button-group {
+			display: flex;
+
+			width: 100%;
+
+			button:first-child {
+				flex:1;
+			}
 		}
 	}
 }
