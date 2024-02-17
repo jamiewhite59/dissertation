@@ -21,8 +21,7 @@ export default {
 						message: '<strong>Error: </strong>' + err,
 						grouping: true,
 					});
-				})
-
+				});
 			}
 		},
 	},
