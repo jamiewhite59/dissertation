@@ -20,6 +20,11 @@ class ItemController extends Controller
     {
         $items = Item::all();
 
+        $items = $items->map(function($item) {
+            $item->quantity = count($item->pieces);
+            return $item;
+        });
+
         return Inertia::render('Items/Index', [
             'items' => $items,
         ]);
