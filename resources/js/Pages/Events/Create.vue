@@ -52,6 +52,14 @@ export default {
 				return availableCustomers;
 			}
 		},
+		filteredItems() {
+			if (this.itemSearch) {
+				return this.items.filter((item) =>
+					item.title.toLowerCase().includes(this.itemSearch.toLowerCase()));
+			} else {
+				return this.items;
+			}
+		},
 	},
 	methods: {
 		save(){
@@ -286,7 +294,7 @@ export default {
 		<template #default>
 			<el-input class="customer-search" v-model="itemSearch" placeholder="Search Items" clearable />
 			<el-scrollbar max-height="250px">
-				<el-row class="customer-row" v-for="item in items" :key="item.id" style="marginBottom:10px;">
+				<el-row class="customer-row" v-for="item in filteredItems" :key="item.id" style="marginBottom:10px;">
 					<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus/></el-icon></el-button></el-col>
 					<el-col class="customer-name" :span="21"><el-text>{{ item.title }}</el-text></el-col>
 				</el-row>
