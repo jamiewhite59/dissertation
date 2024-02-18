@@ -43,7 +43,8 @@ export default {
 	.create-divider {
 		height: 100%;
 
-		border-color: var(--el-color-black);
+		border-color: #aaa3;
+		border-left-width: 2px;
 
 		margin: 0 15px;
 	}

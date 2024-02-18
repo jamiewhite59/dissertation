@@ -38,7 +38,7 @@ export default {
 	<MainLayout title="Items">
 		<OverviewLayout @openCreate="openCreate">
 			<template #search>
-				<el-input v-model="search" placeholder="Search Items" clearable style="width:450px"/>
+				<el-input class="overview-search" v-model="search" placeholder="Search Items" clearable />
 			</template>
 			<template #default>
 				<el-container class="item-table-container">

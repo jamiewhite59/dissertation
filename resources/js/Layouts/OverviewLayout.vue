@@ -49,7 +49,8 @@ export default {
 	padding-bottom: 20px;
 
 	.overview-search {
-		max-width: 450px;
+		max-width: 25%;
+		min-width: 315px;
 
 		padding-left: 1em;
 	}

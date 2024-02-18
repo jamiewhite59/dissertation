@@ -197,26 +197,24 @@ export default {
 		<el-tabs v-model="activeTab">
 			<el-tab-pane class="items-pane" label="Items" name="items">
 				<el-container class="items-pane-container" direction="vertical">
-					<el-container direction="horizontal">
-						<el-button-group class="item-group">
-							<el-button type="primary" @click="openItemDialog">Add Item</el-button>
-							<el-button type="primary" @click="removeItems" :disabled="!tableSelection.value?.length">Remove Item{{ tableSelection.value.length > 1 ? 's' : '' }} {{ tableSelection.value?.length ? '(' + tableSelection.value.length + ')' : '' }}</el-button>
-						</el-button-group>
-						<el-container class="item-action-container">
-							<el-input v-model="actionInput" @keypress="checkCodeInput">
-								<template #prepend>
-									<el-dropdown class="item-function-dropdown" split-button type="primary" trigger="click" @click="itemAction">
-									{{ actionValue }}
-									<template #dropdown>
-										<el-dropdown-item @click="actionValue='Allocate'">Allocate</el-dropdown-item>
-										<el-dropdown-item @click="actionValue='Check-Out'">Check-Out</el-dropdown-item>
-										<el-dropdown-item @click="actionValue='Check-In'">Check-In</el-dropdown-item>
-										<el-dropdown-item @click="actionValue='Complete'">Complete</el-dropdown-item>
-									</template>
-								</el-dropdown>
-								</template>
-							</el-input>
+					<el-container class="item-action-container" direction="horizontal">
+						<el-container class="item-action-button-container">
+							<el-button type="primary" @click="openItemDialog">Add</el-button>
+							<el-button type="primary" @click="removeItems" :disabled="!tableSelection.value?.length">Remove{{ tableSelection.value?.length > 1 ? 's' : '' }} {{ tableSelection.value?.length ? '(' + tableSelection.value.length + ')' : '' }}</el-button>
 						</el-container>
+						<el-input class="item-action-input" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput">
+							<template #prepend>
+								<el-dropdown class="item-function-dropdown" split-button type="primary" trigger="click" @click="itemAction">
+								{{ actionValue }}
+								<template #dropdown>
+									<el-dropdown-item @click="actionValue='Allocate'">Allocate</el-dropdown-item>
+									<el-dropdown-item @click="actionValue='Check-Out'">Check-Out</el-dropdown-item>
+									<el-dropdown-item @click="actionValue='Check-In'">Check-In</el-dropdown-item>
+									<el-dropdown-item @click="actionValue='Complete'">Complete</el-dropdown-item>
+								</template>
+							</el-dropdown>
+							</template>
+						</el-input>
 					</el-container>
 					<el-container class="items-table-container">
 						<el-table :data="eventItems" height="100%" @selection-change="handleTableSelectionChange">
@@ -317,7 +315,23 @@ export default {
 		height: 100%;
 
 		.item-action-container {
+			justify-content: space-between;
 			margin-bottom: 15px;
+
+			.item-action-button-container {
+				max-width: 200px;
+				button {
+					flex: 1;
+				}
+			}
+
+			.item-action-input {
+				justify-content: flex-end;
+				.el-input__wrapper {
+					max-width: 25%;
+					min-width: 315px;
+				}
+			}
 		}
 
 		.items-pane-container {
@@ -328,21 +342,11 @@ export default {
 			}
 		}
 
-		.item-group {
-			margin-right: 1em;
-		}
-
 		.item-function-dropdown {
-			width: 180px;
-
-			.el-button-group {
-				display: flex;
-
-				width: 100%;
-
-				button:first-child {
-					flex:1;
-				}
+			button {
+				border-color: var(--el-button-bg-color);
+				background-color: var(--el-button-active-bg-color);
+				color: var(--el-button-text-color);
 			}
 		}
 	}
