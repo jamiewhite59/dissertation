@@ -36,7 +36,7 @@ export default {
 			customerSearch: '',
 			itemSearch: '',
 			activeTab: 'items',
-			tableSelection: Array,
+			tableSelection: [],
 			actionValue: 'Allocate',
 			actionInput: '',
 		};
@@ -200,7 +200,7 @@ export default {
 					<el-container direction="horizontal">
 						<el-button-group class="item-group">
 							<el-button type="primary" @click="openItemDialog">Add Item</el-button>
-							<el-button type="primary" @click="removeItems">Remove Item(s)</el-button>
+							<el-button type="primary" @click="removeItems" :disabled="!tableSelection.value?.length">Remove Item{{ tableSelection.value.length > 1 ? 's' : '' }} {{ tableSelection.value?.length ? '(' + tableSelection.value.length + ')' : '' }}</el-button>
 						</el-button-group>
 						<el-container class="item-action-container">
 							<el-input v-model="actionInput" @keypress="checkCodeInput">
