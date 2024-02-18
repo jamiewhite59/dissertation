@@ -15,26 +15,28 @@ export default {
 		activeMenuItem() {
 			let page = router.page.url.split('/')[1];
 			switch (page) {
-				case 'events':
-					return '1';
-				case 'customers':
-					return '2';
-				case 'items':
-					return '3-1';
-				case 'organisation':
-					return '4';
-				case 'logs':
-					return '5';
-				case 'user':
-					return '6';
-				default:
-					return '0';
+			case 'events':
+				return '1';
+			case 'customers':
+				return '2';
+			case 'items':
+				return '3-1';
+			case 'organisation':
+				return '4';
+			case 'logs':
+				return '5';
+			case 'user':
+				return '6';
+			default:
+				return '0';
 			}
 		},
 		activeSubMenu() {
 			let arr = this.activeMenuItem.split('-');
 			if (arr.length > 1) {
-				return [arr[0]];
+				return [arr[0],];
+			} else {
+				return null;
 			}
 		},
 	},

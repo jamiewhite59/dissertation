@@ -175,27 +175,27 @@ export default {
 				}
 			).then(() => {
 				let ids = this.tableSelection.value.map(eventItem => eventItem.id);
-				router.put(route('events.destroyItem', this.event.id), {ids: ids});
+				router.put(route('events.destroyItem', this.event.id), {ids: ids,});
 			}).catch(() => {});
 		},
 		itemAction() {
 			switch (this.actionValue) {
-				case 'Allocate':
-					this.allocatePiece();
-					break;
-				case 'Check-Out':
-					this.checkoutPiece();
-					break;
-				case 'Check-In':
-					this.checkinPiece();
-					break;
-				case 'Complete':
-					this.completePiece();
-					break;
-				default:
-					console.warn('Probably shouldnt be here lol');
+			case 'Allocate':
+				this.allocatePiece();
+				break;
+			case 'Check-Out':
+				this.checkoutPiece();
+				break;
+			case 'Check-In':
+				this.checkinPiece();
+				break;
+			case 'Complete':
+				this.completePiece();
+				break;
+			default:
+				console.warn('Probably shouldnt be here lol');
 			}
-		},
+		}
 	},
 };
 </script>
@@ -213,14 +213,14 @@ export default {
 						<el-input class="item-action-input" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput">
 							<template #prepend>
 								<el-dropdown class="item-function-dropdown" split-button type="primary" trigger="click" @click="itemAction">
-								{{ actionValue }}
-								<template #dropdown>
-									<el-dropdown-item @click="actionValue='Allocate'">Allocate</el-dropdown-item>
-									<el-dropdown-item @click="actionValue='Check-Out'">Check-Out</el-dropdown-item>
-									<el-dropdown-item @click="actionValue='Check-In'">Check-In</el-dropdown-item>
-									<el-dropdown-item @click="actionValue='Complete'">Complete</el-dropdown-item>
-								</template>
-							</el-dropdown>
+									{{ actionValue }}
+									<template #dropdown>
+										<el-dropdown-item @click="actionValue='Allocate'">Allocate</el-dropdown-item>
+										<el-dropdown-item @click="actionValue='Check-Out'">Check-Out</el-dropdown-item>
+										<el-dropdown-item @click="actionValue='Check-In'">Check-In</el-dropdown-item>
+										<el-dropdown-item @click="actionValue='Complete'">Complete</el-dropdown-item>
+									</template>
+								</el-dropdown>
 							</template>
 						</el-input>
 					</el-container>
