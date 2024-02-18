@@ -13,6 +13,10 @@ class EventItem extends Model
     use HasUuids;
     use HasFactory;
 
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     public function item(): HasOne {
         return $this->hasOne(Item::class);
     }

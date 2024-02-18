@@ -17,6 +17,10 @@ class EventItemController extends Controller {
         $eventItem->save();
     }
 
+    public function destroy(Request $request) {
+        EventItem::whereIn('id', $request->ids)->delete();
+    }
+
     public function addPiece(EventItemRequest $request) {
         $piece = Piece::firstWhere('code', $request->piece_code);
         if ($piece === null) {

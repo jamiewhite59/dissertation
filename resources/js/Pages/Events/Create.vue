@@ -157,7 +157,18 @@ export default {
 			}
 		},
 		removeItems() {
-			console.debug('TODO: remove some items');
+			ElMessageBox.confirm(
+				'Are you sure you want to remove these item(s)?',
+				'Delete Item',
+				{
+					confirmButtonText: 'Delete',
+					type: 'error',
+					center: true,
+				}
+			).then(() => {
+				let ids = this.tableSelection.value.map(eventItem => eventItem.id);
+				router.put(route('events.destroyItem', this.event.id), {ids: ids});
+			}).catch(() => {});
 		},
 		itemAction() {
 			switch (this.actionValue) {
@@ -189,7 +200,7 @@ export default {
 					<el-container direction="horizontal">
 						<el-button-group class="item-group">
 							<el-button type="primary" @click="openItemDialog">Add Item</el-button>
-							<el-button type="primary" @click="removeItems">Remove Item</el-button>
+							<el-button type="primary" @click="removeItems">Remove Item(s)</el-button>
 						</el-button-group>
 						<el-container class="item-action-container">
 							<el-input v-model="actionInput" @keypress="checkCodeInput">
