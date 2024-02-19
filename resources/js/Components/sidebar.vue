@@ -1,16 +1,7 @@
 <script>
 import { router } from '@inertiajs/vue3';
-import { Postcard, Coordinate, Document, OfficeBuilding, Files, User } from '@element-plus/icons-vue';
 
 export default {
-	components: {
-		Postcard,
-		Coordinate,
-		Document,
-		OfficeBuilding,
-		Files,
-		User,
-	},
 	computed: {
 		activeMenuItem() {
 			let page = router.page.url.split('/')[1];
@@ -27,6 +18,8 @@ export default {
 				return '5';
 			case 'user':
 				return '6';
+			case 'analytics':
+				return '7';
 			default:
 				return '0';
 			}
@@ -99,6 +92,10 @@ export default {
 		<el-menu-item index="6" disabled>
 			<el-icon><User /></el-icon>
 			<span>User</span>
+		</el-menu-item>
+		<el-menu-item index="7" disabled>
+			<el-icon><Histogram /></el-icon>
+			<span>Analytics</span>
 		</el-menu-item>
 	</el-menu>
 </template>
