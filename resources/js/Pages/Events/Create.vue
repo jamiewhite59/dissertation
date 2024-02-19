@@ -35,7 +35,7 @@ export default {
 			itemDialogVisible: false,
 			customerSearch: '',
 			itemSearch: '',
-			activeTab: 'items',
+			activeTab: this.event ? 'items' : 'information',
 			tableSelection: [],
 			actionValue: 'Allocate',
 			actionInput: '',
@@ -195,7 +195,7 @@ export default {
 			default:
 				console.warn('Probably shouldnt be here lol');
 			}
-		}
+		},
 	},
 };
 </script>
@@ -203,7 +203,7 @@ export default {
 <template>
 	<MainLayout :title="event ? event.title : 'Events'" :errors="errors">
 		<el-tabs v-model="activeTab">
-			<el-tab-pane class="items-pane" label="Items" name="items">
+			<el-tab-pane v-if="event" class="items-pane" label="Items" name="items">
 				<el-container class="items-pane-container" direction="vertical">
 					<el-row class="item-action-container" direction="horizontal">
 						<div class="item-action-button-container">
@@ -364,8 +364,15 @@ export default {
 		.item-function-dropdown {
 			button {
 				border-color: var(--el-button-bg-color);
-				background-color: var(--el-button-active-bg-color);
+				background-color: var(--el-button-bg-color);
 				color: var(--el-button-text-color);
+
+				&:hover {
+					color: var(--el-button-hover-text-color);
+					border-color: var(--el-button-hover-border-color);
+					background-color: var(--el-button-hover-bg-color);
+					outline: none;
+				}
 			}
 		}
 	}
