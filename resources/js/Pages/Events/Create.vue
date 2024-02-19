@@ -203,15 +203,15 @@ export default {
 <template>
 	<MainLayout :title="event ? event.title : 'Events'" :errors="errors">
 		<el-tabs v-model="activeTab">
-			<el-tab-pane v-if="event" class="items-pane" label="Items" name="items">
+			<el-tab-pane v-if="event" label="Items" name="items">
 				<el-container class="items-pane-container" direction="vertical">
-					<el-row class="item-action-container" direction="horizontal">
-						<div class="item-action-button-container">
+					<el-row justify="space-between" direction="horizontal" style="margin-bottom: 15px;">
+						<el-container class="item-action-button-container">
 							<el-button type="primary" @click="openItemDialog">Add</el-button>
 							<el-button type="primary" @click="removeItems" :disabled="!tableSelection.value?.length">Remove {{ tableSelection.value?.length ? '(' + tableSelection.value.length + ')' : '' }}</el-button>
-						</div>
+						</el-container>
 						<div class="item-action-dropdown">
-							<el-dropdown class="item-function-dropdown" split-button type="primary" trigger="click" @click="itemAction">
+							<el-dropdown split-button type="primary" trigger="click" @click="itemAction">
 								{{ actionValue }}
 								<template #dropdown>
 									<el-dropdown-item @click="actionValue='Allocate'">Allocate</el-dropdown-item>
@@ -223,15 +223,13 @@ export default {
 							<el-input class="item-action-input" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
 						</div>
 					</el-row>
-					<el-container class="items-table-container">
-						<el-table :data="eventItems" height="100%" @selection-change="handleTableSelectionChange">
-							<el-table-column type="selection" width="55" />
-							<el-table-column prop="item_title" label="Title" />
-							<el-table-column prop="item_stock_type" label="Stock Type" />
-							<el-table-column prop="piece_code" label="Code" />
-							<el-table-column prop="status" label="Status" />
-						</el-table>
-					</el-container>
+					<el-table :data="eventItems" height="100%" @selection-change="handleTableSelectionChange">
+						<el-table-column type="selection" width="55" />
+						<el-table-column prop="item_title" label="Title" />
+						<el-table-column prop="item_stock_type" label="Stock Type" />
+						<el-table-column prop="piece_code" label="Code" />
+						<el-table-column prop="status" label="Status" />
+					</el-table>
 				</el-container>
 			</el-tab-pane>
 			<el-tab-pane label="Information" name="information">
@@ -343,13 +341,10 @@ export default {
 		#pane-items {
 			height: 100%;
 
-			.item-action-container {
-				justify-content: space-between;
-				margin-bottom: 15px;
+			.items-pane-container {
+				height: 100%;
 
 				.item-action-button-container {
-					display: flex;
-
 					button {
 						width: 130px;
 					}
@@ -364,37 +359,12 @@ export default {
 					.el-dropdown {
 						width: 100%;
 					}
-				}
 
-				.item-action-input {
-					justify-content: flex-end;
-
-					.el-input__wrapper {
-						max-width: 25%;
-						min-width: 315px;
-					}
-				}
-			}
-
-			.items-pane-container {
-				height: 100%;
-
-				.items-table-container {
-					height: 94%;
-				}
-			}
-
-			.item-function-dropdown {
-				button {
-					border-color: var(--el-button-bg-color);
-					background-color: var(--el-button-bg-color);
-					color: var(--el-button-text-color);
-
-					&:hover {
-						color: var(--el-button-hover-text-color);
-						border-color: var(--el-button-hover-border-color);
-						background-color: var(--el-button-hover-bg-color);
-						outline: none;
+					.item-action-input {
+						.el-input__wrapper {
+							max-width: 25%;
+							min-width: 315px;
+						}
 					}
 				}
 			}
