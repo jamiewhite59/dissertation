@@ -220,7 +220,7 @@ export default {
 									<el-dropdown-item @click="actionValue='Complete'">Complete</el-dropdown-item>
 								</template>
 							</el-dropdown>
-							<el-input class="item-action-input" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput"/>
+							<el-input class="item-action-input" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
 						</div>
 					</el-row>
 					<el-container class="items-table-container">
@@ -278,10 +278,10 @@ export default {
 	<el-dialog v-model="customerDialogVisible" width="30%" style="min-height:400px;" align-center>
 		<template #header>Customers</template>
 		<template #default>
-			<el-input class="dialog-search" v-model="customerSearch" placeholder="Search Customers" clearable/>
+			<el-input class="dialog-search" v-model="customerSearch" placeholder="Search Customers" clearable />
 			<el-scrollbar height="250px">
 				<el-row v-for="customer in filteredCustomers" :key="customer.id" style="margin-bottom:10px">
-					<el-col :span="3"><el-button size="small" @click="addCustomer(customer.id)"><el-icon><Plus/></el-icon></el-button></el-col>
+					<el-col :span="3"><el-button size="small" @click="addCustomer(customer.id)"><el-icon><Plus /></el-icon></el-button></el-col>
 					<el-col :span="21">{{ customer.name }}</el-col>
 				</el-row>
 			</el-scrollbar>
@@ -291,9 +291,9 @@ export default {
 		<template #header>Items</template>
 		<template #default>
 			<el-input class="dialog-search" v-model="itemSearch" placeholder="Search Items" clearable />
-			<el-scrollbar height="250px">
+			<el-scrollbar height="250">
 				<el-row v-for="item in filteredItems" :key="item.id" style="margin-bottom:10px;">
-					<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus/></el-icon></el-button></el-col>
+					<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus /></el-icon></el-button></el-col>
 					<el-col style="display:flex; align-items:center;" :span="21">{{ item.title }}</el-col>
 				</el-row>
 			</el-scrollbar>
@@ -340,60 +340,62 @@ export default {
 			}
 		}
 
-	#pane-items {
-		height: 100%;
-
-		.item-action-container {
-			justify-content: space-between;
-			margin-bottom: 15px;
-
-			.item-action-button-container {
-				display: flex;
-
-				button {
-					width: 130px;
-				}
-			}
-
-			.item-action-dropdown{
-				display: flex;
-				flex-direction: row;
-				justify-content: center;
-				align-items: center;
-
-				.el-dropdown{
-					width: 100%;
-				}
-			}
-
-			.item-action-input {
-				justify-content: flex-end;
-				.el-input__wrapper {
-					max-width: 25%;
-					min-width: 315px;
-				}
-			}
-		}
-
-		.items-pane-container {
+		#pane-items {
 			height: 100%;
 
-			.items-table-container {
-				height: 94%;
+			.item-action-container {
+				justify-content: space-between;
+				margin-bottom: 15px;
+
+				.item-action-button-container {
+					display: flex;
+
+					button {
+						width: 130px;
+					}
+				}
+
+				.item-action-dropdown {
+					display: flex;
+					flex-direction: row;
+					justify-content: center;
+					align-items: center;
+
+					.el-dropdown {
+						width: 100%;
+					}
+				}
+
+				.item-action-input {
+					justify-content: flex-end;
+
+					.el-input__wrapper {
+						max-width: 25%;
+						min-width: 315px;
+					}
+				}
 			}
-		}
 
-		.item-function-dropdown {
-			button {
-				border-color: var(--el-button-bg-color);
-				background-color: var(--el-button-bg-color);
-				color: var(--el-button-text-color);
+			.items-pane-container {
+				height: 100%;
 
-				&:hover {
-					color: var(--el-button-hover-text-color);
-					border-color: var(--el-button-hover-border-color);
-					background-color: var(--el-button-hover-bg-color);
-					outline: none;
+				.items-table-container {
+					height: 94%;
+				}
+			}
+
+			.item-function-dropdown {
+				button {
+					border-color: var(--el-button-bg-color);
+					background-color: var(--el-button-bg-color);
+					color: var(--el-button-text-color);
+
+					&:hover {
+						color: var(--el-button-hover-text-color);
+						border-color: var(--el-button-hover-border-color);
+						background-color: var(--el-button-hover-bg-color);
+						outline: none;
+					}
 				}
 			}
 		}
