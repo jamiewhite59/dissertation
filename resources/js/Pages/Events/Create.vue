@@ -205,25 +205,24 @@ export default {
 		<el-tabs v-model="activeTab">
 			<el-tab-pane class="items-pane" label="Items" name="items">
 				<el-container class="items-pane-container" direction="vertical">
-					<el-container class="item-action-container" direction="horizontal">
-						<el-container class="item-action-button-container">
+					<el-row class="item-action-container" direction="horizontal">
+						<div class="item-action-button-container">
 							<el-button type="primary" @click="openItemDialog">Add</el-button>
-							<el-button type="primary" @click="removeItems" :disabled="!tableSelection.value?.length">Remove{{ tableSelection.value?.length > 1 ? 's' : '' }} {{ tableSelection.value?.length ? '(' + tableSelection.value.length + ')' : '' }}</el-button>
-						</el-container>
-						<el-input class="item-action-input" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput">
-							<template #prepend>
-								<el-dropdown class="item-function-dropdown" split-button type="primary" trigger="click" @click="itemAction">
-									{{ actionValue }}
-									<template #dropdown>
-										<el-dropdown-item @click="actionValue='Allocate'">Allocate</el-dropdown-item>
-										<el-dropdown-item @click="actionValue='Check-Out'">Check-Out</el-dropdown-item>
-										<el-dropdown-item @click="actionValue='Check-In'">Check-In</el-dropdown-item>
-										<el-dropdown-item @click="actionValue='Complete'">Complete</el-dropdown-item>
-									</template>
-								</el-dropdown>
-							</template>
-						</el-input>
-					</el-container>
+							<el-button type="primary" @click="removeItems" :disabled="!tableSelection.value?.length">Remove {{ tableSelection.value?.length ? '(' + tableSelection.value.length + ')' : '' }}</el-button>
+						</div>
+						<div class="item-action-dropdown">
+							<el-dropdown class="item-function-dropdown" split-button type="primary" trigger="click" @click="itemAction">
+								{{ actionValue }}
+								<template #dropdown>
+									<el-dropdown-item @click="actionValue='Allocate'">Allocate</el-dropdown-item>
+									<el-dropdown-item @click="actionValue='Check-Out'">Check-Out</el-dropdown-item>
+									<el-dropdown-item @click="actionValue='Check-In'">Check-In</el-dropdown-item>
+									<el-dropdown-item @click="actionValue='Complete'">Complete</el-dropdown-item>
+								</template>
+							</el-dropdown>
+							<el-input class="item-action-input" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput"/>
+						</div>
+					</el-row>
 					<el-container class="items-table-container">
 						<el-table :data="eventItems" height="100%" @selection-change="handleTableSelectionChange">
 							<el-table-column type="selection" width="55" />
@@ -327,9 +326,21 @@ export default {
 			margin-bottom: 15px;
 
 			.item-action-button-container {
-				max-width: 200px;
+				display: flex;
+
 				button {
-					flex: 1;
+					width: 130px;
+				}
+			}
+
+			.item-action-dropdown{
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+
+				.el-dropdown{
+					width: 100%;
 				}
 			}
 
