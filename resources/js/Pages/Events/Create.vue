@@ -276,34 +276,32 @@ export default {
 		</el-tabs>
 
 	</MainLayout>
-	<el-dialog v-model="customerDialogVisible" width="30%" style="height:400px" align-center>
+	<el-dialog v-model="customerDialogVisible" width="30%" style="min-height:400px;" align-center>
 		<template #header>Customers</template>
 		<template #default>
-			<el-input class="customer-search" v-model="customerSearch" placeholder="Search Customers" clearable/>
-			<el-scrollbar max-height="250px">
-				<el-row class="customer-row" v-for="customer in filteredCustomers" :key="customer.id" style="marginBottom:10px">
+			<el-input class="dialog-search" v-model="customerSearch" placeholder="Search Customers" clearable/>
+			<el-scrollbar height="250px">
+				<el-row v-for="customer in filteredCustomers" :key="customer.id" style="margin-bottom:10px">
 					<el-col :span="3"><el-button size="small" @click="addCustomer(customer.id)"><el-icon><Plus/></el-icon></el-button></el-col>
-					<el-col class="customer-name" :span="21"><el-text>{{ customer.name }}</el-text></el-col>
+					<el-col :span="21">{{ customer.name }}</el-col>
 				</el-row>
 			</el-scrollbar>
 		</template>
 	</el-dialog>
-	<el-dialog v-model="itemDialogVisible" width="30%" style="height:400px;" align-center>
+	<el-dialog v-model="itemDialogVisible" width="30%" style="min-height:400px;" align-center>
 		<template #header>Items</template>
 		<template #default>
-			<el-input class="customer-search" v-model="itemSearch" placeholder="Search Items" clearable />
-			<el-scrollbar max-height="250px">
-				<el-row class="customer-row" v-for="item in filteredItems" :key="item.id" style="marginBottom:10px;">
+			<el-input class="dialog-search" v-model="itemSearch" placeholder="Search Items" clearable />
+			<el-scrollbar height="250px">
+				<el-row v-for="item in filteredItems" :key="item.id" style="margin-bottom:10px;">
 					<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus/></el-icon></el-button></el-col>
-					<el-col class="customer-name" :span="21"><el-text>{{ item.title }}</el-text></el-col>
+					<el-col style="display:flex; align-items:center;" :span="21">{{ item.title }}</el-col>
 				</el-row>
 			</el-scrollbar>
 		</template>
 	</el-dialog>
 </template>
 <style lang="scss">
-
-
 .el-tabs {
 	display: flex;
 	flex-direction: column;
@@ -316,6 +314,36 @@ export default {
 
 	#pane-information {
 		height: 100%;
+
+		.customer-index-list {
+			flex: initial !important;
+			width: 100%;
+
+			margin-bottom: 1em;
+
+			text-align: center;
+
+			.customer-item-wrapper {
+				height: 100%;
+				overflow: hidden;
+
+				.customer-scrollbar {
+					margin-top: 1em;
+
+					width: 100%;
+				}
+
+				.list-space {
+					display: grid !important;
+					grid-gap: 15px;
+					grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+					height: auto;
+
+					margin-bottom: 1em;
+				}
+			}
+		}
 	}
 
 	#pane-items {
@@ -378,46 +406,9 @@ export default {
 	}
 }
 
-.customer-index-list {
-	flex: initial !important;
-	width: 100%;
-
-	margin-bottom: 1em;
-
-	text-align: center;
-
-	.customer-item-wrapper {
-		height: 100%;
-		overflow: hidden;
-
-		.customer-scrollbar {
-			margin-top: 1em;
-
-			width: 100%;
-		}
-
-		.list-space {
-			display: grid !important;
-			grid-gap: 15px;
-			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-
-			height: auto;
-
-			margin-bottom: 1em;
-		}
-	}
-}
-
 .el-dialog {
-	.customer-search {
-		margin-bottom: 20px;
-	}
-
-	.customer-row {
-		.customer-name {
-			display: flex;
-			align-items: center;
-		}
+	.dialog-search {
+		margin-bottom:10px;
 	}
 }
 </style>
