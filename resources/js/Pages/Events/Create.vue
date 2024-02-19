@@ -16,8 +16,8 @@ export default {
 		return {
 			eventForm: reactive({
 				title: this.event ? this.event.title : '',
-				start_date: this.event ? this.event.start_date: null,
-				end_date: this.event ? this.event.end_date: null,
+				start_date: this.event ? this.event.start_date : null,
+				end_date: this.event ? this.event.end_date : null,
 				icon: this.event ? this.event.icon : '',
 			}),
 			eventFormRules: reactive({
@@ -62,11 +62,11 @@ export default {
 		},
 	},
 	methods: {
-		save(){
+		save() {
 			this.validate()
 				.then((valid) => {
 					if (valid) {
-						if (this.event){
+						if (this.event) {
 							router.patch(route('events.update', this.event.id), this.eventForm);
 						} else {
 							router.post(route('events.store', this.eventForm));
@@ -119,10 +119,10 @@ export default {
 		},
 		addCustomer(id) {
 			this.customerDialogVisible = false;
-			router.put(route('events.addCustomer', this.event.id), {id: id,});
+			router.put(route('events.addCustomer', this.event.id), { id: id, });
 		},
 		removeCustomer(id) {
-			router.put(route('events.removeCustomer', this.event.id), {id: id,});
+			router.put(route('events.removeCustomer', this.event.id), { id: id, });
 		},
 		addItem(item_id) {
 			let data = {
@@ -175,7 +175,7 @@ export default {
 				}
 			).then(() => {
 				let ids = this.tableSelection.value.map(eventItem => eventItem.id);
-				router.put(route('events.destroyItem', this.event.id), {ids: ids,});
+				router.put(route('events.destroyItem', this.event.id), { ids: ids, });
 			}).catch(() => {});
 		},
 		itemAction() {
@@ -241,16 +241,16 @@ export default {
 							<el-text class="form-title" size="large" tag="b">Details</el-text>
 							<el-form class="create-form" ref="formRef" label-position="top" :model="eventForm" :rules="eventFormRules">
 								<el-form-item label="Title" prop="title" required>
-									<el-input v-model="eventForm.title"/>
+									<el-input v-model="eventForm.title" />
 								</el-form-item>
 								<el-form-item label="Icon" prop="icon">
-									<el-input v-model="eventForm.icon"/>
+									<el-input v-model="eventForm.icon" />
 								</el-form-item>
-								<el-form-item label="Start Date" prop="start_date" required >
+								<el-form-item label="Start Date" prop="start_date" required>
 									<el-date-picker v-model="eventForm.start_date" type="date" clearable style="width:100%" />
 								</el-form-item>
 								<el-form-item label="End Date" prop="end_date">
-									<el-date-picker v-model="eventForm.end_date" type="date" clearable  style="width:100%"/>
+									<el-date-picker v-model="eventForm.end_date" type="date" clearable style="width:100%" />
 								</el-form-item>
 							</el-form>
 						</el-container>
@@ -262,10 +262,9 @@ export default {
 								<el-scrollbar class="customer-scrollbar" height="100%">
 									<el-container class="list-space">
 										<el-card class="customer-item add-card" shadow="hover" @click="openCustomerDialog">
-											<el-text tag="b" size="large">Add Customer</el-text>
-											<el-icon><Plus/></el-icon>
+											<el-text tag="b" size="large">Add Customer</el-text><el-icon><Plus /></el-icon>
 										</el-card>
-										<CustomerItem v-for="customer in eventCustomers" :key="customer.id" :customer="customer" :remove="true" @removeCustomer="removeCustomer"/>
+										<CustomerItem v-for="customer in eventCustomers" :key="customer.id" :customer="customer" :remove="true" @removeCustomer="removeCustomer" />
 									</el-container>
 								</el-scrollbar>
 							</el-container>
@@ -310,41 +309,36 @@ export default {
 
 	.el-tabs__content {
 		flex: 1;
-	}
 
-	#pane-information {
-		height: 100%;
+		#pane-information {
+			height: 100%;
 
-		.customer-index-list {
-			flex: initial !important;
-			width: 100%;
+			.customer-index-list {
+				flex: 1;
 
-			margin-bottom: 1em;
+				text-align: center;
 
-			text-align: center;
+				.customer-item-wrapper {
+					height: calc(100% - 20px);
 
-			.customer-item-wrapper {
-				height: 100%;
-				overflow: hidden;
+					.customer-scrollbar {
+						margin-top: 1em;
 
-				.customer-scrollbar {
-					margin-top: 1em;
+						width: 100%;
+					}
 
-					width: 100%;
-				}
+					.list-space {
+						display: grid !important;
+						grid-gap: 15px;
+						grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 
-				.list-space {
-					display: grid !important;
-					grid-gap: 15px;
-					grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+						height: auto;
 
-					height: auto;
-
-					margin-bottom: 1em;
+						margin-bottom: 1em;
+					}
 				}
 			}
 		}
-	}
 
 	#pane-items {
 		height: 100%;
@@ -408,7 +402,7 @@ export default {
 
 .el-dialog {
 	.dialog-search {
-		margin-bottom:10px;
+		margin-bottom: 10px;
 	}
 }
 </style>
