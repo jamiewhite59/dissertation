@@ -11,21 +11,6 @@ export default {
 	},
 	data() {
 		return {
-			itemForm: reactive({
-				title: this.item ? this.item.title : '',
-				description: this.item ? this.item.description : '',
-				image: this.item ? this.item.image : null,
-				stock_type: this.item ? this.item.stock_type : 'bulk',
-			}),
-			itemRules: reactive({
-				title: [
-					{ required: true, message: 'Title is required', trigger: 'blur', },
-				],
-				stock_type: [
-					{ required: true, message: 'Stock Type is required', trigger: 'blur', },
-				],
-				code: [],
-			}),
 			pieceForm: reactive({
 				item_id: this.item?.id,
 				code: '',
@@ -53,29 +38,11 @@ export default {
 				router.delete(route('items.destroy', this.item.id));
 			}).catch(() => {});
 		},
+		saveItem() {
+			this.$refs.itemForm.save();
+		},
 		openIndex() {
 			router.get(route('items.index'));
-		},
-		save() {
-			this.validateItemForm()
-				.then((valid) => {
-					if (valid) {
-						if (this.item){
-							router.patch(route('items.update', this.item.id), this.itemForm);
-						} else {
-							router.post(route('items.store', this.itemForm));
-						}
-					}
-				});
-		},
-		validateItemForm() {
-			return this.$refs.itemFormRef.validate()
-				.then((valid) => {
-					return true;
-				})
-				.catch((err) => {
-					return false;
-				});
 		},
 		validatePieceForm() {
 			return this.$refs.pieceFormRef.validate()
@@ -127,25 +94,9 @@ export default {
 </script>
 <template>
 	<MainLayout title="Items" :errors="errors">
-		<CreateLayout :existing="item" @remove="remove" @openIndex="openIndex" @save="save">
+		<CreateLayout :existing="item" @remove="remove" @openIndex="openIndex" @save="saveItem">
 			<template #form>
-				<el-form class="create-form" ref="itemFormRef" label-position="top" :model="itemForm" :rules="itemRules">
-					<el-form-item label="Title" prop="title" required>
-						<el-input v-model="itemForm.title"/>
-					</el-form-item>
-					<el-form-item label="Description" prop="description">
-						<el-input v-model="itemForm.description"/>
-					</el-form-item>
-					<el-form-item label="Stock Type" prop="stock_type" required>
-						<el-select v-model="itemForm.stock_type">
-							<el-option label="Bulk" value="bulk"/>
-							<el-option label="Hire" value="hire"/>
-						</el-select>
-					</el-form-item>
-					<el-form-item label="Image" prop="image">
-						<el-input v-model="itemForm.image"/>
-					</el-form-item>
-				</el-form>
+				<ItemForm ref="itemForm" :item="item" />
 			</template>
 			<template #default>
 				<el-col class="item-content" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" direction="vertical">

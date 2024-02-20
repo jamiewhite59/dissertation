@@ -19,6 +19,7 @@ import EventItem from '@/Components/EventItem.vue';
 import PieceItem from '@/Components/PieceItem.vue';
 
 import EventForm from '@/Forms/EventForm.vue';
+import ItemForm from '@/Forms/ItemForm.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -39,6 +40,7 @@ createInertiaApp({
 		app.component('EventItem', EventItem);
 		app.component('PieceItem', PieceItem);
 		app.component('EventForm', EventForm);
+		app.component('ItemForm', ItemForm);
 
 		app.mount(el);
 		return app;
