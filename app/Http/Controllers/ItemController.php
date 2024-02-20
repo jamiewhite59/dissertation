@@ -57,11 +57,10 @@ class ItemController extends Controller
      */
     public function edit(Request $request, $id): Response {
         $item = Item::find($id);
-        $pieces = $item->pieces;
+        $item->pieces = $item->pieces;
 
         return Inertia::render('Items/Create', [
             'item' => $item,
-            'pieces' => $pieces,
         ]);
     }
 

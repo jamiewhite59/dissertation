@@ -8,7 +8,6 @@ export default {
 	props: {
 		item: Object,
 		errors: Object,
-		pieces: Array,
 	},
 	data() {
 		return {
@@ -161,7 +160,7 @@ export default {
 										<el-text tag="b" size="large">Add Piece</el-text>
 										<el-icon><Plus/></el-icon>
 									</el-card>
-									<PieceItem v-for="piece in pieces" :key="piece.id" :piece="piece" @click="selectPiece(piece)" @removePiece="destroyPiece" />
+									<PieceItem v-for="piece in item.pieces" :key="piece.id" :piece="piece" @click="selectPiece(piece)" @removePiece="destroyPiece" />
 								</el-container>
 							</el-scrollbar>
 						</el-container>
