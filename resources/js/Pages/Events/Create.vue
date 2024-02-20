@@ -210,7 +210,7 @@ export default {
 							<el-button type="primary" @click="openItemDialog">Add</el-button>
 							<el-button type="primary" @click="removeItems" :disabled="!tableSelection.value?.length">Remove {{ tableSelection.value?.length ? '(' + tableSelection.value.length + ')' : '' }}</el-button>
 						</el-container>
-						<div class="item-action-dropdown">
+						<el-container class="item-action-dropdown">
 							<el-dropdown split-button type="primary" trigger="click" @click="itemAction">
 								{{ actionValue }}
 								<template #dropdown>
@@ -221,7 +221,7 @@ export default {
 								</template>
 							</el-dropdown>
 							<el-input class="item-action-input" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
-						</div>
+						</el-container>
 					</el-row>
 					<el-table :data="eventItems" height="100%" @selection-change="handleTableSelectionChange">
 						<el-table-column type="selection" width="55" />
@@ -351,10 +351,7 @@ export default {
 				}
 
 				.item-action-dropdown {
-					display: flex;
-					flex-direction: row;
-					justify-content: center;
-					align-items: center;
+					flex: unset;
 
 					.el-dropdown {
 						width: 100%;
