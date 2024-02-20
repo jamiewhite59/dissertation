@@ -23,6 +23,7 @@ class EventItemController extends Controller {
 
     public function addPiece(EventItemRequest $request) {
         $piece = Piece::firstWhere('code', $request->piece_code);
+
         if ($piece === null) {
             return back()->withErrors(['not_found' => "No piece was found with code $request->piece_code"]);
         }

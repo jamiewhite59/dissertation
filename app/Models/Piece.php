@@ -17,7 +17,7 @@ class Piece extends Model
         return $this->belongsTo(Item::class);
     }
 
-    public function eventItemPieces():HasMany {
-        return $this->hasMany(EventItemPiece::class);
+    public function eventItems():HasMany {
+        return $this->hasMany(EventItem::class);
     }
 }

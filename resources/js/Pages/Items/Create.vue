@@ -151,7 +151,9 @@ export default {
 			<template #default>
 				<el-col class="item-content" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" direction="vertical">
 					<template v-if="item?.stock_type === 'hire'">
-						<el-text size="large" tag="b">Pieces</el-text>
+						<el-container>
+							<el-text size="large" tag="b" style="margin-bottom: 1em;">Pieces</el-text>
+						</el-container>
 						<el-container class="item-piece-wrapper">
 							<el-scrollbar class="piece-scrollbar" height="100%">
 								<el-container class="list-space">
@@ -186,29 +188,19 @@ export default {
 </template>
 <style lang="scss">
 .item-content {
-	flex: initial !important;
-	width: 100%;
-
-	margin-bottom: 1em;
+	flex: 1;
 
 	.item-piece-wrapper {
-		height: 100%;
-		overflow: hidden;
+		height: calc(100% - 36px);
 
 		.piece-scrollbar {
-			margin-top: 1em;
-
 			width: 100%;
-		}
 
-		.list-space {
-			display: grid !important;
-			grid-gap: 15px;
-			grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-
-			height: auto;
-
-			margin-bottom: 1em;
+			.list-space {
+				display: grid !important;
+				grid-gap: 15px;
+				grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+			}
 		}
 	}
 }
