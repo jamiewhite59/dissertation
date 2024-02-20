@@ -8,8 +8,6 @@ export default {
 		event: Object,
 		customers: Array,
 		errors: Object,
-		eventCustomers: Array,
-		eventItems: Array,
 		items: Array,
 	},
 	data() {
@@ -43,7 +41,7 @@ export default {
 	},
 	computed: {
 		filteredCustomers() {
-			var eventCustomerIds = this.eventCustomers.map((customer) => customer.id);
+			var eventCustomerIds = this.event.customers.map((customer) => customer.id);
 			var availableCustomers = this.customers.filter((customer) => !eventCustomerIds.includes(customer.id));
 			if (this.customerSearch) {
 				return availableCustomers.filter((customer) =>
@@ -223,7 +221,7 @@ export default {
 							<el-input class="item-action-input" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
 						</el-container>
 					</el-row>
-					<el-table :data="eventItems" height="100%" @selection-change="handleTableSelectionChange">
+					<el-table :data="event.items" height="100%" @selection-change="handleTableSelectionChange">
 						<el-table-column type="selection" width="55" />
 						<el-table-column prop="item_title" label="Title" />
 						<el-table-column prop="item_stock_type" label="Stock Type" />
@@ -262,7 +260,7 @@ export default {
 										<el-card class="customer-item add-card" shadow="hover" @click="openCustomerDialog">
 											<el-text tag="b" size="large">Add Customer</el-text><el-icon><Plus /></el-icon>
 										</el-card>
-										<CustomerItem v-for="customer in eventCustomers" :key="customer.id" :customer="customer" :remove="true" @removeCustomer="removeCustomer" />
+										<CustomerItem v-for="customer in event.customers" :key="customer.id" :customer="customer" :remove="true" @removeCustomer="removeCustomer" />
 									</el-container>
 								</el-scrollbar>
 							</el-container>

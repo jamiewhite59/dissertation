@@ -38,17 +38,15 @@ class EventController extends Controller
 
     public function edit(Request $request, $id): Response {
         $event = Event::find($id);
-        $eventCustomers = $event->customers;
+        $event->customers = $event->customers;
+        $event->items = $event->eventItems();
         $customers = Customer::all();
         $items = Item::all();
-        $eventItems = $event->eventItems();
 
         return Inertia::render('Events/Create', [
             'event' => $event,
             'customers' => $customers,
             'items' => $items,
-            'eventItems' => $eventItems,
-            'eventCustomers' => $eventCustomers,
         ]);
     }
 
