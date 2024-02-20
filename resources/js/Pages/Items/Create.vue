@@ -28,7 +28,7 @@ export default {
 				code: [],
 			}),
 			pieceForm: reactive({
-				item_id: this.item.id,
+				item_id: this.item?.id,
 				code: '',
 			}),
 			pieceRules: reactive({
@@ -150,7 +150,7 @@ export default {
 			</template>
 			<template #default>
 				<el-col class="item-content" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" direction="vertical">
-					<template v-if="item.stock_type === 'hire'">
+					<template v-if="item?.stock_type === 'hire'">
 						<el-text size="large" tag="b">Pieces</el-text>
 						<el-container class="item-piece-wrapper">
 							<el-scrollbar class="piece-scrollbar" height="100%">
