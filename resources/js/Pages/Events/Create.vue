@@ -1,7 +1,6 @@
 <script>
 import { router } from '@inertiajs/vue3';
-import { reactive } from 'vue';
-import { ElMessage, ElMessageBox } from 'element-plus';
+import { ElMessageBox } from 'element-plus';
 
 export default {
 	props: {
@@ -65,12 +64,6 @@ export default {
 		openCustomer(id) {
 			router.get((route('customers.edit', id)));
 		},
-		openCustomerDialog() {
-			this.customerDialogVisible = true;
-		},
-		openItemDialog() {
-			this.itemDialogVisible = true;
-		},
 		addCustomer(id) {
 			this.customerDialogVisible = false;
 			router.put(route('events.addCustomer', this.event.id), { id: id, });
@@ -86,8 +79,19 @@ export default {
 
 			router.put(route('events.addItem', this.event.id), data);
 		},
-		handleTableSelectionChange(val) {
-			this.tableSelection.value = val;
+		removeItems() {
+			ElMessageBox.confirm(
+				'Are you sure you want to remove these item(s)?',
+				'Delete Item',
+				{
+					confirmButtonText: 'Delete',
+					type: 'error',
+					center: true,
+				}
+			).then(() => {
+				let ids = this.tableSelection.value.map(eventItem => eventItem.id);
+				router.put(route('events.destroyItem', this.event.id), { ids: ids, });
+			}).catch(() => {});
 		},
 		allocatePiece() {
 			let data = {
@@ -105,32 +109,6 @@ export default {
 		},
 		completePiece() {
 			console.debug('TODO: complete piece');
-		},
-		removePiece() {
-			let someData = {
-				eventItem_id: '9b55d784-4ebb-4796-b12b-70a21cf668dd',
-			};
-
-			router.put(route('events.removeItemPiece', this.event.id), someData);
-		},
-		checkCodeInput(event) {
-			if (event.keyCode === 13) {
-				this.allocatePiece();
-			}
-		},
-		removeItems() {
-			ElMessageBox.confirm(
-				'Are you sure you want to remove these item(s)?',
-				'Delete Item',
-				{
-					confirmButtonText: 'Delete',
-					type: 'error',
-					center: true,
-				}
-			).then(() => {
-				let ids = this.tableSelection.value.map(eventItem => eventItem.id);
-				router.put(route('events.destroyItem', this.event.id), { ids: ids, });
-			}).catch(() => {});
 		},
 		itemAction() {
 			switch (this.actionValue) {
@@ -150,6 +128,14 @@ export default {
 				console.warn('Probably shouldnt be here lol');
 			}
 		},
+		checkCodeInput(event) {
+			if (event.keyCode === 13) {
+				this.allocatePiece();
+			}
+		},
+		handleTableSelectionChange(val) {
+			this.tableSelection.value = val;
+		},
 	},
 };
 </script>
@@ -161,7 +147,7 @@ export default {
 				<el-container class="items-pane-container" direction="vertical">
 					<el-row justify="space-between" direction="horizontal" style="margin-bottom: 15px;">
 						<el-container class="item-action-button-container">
-							<el-button type="primary" @click="openItemDialog">Add</el-button>
+							<el-button type="primary" @click="itemDialogVisible = true">Add</el-button>
 							<el-button type="primary" @click="removeItems" :disabled="!tableSelection.value?.length">Remove {{ tableSelection.value?.length ? '(' + tableSelection.value.length + ')' : '' }}</el-button>
 						</el-container>
 						<el-container class="item-action-dropdown">
@@ -200,7 +186,7 @@ export default {
 							<el-container class="customer-item-wrapper">
 								<el-scrollbar class="customer-scrollbar" height="100%">
 									<el-container class="list-space">
-										<el-card class="customer-item add-card" shadow="hover" @click="openCustomerDialog">
+										<el-card class="customer-item add-card" shadow="hover" @click="customerDialogVisible = true">
 											<el-text tag="b" size="large">Add Customer</el-text><el-icon><Plus /></el-icon>
 										</el-card>
 										<CustomerItem v-for="customer in event.customers" :key="customer.id" :customer="customer" :remove="true" @removeCustomer="removeCustomer" />
