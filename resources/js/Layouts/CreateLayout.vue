@@ -22,7 +22,7 @@ export default {
 					</el-col>
 					<el-col style="text-align:right;" :span="16">
 						<el-button type="primary" @click="$emit('openIndex')">Cancel</el-button>
-						<el-button type="primary" @click="$emit('save')">{{existing ? 'Save' : 'Create'}}</el-button>
+						<el-button type="primary" @click="$emit('save')">Save</el-button>
 					</el-col>
 				</el-row>
 			</el-row>
