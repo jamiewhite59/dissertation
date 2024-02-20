@@ -64,11 +64,7 @@ export default {
 			this.validate()
 				.then((valid) => {
 					if (valid) {
-						if (this.event) {
-							router.patch(route('events.update', this.event.id), this.eventForm);
-						} else {
-							router.post(route('events.store', this.eventForm));
-						}
+						router.patch(route('events.update', this.event.id), this.eventForm);
 					}
 				});
 		},
