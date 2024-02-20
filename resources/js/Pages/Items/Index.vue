@@ -57,8 +57,6 @@ export default {
 .item-table-container {
 	height: 100%;
 
-	padding: 0 20px;
-
 	overflow: hidden;
 }
 </style>

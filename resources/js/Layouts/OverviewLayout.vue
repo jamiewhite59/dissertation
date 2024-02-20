@@ -14,7 +14,7 @@ export default {
 </script>
 <template>
 	<el-container class="overview-container">
-		<el-header class="overview-create">
+		<el-row class="overview-create">
 			<el-container>
 				<el-button type="primary" @click="$emit('openCreate')">
 					<template #icon>
@@ -25,41 +25,40 @@ export default {
 			</el-container>
 			<slot name="extra"></slot>
 			<slot name="search"></slot>
-		</el-header>
+		</el-row>
 		<slot>
-			<el-main class="overview-list">
-				<slot name="cards" v-if="displayCards"></slot>
-				<el-empty v-else :description="'No' + title +'s'" />
-			</el-main>
+			<el-row class="overview-list">
+				<el-scrollbar class="overview-scrollbar" height="100%">
+					<slot name="cards" v-if="displayCards"></slot>
+					<el-empty v-else :description="'No' + title +'s'" />
+				</el-scrollbar>
+			</el-row>
 		</slot>
 	</el-container>
 </template>
 <style lang="scss">
 .overview-container {
+	flex-direction: column;
+
 	height: 100%;
-}
 
-.overview-create {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	gap: 1em;
-	height: auto;
+	.overview-create {
+		padding-bottom: 20px;
 
-	padding-bottom: 20px;
+		.overview-search {
+			max-width: 25%;
+			min-width: 315px;
 
-	.overview-search {
-		max-width: 25%;
-		min-width: 315px;
-
-		padding-left: 1em;
+			padding-left: 1em;
+		}
 	}
-}
 
-.overview-list {
-	flex: initial !important;
+	.overview-list {
+		height: calc(100% - 52px);
 
-	padding-top: 0;
-
+		.overview-scrollbar {
+			width: 100%;
+		}
+	}
 }
 </style>

@@ -75,18 +75,8 @@ export default {
 	<MainLayout title="Events">
 		<OverviewLayout title="Event" :displayCards="!!searchedEvents.length" @openCreate="openCreate">
 			<template #extra>
-				<el-select
-					v-model="statusSelected"
-					multiple
-					placeholder="Select"
-					style="width: 300px"
-				>
-					<el-option
-						v-for="option in statusOptions"
-						:key="option.value"
-						:label="option.label"
-						:value="option.value"
-					/>
+				<el-select v-model="statusSelected" multiple placeholder="Select" style="width: 300px">
+					<el-option v-for="option in statusOptions" :key="option.value" :label="option.label" :value="option.value" />
 				</el-select>
 			</template>
 			<template #search>

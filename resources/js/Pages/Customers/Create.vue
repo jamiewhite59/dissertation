@@ -99,7 +99,7 @@ export default {
 					<el-container class="event-item-wrapper">
 						<el-scrollbar class="event-scrollbar" height="100%">
 							<el-container class="list-space">
-								<EventItem v-for="event in customer.events" :key="event.id" :event="event" />
+								<EventItem v-for="event in customer?.events" :key="event.id" :event="event" />
 							</el-container>
 						</el-scrollbar>
 					</el-container>
