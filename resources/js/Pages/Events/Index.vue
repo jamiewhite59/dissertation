@@ -11,23 +11,6 @@ export default {
 			search: '',
 			statusSelected: [],
 			createDialogVisible: false,
-			eventForm: reactive({
-				title: '',
-				start_date: null,
-				end_date: null,
-				icon:  '',
-			}),
-			eventFormRules: reactive({
-				title: [
-					{ required: true, message: 'Title is required', trigger: 'blur', },
-				],
-				start_date: [
-					{ required: true, message: 'Start Date is required', trigger: 'blur', },
-				],
-				end_date: [
-					{ validator: this.validateEndDate, trigger: 'blur', },
-				],
-			}),
 		};
 	},
 	computed: {
@@ -86,39 +69,12 @@ export default {
 		openCreate() {
 			this.createDialogVisible = true;
 		},
-		validateEndDate(rule, value, callback) {
-			let currentStart = new Date(this.eventForm.start_date).toISOString();
-			let currentEnd = new Date(this.eventForm.end_date).toISOString();
-			if (this.eventForm.end_date && currentStart > currentEnd) {
-				callback(new Error('Start date must be before end date'));
-			} else {
-				callback();
-			}
-		},
-		validate() {
-			return this.$refs.formRef.validate()
-				.then((valid) => {
-					return true;
-				})
-				.catch((err) => {
-					return false;
-				});
-		},
 		createEvent() {
-			this.validate()
-				.then((valid) => {
-					if (valid) {
-						router.post(route('events.store', this.eventForm));
-						this.createDialogVisible = false;
-					}
-				});
+			this.$refs.eventForm.save();
+			this.createDialogVisible = false;
 		},
 		resetForm() {
-			this.eventForm.title = '';
-			this.eventForm.start_date = null;
-			this.eventForm.end_date = null;
-			this.eventForm.icon = '';
-			this.$refs.formRef.resetFields();
+			this.$refs.eventForm.resetForm();
 		},
 	},
 };
@@ -145,20 +101,7 @@ export default {
 	<el-dialog v-model="createDialogVisible" width="30%" style="min-height: 400px" align-center @closed="resetForm">
 		<template #header>Create Event</template>
 		<template #default>
-			<el-form class="create-form" ref="formRef" label-position="top" :model="eventForm" :rules="eventFormRules">
-				<el-form-item label="Title" prop="title" required>
-					<el-input v-model="eventForm.title" />
-				</el-form-item>
-				<el-form-item label="Icon" prop="icon">
-					<el-input v-model="eventForm.icon" />
-				</el-form-item>
-				<el-form-item label="Start Date" prop="start_date" required>
-					<el-date-picker v-model="eventForm.start_date" type="date" clearable style="width:100%" />
-				</el-form-item>
-				<el-form-item label="End Date" prop="end_date">
-					<el-date-picker v-model="eventForm.end_date" type="date" clearable style="width:100%" />
-				</el-form-item>
-			</el-form>
+			<EventForm ref="eventForm" />
 		</template>
 		<template #footer>
 			<el-button type="primary" @click="createDialogVisible = false">Cancel</el-button>
