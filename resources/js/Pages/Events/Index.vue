@@ -1,7 +1,4 @@
 <script>
-import { router } from '@inertiajs/vue3';
-import { reactive } from 'vue';
-
 export default {
 	props: {
 		events: Array,
@@ -66,9 +63,6 @@ export default {
 		},
 	},
 	methods: {
-		openCreate() {
-			this.createDialogVisible = true;
-		},
 		createEvent() {
 			this.$refs.eventForm.save();
 			this.createDialogVisible = false;
@@ -82,7 +76,7 @@ export default {
 
 <template>
 	<MainLayout title="Events">
-		<OverviewLayout title="Event" :displayCards="!!searchedEvents.length" @openCreate="openCreate">
+		<OverviewLayout title="Event" :displayCards="!!searchedEvents.length" @openCreate="createDialogVisible = true">
 			<template #extra>
 				<el-select v-model="statusSelected" multiple placeholder="Select" style="width: 300px">
 					<el-option v-for="option in statusOptions" :key="option.value" :label="option.label" :value="option.value" />
