@@ -93,7 +93,9 @@ export default {
 			</template>
 			<template #default>
 				<el-col class="event-index-list" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" direction="vertical">
-					<el-text size="large" tag="b">Events</el-text>
+					<el-container style="margin-bottom:1em;">
+						<el-text size="large" tag="b">Events</el-text>
+					</el-container>
 					<el-container class="event-item-wrapper">
 						<el-scrollbar class="event-scrollbar" height="100%">
 							<el-container class="list-space">
@@ -108,29 +110,19 @@ export default {
 </template>
 <style lang="scss">
 .event-index-list {
-	flex: initial !important;
-	width: 100%;
-
-	margin-bottom: 1em;
+	flex: 1;
 
 	.event-item-wrapper {
-		height: 100%;
-		overflow: hidden;
+		height: calc(100% - 36px);
 
 		.event-scrollbar {
-			margin-top: 1em;
-
 			width: 100%;
-		}
 
-		.list-space {
-			display: grid !important;
-			grid-gap: 15px;
-			grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-
-			height: auto;
-
-			margin-bottom: 1em;
+			.list-space {
+				display: grid !important;
+				grid-gap: 15px;
+				grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+			}
 		}
 	}
 }

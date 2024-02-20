@@ -52,14 +52,10 @@ export default {
 };
 </script>
 <template>
-	<el-card class="event-item" shadow="hover" @click="openEdit(event.id)">
+	<el-card shadow="hover" style="text-align:center;" @click="openEdit(event.id)">
 		<el-descriptions :title="event.title" :column="1">
 			<template #extra>
-				<el-tooltip
-					effect="light"
-					:content="tooltipValue"
-					placement="top"
-				>
+				<el-tooltip effect="light" :content="tooltipValue" placement="top" >
 					<el-tag :type="status" size="small" effect="dark"/>
 				</el-tooltip>
 			</template>
@@ -75,8 +71,4 @@ export default {
 	</el-card>
 </template>
 <style lang="scss">
-.event-item {
-	text-align: center;
-	height: 120px;
-}
 </style>
