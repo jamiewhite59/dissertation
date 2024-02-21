@@ -29,6 +29,15 @@ export default {
 			}),
 		};
 	},
+	computed: {
+		changes() {
+			if (this.customer) {
+				return Object.keys(this.customerForm).some((key) => this.customer[key] !== this.customerForm[key]);
+			} else {
+				return true;
+			}
+		},
+	},
 	methods: {
 		save() {
 			this.validate()
@@ -62,9 +71,9 @@ export default {
 };
 </script>
 <template>
-	<el-form class="create-form" ref="formRef" label-position="top" :model="customerForm" :rules="rules">
+	<el-form class="create-form" ref="formRef" label-position="top" :model="customerForm" :rules="rules" @input="$emit('change', changes)">
 		<el-form-item label="Name" prop="name" required>
-			<el-input v-model="customerForm.name"/>
+			<el-input v-model="customerForm.name" />
 		</el-form-item>
 		<el-form-item label="Email" prop="email" required>
 			<el-input v-model="customerForm.email"/>

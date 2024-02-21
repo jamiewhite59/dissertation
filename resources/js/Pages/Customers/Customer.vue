@@ -10,6 +10,7 @@ export default {
 	},
 	data() {
 		return {
+			changes: false,
 		};
 	},
 	methods: {
@@ -38,9 +39,9 @@ export default {
 
 <template>
 	<MainLayout title="Customers" :errors="errors">
-		<CreateLayout :existing="customer" @remove="remove" @openIndex="openIndex" @save="save">
+		<CreateLayout :existing="customer" :changes="changes" @remove="remove" @openIndex="openIndex" @save="save">
 			<template #form>
-				<CustomerForm ref="customerForm" :customer="customer" />
+				<CustomerForm ref="customerForm" :customer="customer" @change="(e) => changes=e" />
 			</template>
 			<template #default>
 				<el-col class="event-index-list" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" direction="vertical">
