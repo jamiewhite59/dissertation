@@ -29,8 +29,7 @@ export default {
 		filteredEvents() {
 			if (this.statusSelected.length) {
 				return this.augmentedEvents.filter((event) => {
-					console.debug('selected', this.statusSelected, event.status);
-					return this.statusSelected.includes(event.status);
+					return this.statusSelected.some((status) => event.status === status.value);
 				});
 			} else {
 				return this.events;
@@ -50,14 +49,17 @@ export default {
 				{
 					value: 'upcoming',
 					label: 'Upcoming',
+					type: 'info',
 				},
 				{
 					value: 'active',
 					label: 'Active',
+					type: 'warning',
 				},
 				{
 					value: 'complete',
 					label: 'Complete',
+					type: 'danger',
 				},
 			];
 		},
@@ -78,8 +80,13 @@ export default {
 	<MainLayout title="Events">
 		<OverviewLayout title="Event" :displayCards="!!searchedEvents.length" @openCreate="createDialogVisible = true">
 			<template #extra>
-				<el-select v-model="statusSelected" multiple placeholder="Select" style="width: 300px">
-					<el-option v-for="option in statusOptions" :key="option.value" :label="option.label" :value="option.value" />
+				<el-select v-model="statusSelected" multiple placeholder="Filter Events" style="width: 250px">
+					<el-option v-for="option in statusOptions" :key="option.value" :label="option.label" :value="option">
+						<el-tag :type="option.type" size="small" round>{{ option.label }}</el-tag>
+					</el-option>
+					<template #tag>
+						<el-tag v-for="status in statusSelected" :key="status.value" :type="status.type">{{ status.label }}</el-tag>
+					</template>
 				</el-select>
 			</template>
 			<template #search>
