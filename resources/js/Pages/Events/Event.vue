@@ -70,7 +70,17 @@ export default {
 			router.put(route('events.addCustomer', this.event.id), { id: id, });
 		},
 		removeCustomer(id) {
-			router.put(route('events.removeCustomer', this.event.id), { id: id, });
+			ElMessageBox.confirm(
+				'Are you sure you want to remove this customer from this event?',
+				'Remove Customer',
+				{
+					confirmButtonText: 'Remove',
+					type: 'error',
+					center: true,
+				}
+			).then(() => {
+				router.put(route('events.removeCustomer', this.event.id), { id: id, });
+			}).catch(() => {});
 		},
 		addItem(item_id) {
 			let data = {
