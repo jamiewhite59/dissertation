@@ -22,7 +22,7 @@ class EventController extends Controller
     }
 
     public function create(Request $request): Response {
-        return Inertia::render('Events/Create');
+        return Inertia::render('Events/Customer');
     }
 
     public function store(EventFormRequest $request): RedirectResponse {
@@ -43,7 +43,7 @@ class EventController extends Controller
         $customers = Customer::all();
         $items = Item::all();
 
-        return Inertia::render('Events/Create', [
+        return Inertia::render('Events/Event', [
             'event' => $event,
             'customers' => $customers,
             'items' => $items,

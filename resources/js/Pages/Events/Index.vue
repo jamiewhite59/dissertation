@@ -1,6 +1,4 @@
 <script>
-import { router } from '@inertiajs/vue3';
-
 export default {
 	props: {
 		events: Array,
@@ -9,6 +7,7 @@ export default {
 		return {
 			search: '',
 			statusSelected: [],
+			createDialogVisible: false,
 		};
 	},
 	computed: {
@@ -64,8 +63,12 @@ export default {
 		},
 	},
 	methods: {
-		openCreate() {
-			router.get(route('events.create'));
+		createEvent() {
+			this.$refs.eventForm.save();
+			this.createDialogVisible = false;
+		},
+		resetForm() {
+			this.$refs.eventForm.resetForm();
 		},
 	},
 };
@@ -73,7 +76,7 @@ export default {
 
 <template>
 	<MainLayout title="Events">
-		<OverviewLayout title="Event" :displayCards="!!searchedEvents.length" @openCreate="openCreate">
+		<OverviewLayout title="Event" :displayCards="!!searchedEvents.length" @openCreate="createDialogVisible = true">
 			<template #extra>
 				<el-select v-model="statusSelected" multiple placeholder="Select" style="width: 300px">
 					<el-option v-for="option in statusOptions" :key="option.value" :label="option.label" :value="option.value" />
@@ -89,6 +92,16 @@ export default {
 			</template>
 		</OverviewLayout>
 	</MainLayout>
+	<el-dialog v-model="createDialogVisible" width="30%" style="min-height: 400px" align-center @closed="resetForm">
+		<template #header>Create Event</template>
+		<template #default>
+			<EventForm ref="eventForm" />
+		</template>
+		<template #footer>
+			<el-button type="primary" @click="createDialogVisible = false">Cancel</el-button>
+			<el-button type="primary" @click="createEvent">Create</el-button>
+		</template>
+	</el-dialog>
 </template>
 <style lang="scss">
 .event-list-space {

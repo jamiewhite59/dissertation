@@ -20,7 +20,7 @@ class CustomerController extends Controller
     }
 
     public function create(Request $request): Response {
-        return Inertia::render('Customers/Create');
+        return Inertia::render('Customers/Customer');
     }
 
     public function store(CustomerFormRequest $request): RedirectResponse {
@@ -38,7 +38,7 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         $customer->events = $customer->events;
 
-        return Inertia::render('Customers/Create', [
+        return Inertia::render('Customers/Customer', [
             'customer' => $customer,
         ]);
     }

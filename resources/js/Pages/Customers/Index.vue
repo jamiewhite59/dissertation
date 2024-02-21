@@ -1,6 +1,4 @@
 <script>
-import { router } from '@inertiajs/vue3';
-
 export default {
 	props: {
 		customers: Array,
@@ -9,6 +7,7 @@ export default {
 		return {
 			search: '',
 			select: 'name',
+			createDialogVisible: false,
 		};
 	},
 	computed: {
@@ -27,8 +26,12 @@ export default {
 		},
 	},
 	methods: {
-		openCreate() {
-			router.get(route('customers.create'));
+		createCustomer() {
+			this.$refs.customerForm.save();
+			this.createDialogVisible = false;
+		},
+		resetForm() {
+			this.$refs.customerForm.resetForm();
 		},
 	},
 };
@@ -36,7 +39,7 @@ export default {
 
 <template>
 	<MainLayout title="Customers">
-		<OverviewLayout title="Customer" :displayCards="!!filteredCustomers.length" @openCreate="openCreate">
+		<OverviewLayout title="Customer" :displayCards="!!filteredCustomers.length" @openCreate="createDialogVisible = true">
 			<template #search>
 				<el-input class="overview-search" v-model="search" placeholder="Search Customers" clearable />
 			</template>
@@ -47,6 +50,16 @@ export default {
 			</template>
 		</OverviewLayout>
 	</MainLayout>
+	<el-dialog v-model="createDialogVisible" width="30%" style="min-height: 400px" align-center @closed="resetForm">
+		<template #header>Create Customer</template>
+		<template #default>
+			<CustomerForm ref="customerForm" />
+		</template>
+		<template #footer>
+			<el-button type="primary" @click="createDialogVisible = false">Cancel</el-button>
+			<el-button type="primary" @click="createCustomer">Create</el-button>
+		</template>
+	</el-dialog>
 </template>
 <style lang="scss">
 .customer-list-space {

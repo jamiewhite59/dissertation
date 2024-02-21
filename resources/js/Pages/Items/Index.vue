@@ -8,6 +8,7 @@ export default {
 	data() {
 		return {
 			search: '',
+			createDialogVisible: false,
 		};
 	},
 	computed: {
@@ -26,10 +27,17 @@ export default {
 	},
 	methods: {
 		openCreate() {
-			router.get(route('items.create'));
+			this.createDialogVisible = true;
 		},
 		openEdit(item) {
 			router.get(route('items.edit', item.id));
+		},
+		createItem() {
+			this.$refs.itemForm.save();
+			this.createDialogVisible = false;
+		},
+		resetForm() {
+			this.$refs.itemForm.resetForm();
 		},
 	},
 };
@@ -52,6 +60,16 @@ export default {
 			</template>
 		</OverviewLayout>
 	</MainLayout>
+	<el-dialog v-model="createDialogVisible" width="30%" style="min-height: 400px" align-center @closed="resetForm">
+		<template #header>Create Item</template>
+		<template #default>
+			<ItemForm ref="itemForm" />
+		</template>
+		<template #footer>
+			<el-button type="primary" @click="createDialogVisible = false">Cancel</el-button>
+			<el-button type="primary" @click="createItem">Create</el-button>
+		</template>
+	</el-dialog>
 </template>
 <style lang="scss">
 .item-table-container {

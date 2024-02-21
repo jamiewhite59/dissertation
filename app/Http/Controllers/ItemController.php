@@ -35,7 +35,7 @@ class ItemController extends Controller
      */
     public function create(Request $request): Response
     {
-        return Inertia::render('Items/Create');
+        return Inertia::render('Items/Item');
     }
 
     /**
@@ -59,7 +59,7 @@ class ItemController extends Controller
         $item = Item::find($id);
         $item->pieces = $item->pieces;
 
-        return Inertia::render('Items/Create', [
+        return Inertia::render('Items/Item', [
             'item' => $item,
         ]);
     }
