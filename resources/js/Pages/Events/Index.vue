@@ -47,14 +47,14 @@ export default {
 		statusOptions() {
 			return [
 				{
-					value: 'upcoming',
-					label: 'Upcoming',
-					type: 'info',
-				},
-				{
 					value: 'active',
 					label: 'Active',
 					type: 'success',
+				},
+				{
+					value: 'upcoming',
+					label: 'Upcoming',
+					type: 'info',
 				},
 				{
 					value: 'complete',
