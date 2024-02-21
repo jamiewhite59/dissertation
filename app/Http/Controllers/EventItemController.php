@@ -43,6 +43,15 @@ class EventItemController extends Controller {
         $eventItem->save();
     }
 
+    public function allocateBulkItem(Request $request) {
+        $unallocatedEventitems = EventItem::where('item_id', $request->item_id)->where('status', 'reserved')->get();
+        if (count($unallocatedEventitems) === 0) {
+            return back()->withErrors(['not_found' => 'No items found to be allocated']);
+        }
+        $unallocatedEventitems[0]->status = 'allocated';
+        $unallocatedEventitems[0]->save();
+    }
+
     public function removePiece(Request $request) {
         $eventItem = EventItem::find($request->eventItem_id);
 

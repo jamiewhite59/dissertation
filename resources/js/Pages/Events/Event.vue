@@ -65,6 +65,15 @@ export default {
 			});
 			return counted;
 		},
+		bulkAllocationAllowed() {
+			if (this.tableSelection.value?.length !== 1) {
+				return false;
+			}
+			if (this.tableSelection.value[0].item_stock_type !== 'bulk') {
+				return false;
+			}
+			return true;
+		},
 	},
 	methods: {
 		save() {
@@ -128,13 +137,20 @@ export default {
 				router.put(route('events.destroyItem', this.event.id), { ids: ids, });
 			}).catch(() => {});
 		},
-		allocatePiece() {
+		allocatePieceCode() {
 			let data = {
 				event_id: this.event.id,
 				piece_code: this.actionInput,
 			};
 			router.put(route('events.addItemPiece', this.event.id), data);
 			this.actionInput = '';
+		},
+		allocatePieceBulk() {
+			let data = {
+				event_id: this.event.id,
+				item_id: this.tableSelection.value[0].item_id,
+			};
+			router.put(route('events.allocateBulk', this.event.id), data);
 		},
 		checkoutPiece() {
 			console.debug('TODO: checkout piece');
@@ -148,7 +164,7 @@ export default {
 		itemAction() {
 			switch (this.actionValue) {
 			case 'Allocate':
-				this.allocatePiece();
+				this.allocatePieceCode();
 				break;
 			case 'Check-Out':
 				this.checkoutPiece();
@@ -165,7 +181,7 @@ export default {
 		},
 		checkCodeInput(event) {
 			if (event.keyCode === 13) {
-				this.allocatePiece();
+				this.allocatePieceCode();
 			}
 		},
 		handleTableSelectionChange(val) {
@@ -184,6 +200,7 @@ export default {
 						<el-container class="item-action-button-container">
 							<el-button type="primary" @click="itemDialogVisible = true">Add</el-button>
 							<el-button type="primary" @click="removeItems" :disabled="!tableSelection.value?.length">Remove {{ tableSelection.value?.length ? '(' + tableSelection.value.length + ')' : '' }}</el-button>
+							<el-button type="warning" @click="allocatePieceBulk" :disabled="!bulkAllocationAllowed">Allocate Bulk</el-button>
 						</el-container>
 						<el-container class="item-action-dropdown">
 							<el-dropdown split-button type="primary" trigger="click" @click="itemAction">
