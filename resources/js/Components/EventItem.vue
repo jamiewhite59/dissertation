@@ -56,7 +56,7 @@ export default {
 		<el-descriptions :title="event.title" :column="1">
 			<template #extra>
 				<el-tooltip effect="light" :content="tooltipValue" placement="top" >
-					<el-tag :type="status" size="small" effect="dark"/>
+					<el-tag :type="status" size="small" round effect="dark" style="height:15px;width:15px;"/>
 				</el-tooltip>
 			</template>
 			<el-descriptions-item>
