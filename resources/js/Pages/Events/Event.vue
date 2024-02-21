@@ -19,6 +19,7 @@ export default {
 			tableSelection: [],
 			actionValue: 'Allocate',
 			actionInput: '',
+			formChanges: false,
 		};
 	},
 	computed: {
@@ -173,11 +174,11 @@ export default {
 				</el-container>
 			</el-tab-pane>
 			<el-tab-pane label="Information" name="information">
-				<CreateLayout :existing="event" @remove="remove" @openIndex="openIndex" @save="save">
+				<CreateLayout :existing="event" :changes="formChanges" @remove="remove" @openIndex="openIndex" @save="save">
 					<template #form>
 						<el-container direction="vertical">
 							<el-text class="form-title" size="large" tag="b">Details</el-text>
-							<EventForm ref="eventForm" :event="event" />
+							<EventForm ref="eventForm" :event="event" @change="(e) => formChanges=e" />
 						</el-container>
 					</template>
 					<template #default>

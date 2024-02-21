@@ -27,6 +27,15 @@ export default {
 			}),
 		};
 	},
+	computed: {
+		changes() {
+			if (this.event) {
+				return Object.keys(this.eventForm).some((key) => this.event[key] !== this.eventForm[key]);
+			} else {
+				return true;
+			}
+		},
+	},
 	methods: {
 		validateEndDate(rule, value, callback) {
 			let currentStart = new Date(this.eventForm.start_date).toISOString();
@@ -69,7 +78,7 @@ export default {
 };
 </script>
 <template>
-	<el-form class="create-form" ref="formRef" label-position="top" :model="eventForm" :rules="eventFormRules">
+	<el-form class="create-form" ref="formRef" label-position="top" :model="eventForm" :rules="eventFormRules" @input="$emit('change', changes)">
 		<el-form-item label="Title" prop="title" required>
 			<el-input v-model="eventForm.title" />
 		</el-form-item>
@@ -77,10 +86,10 @@ export default {
 			<el-input v-model="eventForm.icon" />
 		</el-form-item>
 		<el-form-item label="Start Date" prop="start_date" required>
-			<el-date-picker v-model="eventForm.start_date" type="date" clearable style="width:100%" />
+			<el-date-picker v-model="eventForm.start_date" type="date" clearable style="width:100%" @change="$emit('change', changes)" />
 		</el-form-item>
 		<el-form-item label="End Date" prop="end_date">
-			<el-date-picker v-model="eventForm.end_date" type="date" clearable style="width:100%" />
+			<el-date-picker v-model="eventForm.end_date" type="date" clearable style="width:100%" @change="$emit('change', changes)" />
 		</el-form-item>
 	</el-form>
 </template>
