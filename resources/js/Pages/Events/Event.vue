@@ -176,9 +176,14 @@ export default {
 					</el-row>
 					<el-table :data="event.items" height="100%" @selection-change="handleTableSelectionChange">
 						<el-table-column type="selection" width="55" />
-						<el-table-column prop="item_title" label="Title" />
+						<el-table-column prop="item_title" label="Title" sortable />
 						<el-table-column prop="item_stock_type" label="Stock Type" />
-						<el-table-column prop="piece_code" label="Code" />
+						<el-table-column prop="piece_code" label="Code">
+							<template #default="scope">
+								<div v-if="scope.row.piece_code">{{scope.row.piece_code}}</div>
+								<div v-else-if="scope.row.item_stock_type === 'bulk'">Bulk Stock</div>
+							</template>
+						</el-table-column>
 						<el-table-column prop="status" label="Status" />
 					</el-table>
 				</el-container>
