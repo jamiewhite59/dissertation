@@ -41,6 +41,30 @@ export default {
 				return this.items;
 			}
 		},
+		augmentedItems() {
+			let items = this.event.items;
+			let newItems = [];
+			items.forEach((item) => {
+				if (! (newItems.find((newItem) => newItem.item_id === item.item_id && item.item_stock_type === 'bulk'))) {
+					newItems.push(item);
+				}
+			});
+			return newItems;
+		},
+		itemQuantities() {
+			let counted = {};
+			this.event.items.forEach((item) => {
+				if (counted[item.item_id]?.quantity) {
+					counted[item.item_id].quantity++;
+				} else {
+					counted[item.item_id] = {
+						quantity: 1,
+						stock_type: item.item_stock_type,
+					};
+				}
+			});
+			return counted;
+		},
 	},
 	methods: {
 		save() {
@@ -174,10 +198,14 @@ export default {
 							<el-input class="item-action-input" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
 						</el-container>
 					</el-row>
-					<el-table :data="event.items" height="100%" @selection-change="handleTableSelectionChange">
+					<el-table :data="augmentedItems" height="100%" @selection-change="handleTableSelectionChange">
 						<el-table-column type="selection" width="55" />
 						<el-table-column prop="item_title" label="Title" sortable />
-						<el-table-column prop="item_stock_type" label="Stock Type" />
+						<el-table-column label="Quantity">
+							<template #default="scope">
+								<div>{{ itemQuantities[scope.row.item_id].stock_type === 'hire' ? 1 : itemQuantities[scope.row.item_id].quantity }}</div>
+							</template>
+						</el-table-column>
 						<el-table-column prop="piece_code" label="Code">
 							<template #default="scope">
 								<div v-if="scope.row.piece_code">{{scope.row.piece_code}}</div>
