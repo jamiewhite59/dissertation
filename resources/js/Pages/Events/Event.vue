@@ -187,6 +187,20 @@ export default {
 		handleTableSelectionChange(val) {
 			this.tableSelection.value = val;
 		},
+		checkStatus(item_id) {
+			let items = this.event.items.filter((item) => item.item_id === item_id);
+			if (items.every((item) => item.status === 'allocated')) {
+				return 'allocated';
+			} else {
+				return 'reserved';
+			}
+		},
+		checkAllocated(item_id) {
+			let items = this.event.items.filter((item) => item.item_id === item_id);
+			let allocatedItems = items.filter((item) => item.status === 'allocated');
+
+			return allocatedItems.length;
+		},
 	},
 };
 </script>
@@ -223,13 +237,24 @@ export default {
 								<div>{{ itemQuantities[scope.row.item_id].stock_type === 'hire' ? 1 : itemQuantities[scope.row.item_id].quantity }}</div>
 							</template>
 						</el-table-column>
+						<el-table-column label="Allocated">
+							<template #default="scope">
+								<div v-if="scope.row.item_stock_type === 'hire'">{{ scope.row.piece_id ? 1 : 0 }}</div>
+								<div v-else>{{ checkAllocated(scope.row.item_id) }}</div>
+							</template>
+						</el-table-column>
 						<el-table-column prop="piece_code" label="Code">
 							<template #default="scope">
 								<div v-if="scope.row.piece_code">{{scope.row.piece_code}}</div>
 								<div v-else-if="scope.row.item_stock_type === 'bulk'">Bulk Stock</div>
 							</template>
 						</el-table-column>
-						<el-table-column prop="status" label="Status" />
+						<el-table-column prop="status" label="Status">
+							<template #default="scope">
+								<div v-if="scope.row.item_stock_type === 'hire'">{{ scope.row.status }}</div>
+								<div v-else>{{checkStatus(scope.row.item_id)}}</div>
+							</template>
+						</el-table-column>
 					</el-table>
 				</el-container>
 			</el-tab-pane>
