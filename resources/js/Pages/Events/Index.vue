@@ -54,7 +54,7 @@ export default {
 				{
 					value: 'active',
 					label: 'Active',
-					type: 'warning',
+					type: 'success',
 				},
 				{
 					value: 'complete',
