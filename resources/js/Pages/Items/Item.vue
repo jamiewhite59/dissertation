@@ -22,6 +22,7 @@ export default {
 			}),
 			dialogVisible: false,
 			selectedPiece: null,
+			formChanges: false,
 		};
 	},
 	methods: {
@@ -94,9 +95,9 @@ export default {
 </script>
 <template>
 	<MainLayout title="Items" :errors="errors">
-		<CreateLayout :existing="item" @remove="remove" @openIndex="openIndex" @save="saveItem">
+		<CreateLayout :existing="item" :changes="formChanges" @remove="remove" @openIndex="openIndex" @save="saveItem">
 			<template #form>
-				<ItemForm ref="itemForm" :item="item" />
+				<ItemForm ref="itemForm" :item="item" @change="(e) => formChanges=e" />
 			</template>
 			<template #default>
 				<el-col class="item-content" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" direction="vertical">

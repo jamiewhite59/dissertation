@@ -25,6 +25,15 @@ export default {
 			}),
 		};
 	},
+	computed: {
+		changes() {
+			if (this.item) {
+				return Object.keys(this.itemForm).some((key) => this.item[key] !== this.itemForm[key]);
+			} else {
+				return true;
+			}
+		},
+	},
 	methods: {
 		validateItemForm() {
 			return this.$refs.itemFormRef.validate()
@@ -58,7 +67,7 @@ export default {
 };
 </script>
 <template>
-	<el-form class="create-form" ref="itemFormRef" label-position="top" :model="itemForm" :rules="itemRules">
+	<el-form class="create-form" ref="itemFormRef" label-position="top" :model="itemForm" :rules="itemRules" @input="$emit('change', changes)">
 		<el-form-item label="Title" prop="title" required>
 			<el-input v-model="itemForm.title"/>
 		</el-form-item>
@@ -66,7 +75,7 @@ export default {
 			<el-input v-model="itemForm.description"/>
 		</el-form-item>
 		<el-form-item label="Stock Type" prop="stock_type" required>
-			<el-select v-model="itemForm.stock_type">
+			<el-select v-model="itemForm.stock_type" @change="$emit('change', changes)">
 				<el-option label="Bulk" value="bulk"/>
 				<el-option label="Hire" value="hire"/>
 			</el-select>
