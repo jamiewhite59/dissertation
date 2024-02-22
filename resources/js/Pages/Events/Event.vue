@@ -137,20 +137,41 @@ export default {
 				router.put(route('events.destroyItem', this.event.id), { ids: ids, });
 			}).catch(() => {});
 		},
-		allocatePieceCode() {
+		rowAllocate(item) {
+			if (item.item_stock_type === 'hire') {
+				ElMessageBox.prompt('Input piece code', 'Code', {
+					confirmButtonText: 'Allocate',
+					cancelButtonText: 'Cancel',
+				}).then((value) => {
+					this.allocatePieceCode(item, value.value);
+				});
+			} else {
+				ElMessageBox.prompt('Input quantity', 'Quantity', {
+					confirmButtonText: 'Allocate',
+					cancelButtonText: 'Cancel',
+				}).then((value) => {
+					this.allocatePieceBulk(item, value.value);
+				});
+			}
+		},
+		allocatePieceCode(item, code) {
 			let data = {
 				event_id: this.event.id,
-				piece_code: this.actionInput,
+				piece_code: code ? code : this.actionInput,
+				event_item_id: item.id,
 			};
 			router.put(route('events.addItemPiece', this.event.id), data);
 			this.actionInput = '';
 		},
-		allocatePieceBulk() {
-			let data = {
-				event_id: this.event.id,
-				item_id: this.tableSelection.value[0].item_id,
-			};
-			router.put(route('events.allocateBulk', this.event.id), data);
+		allocatePieceBulk(item, quantity) {
+			if (item.item_stock_type === 'bulk') {
+				let data = {
+					event_id: item.event_id,
+					item_id: item.item_id,
+					quantity: quantity,
+				};
+				router.put(route('events.allocateBulk', item.event_id), data);
+			}
 		},
 		checkoutPiece() {
 			console.debug('TODO: checkout piece');
@@ -187,7 +208,7 @@ export default {
 		handleTableSelectionChange(val) {
 			this.tableSelection.value = val;
 		},
-		checkStatus(item_id) {
+		getStatus(item_id) {
 			let items = this.event.items.filter((item) => item.item_id === item_id);
 			if (items.every((item) => item.status === 'allocated')) {
 				return 'allocated';
@@ -195,7 +216,7 @@ export default {
 				return 'reserved';
 			}
 		},
-		checkAllocated(item_id) {
+		getAllocated(item_id) {
 			let items = this.event.items.filter((item) => item.item_id === item_id);
 			let allocatedItems = items.filter((item) => item.status === 'allocated');
 
@@ -214,7 +235,6 @@ export default {
 						<el-container class="item-action-button-container">
 							<el-button type="primary" @click="itemDialogVisible = true">Add</el-button>
 							<el-button type="primary" @click="removeItems" :disabled="!tableSelection.value?.length">Remove {{ tableSelection.value?.length ? '(' + tableSelection.value.length + ')' : '' }}</el-button>
-							<el-button type="warning" @click="allocatePieceBulk" :disabled="!bulkAllocationAllowed">Allocate Bulk</el-button>
 						</el-container>
 						<el-container class="item-action-dropdown">
 							<el-dropdown split-button type="primary" trigger="click" @click="itemAction">
@@ -240,7 +260,7 @@ export default {
 						<el-table-column label="Allocated">
 							<template #default="scope">
 								<div v-if="scope.row.item_stock_type === 'hire'">{{ scope.row.piece_id ? 1 : 0 }}</div>
-								<div v-else>{{ checkAllocated(scope.row.item_id) }}</div>
+								<div v-else>{{ getAllocated(scope.row.item_id) }}</div>
 							</template>
 						</el-table-column>
 						<el-table-column prop="piece_code" label="Code">
@@ -252,7 +272,19 @@ export default {
 						<el-table-column prop="status" label="Status">
 							<template #default="scope">
 								<div v-if="scope.row.item_stock_type === 'hire'">{{ scope.row.status }}</div>
-								<div v-else>{{checkStatus(scope.row.item_id)}}</div>
+								<div v-else>{{getStatus(scope.row.item_id)}}</div>
+							</template>
+						</el-table-column>
+						<el-table-column label="Action">
+							<template #default="scope">
+								<el-dropdown trigger="click" size="small">
+									<el-button type="primary"><el-icon><arrow-down /></el-icon></el-button>
+									<template #dropdown>
+										<el-dropdown-menu>
+											<el-dropdown-item @click="rowAllocate(scope.row)">Allocate</el-dropdown-item>
+										</el-dropdown-menu>
+									</template>
+								</el-dropdown>
 							</template>
 						</el-table-column>
 					</el-table>

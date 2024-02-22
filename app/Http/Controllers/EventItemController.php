@@ -32,9 +32,12 @@ class EventItemController extends Controller {
         if (count($availablePiece) > 0) {
             return back()->withErrors(['already_allocated' => 'Piece already allocated to event']);
         }
-
-        $eventItem = EventItem::where('event_id', $request->event_id)->where('piece_id', null)->where('item_id', $piece->item->id)->first();
-        if ($eventItem === null) {
+        if ($request->event_item_id) {
+            $eventItem = EventItem::find($request->event_item_id);
+        } else {
+            $eventItem = EventItem::where('event_id', $request->event_id)->where('piece_id', null)->where('item_id', $piece->item->id)->first();
+        }
+        if ($eventItem === null || $eventItem->piece_id !== null) {
             return back()->withErrors(['not_required' => 'No items available for allocation with this piece.']);
         }
 
@@ -45,11 +48,20 @@ class EventItemController extends Controller {
 
     public function allocateBulkItem(Request $request) {
         $unallocatedEventitems = EventItem::where('item_id', $request->item_id)->where('status', 'reserved')->get();
-        if (count($unallocatedEventitems) === 0) {
+        $numUnallocatedItems = count($unallocatedEventitems);
+        if ($numUnallocatedItems === 0) {
             return back()->withErrors(['not_found' => 'No items found to be allocated']);
         }
-        $unallocatedEventitems[0]->status = 'allocated';
-        $unallocatedEventitems[0]->save();
+        if ($numUnallocatedItems <= $request->quantity) {
+            $unallocatedEventitems->toQuery()->update([
+                'status' => 'allocated',
+            ]);
+        } else {
+            for ($index=0; $index < $request->quantity; $index++) {
+                $unallocatedEventitems[$index]->status = 'allocated';
+                $unallocatedEventitems[$index]->save();
+            }
+        }
     }
 
     public function removePiece(Request $request) {
