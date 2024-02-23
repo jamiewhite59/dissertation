@@ -80,6 +80,15 @@ class EventItemController extends Controller {
         $eventItem->save();
     }
 
+    public function completePiece(Request $request) {
+        $piece = Piece::firstWhere('code', $request->piece_code);
+        $eventItem = EventItem::where('event_id', $request->event_id)->where('piece_id', $piece->id)->first();
+
+        $eventItem->status = 'completed';
+        $eventItem->save();
+    }
+
+
     public function removePiece(Request $request) {
         $eventItem = EventItem::find($request->eventItem_id);
 

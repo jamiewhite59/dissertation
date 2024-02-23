@@ -189,6 +189,11 @@ export default {
 		},
 		completePiece() {
 			console.debug('TODO: complete piece');
+			let data = {
+				event_id: this.event.id,
+				piece_code: this.actionInput,
+			};
+			router.put(route('events.completePiece', this.event.id), data);
 		},
 		itemAction() {
 			switch (this.actionValue) {
