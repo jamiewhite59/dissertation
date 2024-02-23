@@ -57,6 +57,7 @@ Route::put('/events/{event}/addItemPiece', [EventItemController::class, 'addPiec
 Route::put('/events/{event}/allocateBulkItem', [EventItemController::class, 'allocateBulkItem'])->name('events.allocateBulk');
 Route::put('/events/{event}/removeItemPiece', [EventItemController::class, 'removePiece'])->name('events.removeItemPiece');
 Route::put('/events/{event}/checkoutPiece', [EventItemController::class, 'checkoutPiece'])->name('events.checkoutPiece');
+Route::put('/events/{event}/checkinPiece', [EventItemController::class, 'checkinPiece'])->name('events.checkinPiece');
 
 Route::resource('customers', CustomerController::class);
 

@@ -181,7 +181,11 @@ export default {
 			router.put(route('events.checkoutPiece', this.event.id), data);
 		},
 		checkinPiece() {
-			console.debug('TODO: checkin piece');
+			let data = {
+				event_id: this.event.id,
+				piece_code: this.actionInput,
+			};
+			router.put(route('events.checkinPiece', this.event.id), data);
 		},
 		completePiece() {
 			console.debug('TODO: complete piece');
