@@ -64,6 +64,14 @@ class EventItemController extends Controller {
         }
     }
 
+    public function checkoutPiece(Request $request) {
+        $piece = Piece::firstWhere('code', $request->piece_code);
+        $eventItem = EventItem::where('event_id', $request->event_id)->where('piece_id', $piece->id)->first();
+
+        $eventItem->status = 'checked-out';
+        $eventItem->save();
+    }
+
     public function removePiece(Request $request) {
         $eventItem = EventItem::find($request->eventItem_id);
 

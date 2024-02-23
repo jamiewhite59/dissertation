@@ -158,7 +158,7 @@ export default {
 			let data = {
 				event_id: this.event.id,
 				piece_code: code ? code : this.actionInput,
-				event_item_id: item.id,
+				event_item_id: item?.id,
 			};
 			router.put(route('events.addItemPiece', this.event.id), data);
 			this.actionInput = '';
@@ -174,7 +174,11 @@ export default {
 			}
 		},
 		checkoutPiece() {
-			console.debug('TODO: checkout piece');
+			let data = {
+				event_id: this.event.id,
+				piece_code: this.actionInput,
+			};
+			router.put(route('events.checkoutPiece', this.event.id), data);
 		},
 		checkinPiece() {
 			console.debug('TODO: checkin piece');
@@ -202,7 +206,7 @@ export default {
 		},
 		checkCodeInput(event) {
 			if (event.keyCode === 13) {
-				this.allocatePieceCode();
+				this.itemAction();
 			}
 		},
 		handleTableSelectionChange(val) {
