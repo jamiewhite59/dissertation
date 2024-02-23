@@ -13,6 +13,7 @@ export default {
 				description: this.item ? this.item.description : '',
 				image: this.item ? this.item.image : null,
 				stock_type: this.item ? this.item.stock_type : 'bulk',
+				quantity: this.item ? this.item.pieceQuantity: 0,
 			}),
 			itemRules: reactive({
 				title: [
@@ -61,6 +62,7 @@ export default {
 			this.itemForm.description = '';
 			this.itemForm.image = null;
 			this.itemForm.stock_type = 'bulk';
+			this.itemForm.pieceQuantity = 0;
 			this.$refs.itemFormRef.resetFields();
 		},
 	},
@@ -82,6 +84,9 @@ export default {
 		</el-form-item>
 		<el-form-item label="Image" prop="image">
 			<el-input v-model="itemForm.image"/>
+		</el-form-item>
+		<el-form-item label="Quantity">
+			<el-input v-model="itemForm.quantity" :disabled="itemForm.stock_type === 'hire'"/>
 		</el-form-item>
 	</el-form>
 </template>
