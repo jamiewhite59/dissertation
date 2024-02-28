@@ -11,6 +11,7 @@ export default {
 	props: {
 		title: String,
 		errors: Object,
+		flash: Object,
 	},
 	watch: {
 		errors() {
@@ -21,6 +22,15 @@ export default {
 						message: '<strong>Error: </strong>' + err,
 						grouping: true,
 					});
+				});
+			}
+		},
+		flash() {
+			if (this.flash.success) {
+				ElMessage.success({
+					dangerouslyUseHTMLString: true,
+					message: '<strong>Success: </strong>' + this.flash.success,
+					grouping: true,
 				});
 			}
 		},

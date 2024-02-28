@@ -44,6 +44,7 @@ class EventItemController extends Controller {
         $eventItem->piece_id = $piece->id;
         $eventItem->status = 'allocated';
         $eventItem->save();
+        return back()->with('success', 'Item allocated: ' . $request->piece_code);
     }
 
     public function allocateBulkItem(Request $request) {
@@ -62,6 +63,7 @@ class EventItemController extends Controller {
                 $unallocatedEventitems[$index]->save();
             }
         }
+        return back()->with('success', 'Bulk items allocated');
     }
 
     public function checkoutPiece(Request $request) {
@@ -70,6 +72,7 @@ class EventItemController extends Controller {
 
         $eventItem->status = 'checked-out';
         $eventItem->save();
+        return back()->with('success', 'Item checked-out: ' . $request->piece_code);
     }
 
     public function checkinPiece(Request $request) {
@@ -78,6 +81,7 @@ class EventItemController extends Controller {
 
         $eventItem->status = 'checked-in';
         $eventItem->save();
+        return back()->with('success', 'Item checked-in: ' . $request->piece_code);
     }
 
     public function completePiece(Request $request) {
@@ -86,6 +90,7 @@ class EventItemController extends Controller {
 
         $eventItem->status = 'completed';
         $eventItem->save();
+        return back()->with('success', 'Item completed: ' . $request->piece_code);
     }
 
 

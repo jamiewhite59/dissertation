@@ -6,8 +6,9 @@ export default {
 	props: {
 		event: Object,
 		customers: Array,
-		errors: Object,
 		items: Array,
+		errors: Object,
+		flash: Object,
 	},
 	data() {
 		return {
@@ -73,6 +74,11 @@ export default {
 				return false;
 			}
 			return true;
+		},
+	},
+	watch: {
+		success() {
+			console.debug('success?!', this.success);
 		},
 	},
 	methods: {
@@ -241,7 +247,7 @@ export default {
 </script>
 
 <template>
-	<MainLayout :title="event ? event.title : 'Events'" :errors="errors">
+	<MainLayout :title="event ? event.title : 'Events'" :errors="errors" :flash="flash">
 		<el-tabs v-model="activeTab">
 			<el-tab-pane v-if="event" label="Items" name="items">
 				<el-container class="items-pane-container" direction="vertical">
