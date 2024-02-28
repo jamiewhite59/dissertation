@@ -216,6 +216,7 @@ export default {
 		checkCodeInput(event) {
 			if (event.keyCode === 13) {
 				this.itemAction();
+				this.actionInput = '';
 			}
 		},
 		handleTableSelectionChange(val) {
