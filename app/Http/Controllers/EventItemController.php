@@ -68,6 +68,11 @@ class EventItemController extends Controller {
 
     public function checkoutPiece(Request $request) {
         $piece = Piece::firstWhere('code', $request->piece_code);
+
+        if ($piece === null) {
+            return back()->withErrors(['not_found' => "No piece was found with code $request->piece_code"]);
+        }
+
         $eventItem = EventItem::where('event_id', $request->event_id)->where('piece_id', $piece->id)->first();
 
         $eventItem->status = 'checked-out';
@@ -77,6 +82,11 @@ class EventItemController extends Controller {
 
     public function checkinPiece(Request $request) {
         $piece = Piece::firstWhere('code', $request->piece_code);
+
+        if ($piece === null) {
+            return back()->withErrors(['not_found' => "No piece was found with code $request->piece_code"]);
+        }
+
         $eventItem = EventItem::where('event_id', $request->event_id)->where('piece_id', $piece->id)->first();
 
         $eventItem->status = 'checked-in';
@@ -86,6 +96,11 @@ class EventItemController extends Controller {
 
     public function completePiece(Request $request) {
         $piece = Piece::firstWhere('code', $request->piece_code);
+
+        if ($piece === null) {
+            return back()->withErrors(['not_found' => "No piece was found with code $request->piece_code"]);
+        }
+
         $eventItem = EventItem::where('event_id', $request->event_id)->where('piece_id', $piece->id)->first();
 
         $eventItem->status = 'completed';
