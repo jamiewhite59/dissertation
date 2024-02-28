@@ -33,8 +33,10 @@ export default {
 			router.get(route('items.edit', item.id));
 		},
 		createItem() {
-			this.$refs.itemForm.save();
-			this.createDialogVisible = false;
+			this.$refs.itemForm.save()
+				.then(() => {
+					this.createDialogVisible = false;
+				});
 		},
 		resetForm() {
 			this.$refs.itemForm.resetForm();

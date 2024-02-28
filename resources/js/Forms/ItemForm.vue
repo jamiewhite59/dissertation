@@ -46,16 +46,22 @@ export default {
 				});
 		},
 		save() {
-			this.validateItemForm()
-				.then((valid) => {
-					if (valid) {
-						if (this.item){
-							router.patch(route('items.update', this.item.id), this.itemForm);
+			return new Promise((resolve, reject) => {
+				this.validateItemForm()
+					.then((valid) => {
+						if (valid) {
+							if (this.item){
+								router.patch(route('items.update', this.item.id), this.itemForm);
+								resolve();
+							} else {
+								router.post(route('items.store', this.itemForm));
+								resolve();
+							}
 						} else {
-							router.post(route('items.store', this.itemForm));
+							reject();
 						}
-					}
-				});
+					});
+			});
 		},
 		resetForm() {
 			this.itemForm.title = '';
@@ -86,7 +92,7 @@ export default {
 			<el-input v-model="itemForm.image"/>
 		</el-form-item>
 		<el-form-item label="Quantity">
-			<el-input v-model="itemForm.quantity" :disabled="itemForm.stock_type === 'hire'"/>
+			<el-input v-model="itemForm.quantity" type="number" :disabled="itemForm.stock_type === 'hire'"/>
 		</el-form-item>
 	</el-form>
 </template>
