@@ -111,6 +111,8 @@ class EventItemController extends Controller {
         $eventItem->save();
     }
 
+    // INTERNAL FUNCTIONS
+
     private function getEventItem(String $code, String $event_id) {
         $piece = Piece::firstWhere('code', $code);
 
