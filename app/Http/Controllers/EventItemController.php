@@ -67,13 +67,11 @@ class EventItemController extends Controller {
     }
 
     public function checkoutPiece(Request $request) {
-        $piece = Piece::firstWhere('code', $request->piece_code);
+        $eventItem = $this->getEventItem($request->piece_code, $request->event_id);
 
-        if ($piece === null) {
-            return back()->withErrors(['not_found' => "No piece was found with code $request->piece_code"]);
+        if (gettype($eventItem) === 'array') {
+            return back()->withErrors($eventItem);
         }
-
-        $eventItem = EventItem::where('event_id', $request->event_id)->where('piece_id', $piece->id)->first();
 
         $eventItem->status = 'checked-out';
         $eventItem->save();
@@ -81,13 +79,11 @@ class EventItemController extends Controller {
     }
 
     public function checkinPiece(Request $request) {
-        $piece = Piece::firstWhere('code', $request->piece_code);
+        $eventItem = $this->getEventItem($request->piece_code, $request->event_id);
 
-        if ($piece === null) {
-            return back()->withErrors(['not_found' => "No piece was found with code $request->piece_code"]);
+        if (gettype($eventItem) === 'array') {
+            return back()->withErrors($eventItem);
         }
-
-        $eventItem = EventItem::where('event_id', $request->event_id)->where('piece_id', $piece->id)->first();
 
         $eventItem->status = 'checked-in';
         $eventItem->save();
@@ -95,13 +91,11 @@ class EventItemController extends Controller {
     }
 
     public function completePiece(Request $request) {
-        $piece = Piece::firstWhere('code', $request->piece_code);
+        $eventItem = $this->getEventItem($request->piece_code, $request->event_id);
 
-        if ($piece === null) {
-            return back()->withErrors(['not_found' => "No piece was found with code $request->piece_code"]);
+        if (gettype($eventItem) === 'array') {
+            return back()->withErrors($eventItem);
         }
-
-        $eventItem = EventItem::where('event_id', $request->event_id)->where('piece_id', $piece->id)->first();
 
         $eventItem->status = 'completed';
         $eventItem->save();
@@ -115,5 +109,21 @@ class EventItemController extends Controller {
         $eventItem->piece_id = null;
         $eventItem->status = 'reserved';
         $eventItem->save();
+    }
+
+    private function getEventItem(String $code, String $event_id) {
+        $piece = Piece::firstWhere('code', $code);
+
+        if ($piece === null) {
+            return ['not_found' => "No piece was found with code $code"];
+        }
+
+        $eventItem = EventItem::where('event_id', $event_id)->where('piece_id', $piece->id)->first();
+
+        if ($eventItem === null) {
+            return ['not_found' => "No event item was found in this event with code $code"];
+        }
+
+        return $eventItem;
     }
 }
