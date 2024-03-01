@@ -80,6 +80,9 @@ export default {
 		success() {
 			console.debug('success?!', this.success);
 		},
+		actionValue() {
+			this.$refs.actionInput.focus();
+		},
 	},
 	methods: {
 		save() {
@@ -345,7 +348,7 @@ export default {
 									<el-dropdown-item @click="actionValue='Complete'">Complete</el-dropdown-item>
 								</template>
 							</el-dropdown>
-							<el-input class="item-action-input" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
+							<el-input class="item-action-input" ref="actionInput" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
 						</el-container>
 					</el-row>
 					<el-table :data="augmentedItems" height="100%" @selection-change="handleTableSelectionChange">
