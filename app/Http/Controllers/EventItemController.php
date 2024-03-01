@@ -67,7 +67,7 @@ class EventItemController extends Controller {
     }
 
     public function allocateBulkItem(Request $request) {
-        $unallocatedEventitems = EventItem::where('item_id', $request->item_id)->where('status', 'reserved')->get();
+        $unallocatedEventitems = EventItem::where('event_id', $request->event_id)->where('item_id', $request->item_id)->where('status', 'reserved')->get();
         $numUnallocatedItems = count($unallocatedEventitems);
         if ($numUnallocatedItems === 0) {
             return back()->withErrors(['not_found' => 'No items found to be allocated']);
