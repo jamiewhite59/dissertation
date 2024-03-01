@@ -309,6 +309,18 @@ export default {
 
 			return allocatedItems.length;
 		},
+		rowDropdownDisabled(row, action) {
+			switch (action) {
+			case 'allocate':
+				return row.item_stock_type === 'hire' ? row.status !== 'reserved' : this.getBulkStatus(row.item_id) !== 'reserved';
+			case 'check-out':
+				return row.item_stock_type === 'hire' ? row.status === 'checked-out' || row.status === 'reserved' : ['checked-out', 'reserved',].includes(this.getBulkStatus(row.item_id));
+			case 'check-in':
+				return row.item_stock_type === 'hire' ? row.status === 'checked-in' || row.status === 'reserved' : ['checked-in', 'reserved',].includes(this.getBulkStatus(row.item_id));
+			case 'complete':
+				return row.item_stock_type === 'hire' ? row.status === 'completed' || row.status === 'reserved' : ['completed', 'reserved',].includes(this.getBulkStatus(row.item_id));
+			}
+		},
 	},
 };
 </script>
@@ -359,7 +371,7 @@ export default {
 						<el-table-column prop="status" label="Status">
 							<template #default="scope">
 								<div v-if="scope.row.item_stock_type === 'hire'">{{ scope.row.status }}</div>
-								<div v-else>{{getStatus(scope.row.item_id)}}</div>
+								<div v-else>{{getBulkStatus(scope.row.item_id)}}</div>
 							</template>
 						</el-table-column>
 						<el-table-column label="Action">
@@ -368,10 +380,10 @@ export default {
 									<el-button type="primary"><el-icon><arrow-down /></el-icon></el-button>
 									<template #dropdown>
 										<el-dropdown-menu>
-											<el-dropdown-item :disabled="scope.row.status === 'allocated'" @click="rowAllocate(scope.row)">Allocate</el-dropdown-item>
-											<el-dropdown-item :disabled="scope.row.status === 'checked-out'" @click="rowAction(scope.row, 'check-out')">Check Out</el-dropdown-item>
-											<el-dropdown-item :disabled="scope.row.status === 'checked-in'" @click="rowAction(scope.row, 'check-in')">Check In</el-dropdown-item>
-											<el-dropdown-item :disabled="scope.row.status === 'completed'" @click="rowAction(scope.row, 'complete')">Complete</el-dropdown-item>
+											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'allocate')" @click="rowAllocate(scope.row)">Allocate</el-dropdown-item>
+											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'check-out')" @click="rowAction(scope.row, 'check-out')">Check Out</el-dropdown-item>
+											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'check-in')" @click="rowAction(scope.row, 'check-in')">Check In</el-dropdown-item>
+											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'complete')" @click="rowAction(scope.row, 'complete')">Complete</el-dropdown-item>
 										</el-dropdown-menu>
 									</template>
 								</el-dropdown>
