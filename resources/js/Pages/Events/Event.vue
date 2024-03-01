@@ -184,22 +184,60 @@ export default {
 				event_id: this.event.id,
 				piece_code: this.actionInput,
 			};
-			router.put(route('events.checkoutPiece', this.event.id), data);
+			let eventItem = this.event.items.find((piece) => piece.piece_code === this.actionInput);
+			if (eventItem.status !== 'reserved' || eventItem.status !== 'allocated') {
+				ElMessageBox.confirm(
+					'This item is not currently reserved or allocated, do you want to force its status?',
+					'Force Status',
+					{
+						confirmButtonText: 'Confirm',
+						type: 'warning',
+						center: true,
+					}
+				).then(() => {
+					router.put(route('events.checkoutPiece', this.event.id), data);
+				}).catch(() => {});
+			}
 		},
 		checkinPiece() {
 			let data = {
 				event_id: this.event.id,
 				piece_code: this.actionInput,
 			};
-			router.put(route('events.checkinPiece', this.event.id), data);
+			let eventItem = this.event.items.find((piece) => piece.piece_code === this.actionInput);
+			if (eventItem.status !== 'checked-out') {
+				ElMessageBox.confirm(
+					'This item is not currently checked-out, do you want to force its status?',
+					'Force Status',
+					{
+						confirmButtonText: 'Confirm',
+						type: 'warning',
+						center: true,
+					}
+				).then(() => {
+					router.put(route('events.checkinPiece', this.event.id), data);
+				}).catch(() => {});
+			}
 		},
 		completePiece() {
-			console.debug('TODO: complete piece');
 			let data = {
 				event_id: this.event.id,
 				piece_code: this.actionInput,
 			};
-			router.put(route('events.completePiece', this.event.id), data);
+			let eventItem = this.event.items.find((piece) => piece.piece_code === this.actionInput);
+			if (eventItem.status !== 'checked-in') {
+				ElMessageBox.confirm(
+					'This item is not currently checked-in, do you want to force its status?',
+					'Force Status',
+					{
+						confirmButtonText: 'Confirm',
+						type: 'warning',
+						center: true,
+					}
+				).then(() => {
+					router.put(route('events.completePiece', this.event.id), data);
+				}).catch(() => {});
+			}
 		},
 		itemAction() {
 			switch (this.actionValue) {
