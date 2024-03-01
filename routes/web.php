@@ -55,6 +55,7 @@ Route::put('/events/{event}/addItem', [EventItemController::class, 'create'])->n
 Route::put('/events/{event}/destroyItem', [EventItemController::class, 'destroy'])->name('events.destroyItem');
 Route::put('/events/{event}/addItemPiece', [EventItemController::class, 'addPiece'])->name('events.addItemPiece');
 Route::put('/events/{event}/allocateBulkItem', [EventItemController::class, 'allocateBulkItem'])->name('events.allocateBulk');
+Route::put('/events/{event}/actionBulk', [EventItemController::class, 'actionBulk'])->name('events.actionBulk');
 Route::put('/events/{event}/removeItemPiece', [EventItemController::class, 'removePiece'])->name('events.removeItemPiece');
 Route::put('/events/{event}/checkoutPiece', [EventItemController::class, 'checkoutPiece'])->name('events.checkoutPiece');
 Route::put('/events/{event}/checkinPiece', [EventItemController::class, 'checkinPiece'])->name('events.checkinPiece');

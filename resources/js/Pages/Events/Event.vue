@@ -146,26 +146,45 @@ export default {
 				router.put(route('events.destroyItem', this.event.id), { ids: ids, });
 			}).catch(() => {});
 		},
-		rowAllocate(item) {
-			if (item.item_stock_type === 'hire') {
-				ElMessageBox.prompt('Input piece code', 'Code', {
-					confirmButtonText: 'Allocate',
-					cancelButtonText: 'Cancel',
-				}).then((value) => {
-					this.allocatePieceCode(item, value.value);
-				});
-			} else {
-				ElMessageBox.prompt('Input quantity', 'Quantity', {
-					confirmButtonText: 'Allocate',
-					cancelButtonText: 'Cancel',
-				}).then((value) => {
-					this.allocatePieceBulk(item, value.value);
-				});
-			}
+		allocatePieceCode(item, code) {
+			let data = {
+				event_id: this.event.id,
+				piece_code: code ? code : this.actionInput,
+				event_item_id: item?.id,
+			};
+			router.put(route('events.addItemPiece', this.event.id), data);
+			this.actionInput = '';
+		},
+		allocatePieceBulk(item, quantity) {
+			let data = {
+				event_id: item.event_id,
+				item_id: item.item_id,
+				quantity: quantity,
+			};
+			router.put(route('events.allocateBulk', item.event_id), data);
+		},
+		actionBulk(item, quantity, old_status, new_status) {
+			let data = {
+				event_id: item.event_id,
+				item_id: item.item_id,
+				quantity: quantity,
+				old_status: old_status,
+				new_status: new_status,
+			};
+
+			router.put(route('events.actionBulk', item.event_id), data);
 		},
 		rowAction(item, action) {
 			if (item.item_stock_type === 'hire') {
 				switch (action) {
+				case 'allocate':
+					ElMessageBox.prompt('Input piece code', 'Code', {
+						confirmButtonText: 'Allocate',
+						cancelButtonText: 'Cancel',
+					}).then((value) => {
+						this.allocatePieceCode(item, value.value);
+					});
+					return;
 				case 'check-out':
 					this.checkoutPiece(item.piece_code);
 					return;
@@ -178,25 +197,26 @@ export default {
 				default:
 					console.warn('Definitely shouldnt be here mate');
 				}
-			}
-		},
-		allocatePieceCode(item, code) {
-			let data = {
-				event_id: this.event.id,
-				piece_code: code ? code : this.actionInput,
-				event_item_id: item?.id,
-			};
-			router.put(route('events.addItemPiece', this.event.id), data);
-			this.actionInput = '';
-		},
-		allocatePieceBulk(item, quantity) {
-			if (item.item_stock_type === 'bulk') {
-				let data = {
-					event_id: item.event_id,
-					item_id: item.item_id,
-					quantity: quantity,
-				};
-				router.put(route('events.allocateBulk', item.event_id), data);
+			} else {
+				ElMessageBox.prompt('Input quantity', 'Quantity', {
+					confirmButtonText: 'Confirm',
+					cancelButtonText: 'Cancel',
+				}).then((value) => {
+					switch (action) {
+					case 'allocate':
+						this.allocatePieceBulk(item, value.value);
+						return;
+					case 'check-out':
+						this.actionBulk(item, value.value, 'allocated', 'checked-out');
+						return;
+					case 'check-in':
+						this.actionBulk(item, value.value, 'checked-out', 'checked-in');
+						return;
+					case 'complete':
+						this.actionBulk(item, value.value, 'checked-in', 'completed');
+						return;
+					}
+				});
 			}
 		},
 		checkoutPiece(code) {
@@ -294,11 +314,11 @@ export default {
 		},
 		getBulkStatus(item_id) {
 			let items = this.event.items.filter((item) => item.item_id === item_id);
-			if (items.every((item) => item.status === 'allocated')) {
+			if (items.every((item) => item.status === 'allocated') || (items.some((item) => item.status === 'checked-out')) && ! items.every((item) => item.status === 'checked-out')) {
 				return 'allocated';
-			} else if (items.every((item) => item.status === 'checked-out')){
+			} else if (items.every((item) => item.status === 'checked-out') || items.some((item) => item.status === 'checked-in') && ! items.every((item) => item.status === 'checked-in')){
 				return 'checked-out';
-			} else if (items.every((item) => item.status === 'checked-in')) {
+			} else if (items.every((item) => item.status === 'checked-in') || items.some((item) => item.status === 'completed') && ! items.every((item) => item.status === 'completed')) {
 				return 'checked-in';
 			} else if (items.every((item) => item.status === 'completed')) {
 				return 'completed';
@@ -317,9 +337,9 @@ export default {
 			case 'allocate':
 				return row.item_stock_type === 'hire' ? row.status !== 'reserved' : this.getBulkStatus(row.item_id) !== 'reserved';
 			case 'check-out':
-				return row.item_stock_type === 'hire' ? row.status === 'checked-out' || row.status === 'reserved' : ['checked-out', 'reserved',].includes(this.getBulkStatus(row.item_id));
+				return row.item_stock_type === 'hire' ? row.status === 'checked-out' || row.status === 'reserved' : ['reserved', 'checked-out', 'checked-in', 'completed',].includes(this.getBulkStatus(row.item_id));
 			case 'check-in':
-				return row.item_stock_type === 'hire' ? row.status === 'checked-in' || row.status === 'reserved' : ['checked-in', 'reserved',].includes(this.getBulkStatus(row.item_id));
+				return row.item_stock_type === 'hire' ? row.status === 'checked-in' || row.status === 'reserved' : [ 'reserved', 'checked-out', 'checked-in', 'completed',].includes(this.getBulkStatus(row.item_id));
 			case 'complete':
 				return row.item_stock_type === 'hire' ? row.status === 'completed' || row.status === 'reserved' : ['completed', 'reserved',].includes(this.getBulkStatus(row.item_id));
 			}
@@ -351,7 +371,7 @@ export default {
 							<el-input class="item-action-input" ref="actionInput" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
 						</el-container>
 					</el-row>
-					<el-table :data="augmentedItems" height="100%" @selection-change="handleTableSelectionChange">
+					<el-table :data="augmentedItems" height="100%" @selection-change="handleTableSelectionChange" @row-click="showRow">
 						<el-table-column type="selection" width="55" />
 						<el-table-column prop="item_title" label="Title" sortable />
 						<el-table-column label="Quantity">
@@ -383,7 +403,7 @@ export default {
 									<el-button type="primary"><el-icon><arrow-down /></el-icon></el-button>
 									<template #dropdown>
 										<el-dropdown-menu>
-											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'allocate')" @click="rowAllocate(scope.row)">Allocate</el-dropdown-item>
+											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'allocate')" @click="rowAction(scope.row, 'allocate')">Allocate</el-dropdown-item>
 											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'check-out')" @click="rowAction(scope.row, 'check-out')">Check Out</el-dropdown-item>
 											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'check-in')" @click="rowAction(scope.row, 'check-in')">Check In</el-dropdown-item>
 											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'complete')" @click="rowAction(scope.row, 'complete')">Complete</el-dropdown-item>

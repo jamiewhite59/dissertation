@@ -47,6 +47,25 @@ class EventItemController extends Controller {
         return back()->with('success', 'Item allocated: ' . $request->piece_code);
     }
 
+    public function actionBulk(Request $request) {
+        $oldEventitems = EventItem::where('event_id', $request->event_id)->where('item_id', $request->item_id)->where('status', $request->old_status)->get();
+        $numOldItems = count($oldEventitems);
+        if ($numOldItems === 0) {
+            return back()->withErrors(['not_found' => "No items found to be $request->new_status"]);
+        }
+        if ($numOldItems <= $request->quantity) {
+            $oldEventitems->toQuery()->update([
+                'status' => $request->new_status,
+            ]);
+        } else {
+            for ($index=0; $index < $request->quantity; $index++) {
+                $oldEventitems[$index]->status = $request->new_status;
+                $oldEventitems[$index]->save();
+            }
+        }
+        return back()->with('success', "Bulk items $request->new_status");
+    }
+
     public function allocateBulkItem(Request $request) {
         $unallocatedEventitems = EventItem::where('item_id', $request->item_id)->where('status', 'reserved')->get();
         $numUnallocatedItems = count($unallocatedEventitems);
