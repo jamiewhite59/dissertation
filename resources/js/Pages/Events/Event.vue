@@ -289,10 +289,16 @@ export default {
 		handleTableSelectionChange(val) {
 			this.tableSelection.value = val;
 		},
-		getStatus(item_id) {
+		getBulkStatus(item_id) {
 			let items = this.event.items.filter((item) => item.item_id === item_id);
 			if (items.every((item) => item.status === 'allocated')) {
 				return 'allocated';
+			} else if (items.every((item) => item.status === 'checked-out')){
+				return 'checked-out';
+			} else if (items.every((item) => item.status === 'checked-in')) {
+				return 'checked-in';
+			} else if (items.every((item) => item.status === 'completed')) {
+				return 'completed';
 			} else {
 				return 'reserved';
 			}
