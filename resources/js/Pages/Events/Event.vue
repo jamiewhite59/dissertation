@@ -160,6 +160,23 @@ export default {
 				});
 			}
 		},
+		rowAction(item, action) {
+			if (item.item_stock_type === 'hire') {
+				switch (action) {
+				case 'check-out':
+					this.checkoutPiece(item.piece_code);
+					return;
+				case 'check-in':
+					this.checkinPiece(item.piece_code);
+					return;
+				case 'complete':
+					this.completePiece(item.piece_code);
+					return;
+				default:
+					console.warn('Definitely shouldnt be here mate');
+				}
+			}
+		},
 		allocatePieceCode(item, code) {
 			let data = {
 				event_id: this.event.id,
@@ -179,12 +196,12 @@ export default {
 				router.put(route('events.allocateBulk', item.event_id), data);
 			}
 		},
-		checkoutPiece() {
+		checkoutPiece(code) {
 			let data = {
 				event_id: this.event.id,
-				piece_code: this.actionInput,
+				piece_code: code || this.actionInput,
 			};
-			let eventItem = this.event.items.find((piece) => piece.piece_code === this.actionInput);
+			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
 			if (eventItem.status !== 'reserved' || eventItem.status !== 'allocated') {
 				ElMessageBox.confirm(
 					'This item is not currently reserved or allocated, do you want to force its status?',
@@ -197,14 +214,16 @@ export default {
 				).then(() => {
 					router.put(route('events.checkoutPiece', this.event.id), data);
 				}).catch(() => {});
+			} else {
+				router.put(route('events.checkoutPiece', this.event.id), data);
 			}
 		},
-		checkinPiece() {
+		checkinPiece(code) {
 			let data = {
 				event_id: this.event.id,
-				piece_code: this.actionInput,
+				piece_code: code || this.actionInput,
 			};
-			let eventItem = this.event.items.find((piece) => piece.piece_code === this.actionInput);
+			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
 			if (eventItem.status !== 'checked-out') {
 				ElMessageBox.confirm(
 					'This item is not currently checked-out, do you want to force its status?',
@@ -217,14 +236,16 @@ export default {
 				).then(() => {
 					router.put(route('events.checkinPiece', this.event.id), data);
 				}).catch(() => {});
+			} else {
+				router.put(route('events.checkinPiece', this.event.id), data);
 			}
 		},
-		completePiece() {
+		completePiece(code) {
 			let data = {
 				event_id: this.event.id,
-				piece_code: this.actionInput,
+				piece_code: code || this.actionInput,
 			};
-			let eventItem = this.event.items.find((piece) => piece.piece_code === this.actionInput);
+			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
 			if (eventItem.status !== 'checked-in') {
 				ElMessageBox.confirm(
 					'This item is not currently checked-in, do you want to force its status?',
@@ -237,6 +258,8 @@ export default {
 				).then(() => {
 					router.put(route('events.completePiece', this.event.id), data);
 				}).catch(() => {});
+			} else {
+				router.put(route('events.completePiece', this.event.id), data);
 			}
 		},
 		itemAction() {
@@ -339,7 +362,10 @@ export default {
 									<el-button type="primary"><el-icon><arrow-down /></el-icon></el-button>
 									<template #dropdown>
 										<el-dropdown-menu>
-											<el-dropdown-item @click="rowAllocate(scope.row)">Allocate</el-dropdown-item>
+											<el-dropdown-item :disabled="scope.row.status === 'allocated'" @click="rowAllocate(scope.row)">Allocate</el-dropdown-item>
+											<el-dropdown-item :disabled="scope.row.status === 'checked-out'" @click="rowAction(scope.row, 'check-out')">Check Out</el-dropdown-item>
+											<el-dropdown-item :disabled="scope.row.status === 'checked-in'" @click="rowAction(scope.row, 'check-in')">Check In</el-dropdown-item>
+											<el-dropdown-item :disabled="scope.row.status === 'completed'" @click="rowAction(scope.row, 'complete')">Complete</el-dropdown-item>
 										</el-dropdown-menu>
 									</template>
 								</el-dropdown>
