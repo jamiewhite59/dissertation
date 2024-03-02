@@ -225,7 +225,7 @@ export default {
 				piece_code: code || this.actionInput,
 			};
 			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
-			if (eventItem.status !== 'reserved' || eventItem.status !== 'allocated') {
+			if (eventItem.status !== 'reserved' && eventItem.status !== 'allocated') {
 				ElMessageBox.confirm(
 					'This item is not currently reserved or allocated, do you want to force its status?',
 					'Force Status',
@@ -337,11 +337,11 @@ export default {
 			case 'allocate':
 				return row.item_stock_type === 'hire' ? row.status !== 'reserved' : this.getBulkStatus(row.item_id) !== 'reserved';
 			case 'check-out':
-				return row.item_stock_type === 'hire' ? row.status === 'checked-out' || row.status === 'reserved' : ['reserved', 'checked-out', 'checked-in', 'completed',].includes(this.getBulkStatus(row.item_id));
+				return row.item_stock_type === 'hire' ? ['checked-out', 'reserved', 'completed',].includes(row.status) : ['reserved', 'checked-out', 'checked-in', 'completed',].includes(this.getBulkStatus(row.item_id));
 			case 'check-in':
-				return row.item_stock_type === 'hire' ? row.status === 'checked-in' || row.status === 'reserved' : [ 'reserved', 'checked-out', 'checked-in', 'completed',].includes(this.getBulkStatus(row.item_id));
+				return row.item_stock_type === 'hire' ? ['checked-in', 'reserved', 'completed',].includes(row.status) : [ 'reserved', 'checked-out', 'checked-in', 'completed',].includes(this.getBulkStatus(row.item_id));
 			case 'complete':
-				return row.item_stock_type === 'hire' ? row.status === 'completed' || row.status === 'reserved' : ['completed', 'reserved',].includes(this.getBulkStatus(row.item_id));
+				return row.item_stock_type === 'hire' ? ['completed',].includes(row.status) : ['completed', 'reserved',].includes(this.getBulkStatus(row.item_id));
 			}
 		},
 	},
@@ -371,7 +371,7 @@ export default {
 							<el-input class="item-action-input" ref="actionInput" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
 						</el-container>
 					</el-row>
-					<el-table :data="augmentedItems" height="100%" @selection-change="handleTableSelectionChange" @row-click="showRow">
+					<el-table :data="augmentedItems" height="100%" @selection-change="handleTableSelectionChange">
 						<el-table-column type="selection" width="55" />
 						<el-table-column prop="item_title" label="Title" sortable />
 						<el-table-column label="Quantity">
