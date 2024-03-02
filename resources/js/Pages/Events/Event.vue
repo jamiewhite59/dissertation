@@ -225,12 +225,8 @@ export default {
 				piece_code: code || this.actionInput,
 			};
 			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
-			if (eventItem.status === 'completed') {
-				ElMessage.error({
-					dangerouslyUseHTMLString: true,
-					message: '<strong>Error: </strong>' + 'Cannot change status of a completed item.',
-					grouping: true,
-				});
+			if (['checked-out', 'completed',].includes(eventItem.status)) {
+				this.statusChangeErrMessage();
 				return;
 			}
 			if (eventItem.status !== 'reserved' && eventItem.status !== 'allocated') {
@@ -255,12 +251,8 @@ export default {
 				piece_code: code || this.actionInput,
 			};
 			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
-			if (eventItem.status === 'completed') {
-				ElMessage.error({
-					dangerouslyUseHTMLString: true,
-					message: '<strong>Error: </strong>' + 'Cannot change status of a completed item.',
-					grouping: true,
-				});
+			if (['checked-in', 'completed',].includes(eventItem.status)) {
+				this.statusChangeErrMessage();
 				return;
 			}
 			if (eventItem.status !== 'checked-out') {
@@ -286,11 +278,7 @@ export default {
 			};
 			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
 			if (eventItem.status === 'completed') {
-				ElMessage.error({
-					dangerouslyUseHTMLString: true,
-					message: '<strong>Error: </strong>' + 'Cannot change status of a completed item.',
-					grouping: true,
-				});
+				this.statusChangeErrMessage();
 				return;
 			}
 			if (eventItem.status !== 'checked-in') {
@@ -365,8 +353,15 @@ export default {
 			case 'check-in':
 				return row.item_stock_type === 'hire' ? ['checked-in', 'reserved', 'completed',].includes(row.status) : [ 'reserved', 'checked-out', 'checked-in', 'completed',].includes(this.getBulkStatus(row.item_id));
 			case 'complete':
-				return row.item_stock_type === 'hire' ? ['completed',].includes(row.status) : ['completed', 'reserved',].includes(this.getBulkStatus(row.item_id));
+				return row.item_stock_type === 'hire' ? ['completed', 'reserved',].includes(row.status) : ['completed', 'reserved',].includes(this.getBulkStatus(row.item_id));
 			}
+		},
+		statusChangeErrMessage() {
+			ElMessage.error({
+				dangerouslyUseHTMLString: true,
+				message: '<strong>Error: </strong>' + 'Unable to change status.',
+				grouping: true,
+			});
 		},
 	},
 };
