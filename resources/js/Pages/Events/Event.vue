@@ -326,21 +326,21 @@ export default {
 		},
 		getBulkStatus(item_id) {
 			let items = this.event.items.filter((item) => item.item_id === item_id);
-			if (items.every((item) => item.status === 'allocated') || (items.some((item) => item.status === 'checked-out')) && ! items.every((item) => item.status === 'checked-out')) {
-				return 'allocated';
-			} else if (items.every((item) => item.status === 'checked-out') || items.some((item) => item.status === 'checked-in') && ! items.every((item) => item.status === 'checked-in')){
-				return 'checked-out';
-			} else if (items.every((item) => item.status === 'checked-in') || items.some((item) => item.status === 'completed') && ! items.every((item) => item.status === 'completed')) {
-				return 'checked-in';
-			} else if (items.every((item) => item.status === 'completed')) {
+			if (items.every((item) => item.status === 'completed')) {
 				return 'completed';
+			} else if (items.every((item) => item.status === 'checked-in') || (items.some((item) => item.status === 'completed') && ! items.every((item) => item.status === 'completed'))) {
+				return 'checked-in';
+			} else if (items.every((item) => item.status === 'checked-out') || (items.some((item) => item.status === 'checked-in') && ! items.every((item) => item.status === 'checked-in'))) {
+				return 'checked-out';
+			} else if (items.every((item) => item.status === 'allocated') || (items.some((item) => item.status === 'checked-out') && ! items.every((item) => item.status === 'checked-out'))) {
+				return 'allocated';
 			} else {
 				return 'reserved';
 			}
 		},
 		getAllocated(item_id) {
 			let items = this.event.items.filter((item) => item.item_id === item_id);
-			let allocatedItems = items.filter((item) => item.status === 'allocated');
+			let allocatedItems = items.filter((item) => ['allocated', 'checked-out', 'checked-in', 'completed',].includes(item.status));
 
 			return allocatedItems.length;
 		},
@@ -351,7 +351,7 @@ export default {
 			case 'check-out':
 				return row.item_stock_type === 'hire' ? ['checked-out', 'reserved', 'completed',].includes(row.status) : ['reserved', 'checked-out', 'checked-in', 'completed',].includes(this.getBulkStatus(row.item_id));
 			case 'check-in':
-				return row.item_stock_type === 'hire' ? ['checked-in', 'reserved', 'completed',].includes(row.status) : [ 'reserved', 'checked-out', 'checked-in', 'completed',].includes(this.getBulkStatus(row.item_id));
+				return row.item_stock_type === 'hire' ? ['checked-in', 'reserved', 'completed',].includes(row.status) : [ 'reserved', 'checked-in', 'completed',].includes(this.getBulkStatus(row.item_id));
 			case 'complete':
 				return row.item_stock_type === 'hire' ? ['completed', 'reserved',].includes(row.status) : ['completed', 'reserved',].includes(this.getBulkStatus(row.item_id));
 			}
