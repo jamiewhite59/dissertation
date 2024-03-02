@@ -225,7 +225,7 @@ export default {
 				piece_code: code || this.actionInput,
 			};
 			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
-			if (['checked-out', 'completed',].includes(eventItem.status)) {
+			if (! eventItem || ['checked-out', 'completed',].includes(eventItem?.status)) {
 				this.statusChangeErrMessage();
 				return;
 			}
@@ -251,7 +251,7 @@ export default {
 				piece_code: code || this.actionInput,
 			};
 			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
-			if (['checked-in', 'completed',].includes(eventItem.status)) {
+			if (! eventItem || ['checked-in', 'completed',].includes(eventItem?.status)) {
 				this.statusChangeErrMessage();
 				return;
 			}
@@ -277,7 +277,7 @@ export default {
 				piece_code: code || this.actionInput,
 			};
 			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
-			if (eventItem.status === 'completed') {
+			if (! eventItem || (eventItem?.status === 'completed')) {
 				this.statusChangeErrMessage();
 				return;
 			}
@@ -342,7 +342,6 @@ export default {
 			let items = this.event.items.filter((item) => item.item_id === item_id);
 			let statusArr = ['allocated', 'checked-out', 'checked-in', 'completed',];
 			let index = statusArr.indexOf(status);
-			console.debug('arr', statusArr.slice(index));
 			return items.filter((item) => statusArr.slice(index).includes(item.status)).length;
 		},
 		rowDropdownDisabled(row, action) {
