@@ -1,6 +1,6 @@
 <script>
 import { router } from '@inertiajs/vue3';
-import { ElMessageBox } from 'element-plus';
+import { ElMessageBox, ElMessage } from 'element-plus';
 
 export default {
 	props: {
@@ -225,6 +225,14 @@ export default {
 				piece_code: code || this.actionInput,
 			};
 			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
+			if (eventItem.status === 'completed') {
+				ElMessage.error({
+					dangerouslyUseHTMLString: true,
+					message: '<strong>Error: </strong>' + 'Cannot change status of a completed item.',
+					grouping: true,
+				});
+				return;
+			}
 			if (eventItem.status !== 'reserved' && eventItem.status !== 'allocated') {
 				ElMessageBox.confirm(
 					'This item is not currently reserved or allocated, do you want to force its status?',
@@ -247,6 +255,14 @@ export default {
 				piece_code: code || this.actionInput,
 			};
 			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
+			if (eventItem.status === 'completed') {
+				ElMessage.error({
+					dangerouslyUseHTMLString: true,
+					message: '<strong>Error: </strong>' + 'Cannot change status of a completed item.',
+					grouping: true,
+				});
+				return;
+			}
 			if (eventItem.status !== 'checked-out') {
 				ElMessageBox.confirm(
 					'This item is not currently checked-out, do you want to force its status?',
@@ -269,6 +285,14 @@ export default {
 				piece_code: code || this.actionInput,
 			};
 			let eventItem = this.event.items.find((piece) => piece.piece_code === data.piece_code);
+			if (eventItem.status === 'completed') {
+				ElMessage.error({
+					dangerouslyUseHTMLString: true,
+					message: '<strong>Error: </strong>' + 'Cannot change status of a completed item.',
+					grouping: true,
+				});
+				return;
+			}
 			if (eventItem.status !== 'checked-in') {
 				ElMessageBox.confirm(
 					'This item is not currently checked-in, do you want to force its status?',
