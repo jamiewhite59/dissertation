@@ -6,6 +6,7 @@ use App\Http\Requests\ItemFormRequest;
 use App\Http\Requests\PieceFormRequest;
 use App\Models\Item;
 use App\Models\Piece;
+use App\Models\EventItem;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -101,6 +102,11 @@ class ItemController extends Controller
     }
 
     public function destroyPiece(Request $request, $id): RedirectResponse {
+        $eventItems = EventItem::where('piece_id', $id)->where('status', '!=', 'completed')->get();
+        if (count($eventItems) !== 0) {
+            return back()->withErrors(['unable' => 'An event item is currently using this piece']);
+        }
+
         Piece::destroy($id);
 
         return back();
