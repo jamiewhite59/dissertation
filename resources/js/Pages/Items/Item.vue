@@ -108,7 +108,7 @@ export default {
 						<el-container class="item-piece-wrapper">
 							<el-scrollbar class="piece-scrollbar" height="100%">
 								<el-container class="list-space">
-									<el-card class="piece-item add-card" shadow="hover" @click="dialogVisible = true">
+									<el-card class="piece-item add-card" shadow="hover" @click="dialogVisible = true;">
 										<el-text tag="b" size="large">Add Piece</el-text>
 										<el-icon><Plus/></el-icon>
 									</el-card>
@@ -122,12 +122,12 @@ export default {
 			</template>
 		</CreateLayout>
 	</MainLayout>
-	<el-dialog v-model="dialogVisible" width="30%" align-center @closed="hideDialog">
+	<el-dialog v-model="dialogVisible" width="30%" align-center @opened="$refs.codeInput.focus()" @closed="hideDialog">
 		<template #header>{{ selectedPiece ? 'Edit Piece' : 'Create Piece' }}</template>
 		<template #default>
 			<el-form ref="pieceFormRef" label-position="top" :model="pieceForm" :rules="pieceRules">
 				<el-form-item label="Identifying Code" prop="code">
-					<el-input v-model="pieceForm.code"/>
+					<el-input ref="codeInput" v-model="pieceForm.code"/>
 				</el-form-item>
 			</el-form>
 		</template>
