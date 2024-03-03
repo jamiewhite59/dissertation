@@ -89,6 +89,7 @@ export default {
 			this.dialogVisible = false;
 			this.selectedPiece = null;
 			this.pieceForm.code = '';
+			this.$refs.pieceFormRef.resetFields();
 		},
 	},
 };
