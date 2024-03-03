@@ -9,6 +9,12 @@ use App\Models\Piece;
 
 class EventItemController extends Controller {
     public function create(Request $request) {
+        $itemPieces = Piece::where('item_id', $request->item_id)->get();
+        $sameItems = EventItem::where('item_id', $request->item_id)->where('event_id', $request->event_id)->get();
+        if (count($sameItems) >= count($itemPieces)) {
+            return back()->withErrors(['unable' => 'Cannot add any more of this item to this event']);
+        }
+
         $eventItem = new EventItem;
 
         $eventItem->item_id = $request->item_id;
