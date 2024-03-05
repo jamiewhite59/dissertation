@@ -28,7 +28,7 @@ class CustomerController extends Controller
         $customer->name = $request->name;
         $customer->email = $request->email;
         $customer->phone_number = $request->phone_number;
-        $customer->company = $request->company;
+        $customer->company = $request->company ?: '';
         $customer->save();
 
         return redirect('/customers');
