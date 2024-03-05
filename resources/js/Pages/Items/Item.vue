@@ -98,7 +98,7 @@ export default {
 	<MainLayout title="Items" :errors="errors">
 		<CreateLayout :existing="item" :changes="formChanges" @remove="remove" @openIndex="openIndex" @save="saveItem">
 			<template #form>
-				<ItemForm ref="itemForm" :item="item" @change="(e) => formChanges=e" />
+				<ItemForm ref="itemForm" :item="item" @change="(e) => typeof(e) === 'boolean' ? changes=e : ''" />
 			</template>
 			<template #default>
 				<el-col class="item-content" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" direction="vertical">
