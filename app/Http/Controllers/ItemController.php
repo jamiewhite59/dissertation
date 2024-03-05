@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
+use Illuminate\Database\QueryException;
+
 class ItemController extends Controller
 {
     /**
@@ -93,7 +95,20 @@ class ItemController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Request $request, $id): RedirectResponse {
-        Item::destroy($id);
+        $itemPieces = Piece::where('item_id', $id)->get();
+        for($x = 0; $x < count($itemPieces); $x++) {
+            $eventItems = EventItem::where('piece_id', $itemPieces[$x]->id)->where('status', '!=', 'completed')->get();
+            if (count($eventItems) !== 0) {
+                return back()->withErrors(['unable' => 'At least one piece is in use in an event']);
+            }
+
+            Piece::destroy($itemPieces[$x]->id);
+        }
+        try {
+            Item::destroy($id);
+        } catch (QueryException $exception) {
+            return back()->withErrors(['sql_error' => 'Cannot remove item with pieces']);
+        }
 
         return redirect('/items');
     }

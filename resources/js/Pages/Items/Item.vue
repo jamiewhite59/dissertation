@@ -28,7 +28,7 @@ export default {
 	methods: {
 		remove() {
 			ElMessageBox.confirm(
-				'Are you sure you want to permanently delete this item?',
+				'Are you sure you want to permanently delete this item and all pieces associated with it?',
 				'Delete Item',
 				{
 					confirmButtonText: 'Delete',
