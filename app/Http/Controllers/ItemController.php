@@ -47,7 +47,7 @@ class ItemController extends Controller
     public function store(ItemFormRequest $request) {
         $item = new Item;
         $item->title = $request->title;
-        $item->description = $request->description;
+        $item->description = $request->description ?: '';
         $item->image = $request->image;
         $item->stock_type = $request->stock_type;
         $item->save();
