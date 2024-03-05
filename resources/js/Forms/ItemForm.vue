@@ -13,7 +13,7 @@ export default {
 				description: this.item ? this.item.description : '',
 				image: this.item ? this.item.image : null,
 				stock_type: this.item ? this.item.stock_type : 'bulk',
-				quantity: this.item ? this.item.pieceQuantity: 0,
+				quantity: this.item ? this.item.pieces.length : 0,
 			}),
 			itemRules: reactive({
 				title: [
@@ -29,7 +29,10 @@ export default {
 	computed: {
 		changes() {
 			if (this.item) {
-				return Object.keys(this.itemForm).some((key) => this.item[key] !== this.itemForm[key]);
+				var clone = Object.assign({}, this.itemForm);
+				delete clone.quantity;
+				return Object.keys(clone).some((key) => this.item[key] !== clone[key])
+				|| Number(this.itemForm.quantity) !== this.item.pieces.length;
 			} else {
 				return true;
 			}
@@ -92,7 +95,7 @@ export default {
 			<el-input v-model="itemForm.image"/>
 		</el-form-item>
 		<el-form-item label="Quantity">
-			<el-input v-model="itemForm.quantity" type="number" min="0" :disabled="itemForm.stock_type === 'hire'"/>
+			<el-input v-model="itemForm.quantity" type="number" min="0" :disabled="itemForm.stock_type === 'hire'" />
 		</el-form-item>
 	</el-form>
 </template>
