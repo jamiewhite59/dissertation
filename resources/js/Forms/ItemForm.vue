@@ -68,7 +68,7 @@ export default {
 			this.itemForm.description = '';
 			this.itemForm.image = null;
 			this.itemForm.stock_type = 'bulk';
-			this.itemForm.pieceQuantity = 0;
+			this.itemForm.quantity = 0;
 			this.$refs.itemFormRef.resetFields();
 		},
 	},
@@ -92,7 +92,7 @@ export default {
 			<el-input v-model="itemForm.image"/>
 		</el-form-item>
 		<el-form-item label="Quantity">
-			<el-input v-model="itemForm.quantity" type="number" :disabled="itemForm.stock_type === 'hire'"/>
+			<el-input v-model="itemForm.quantity" type="number" min="0" :disabled="itemForm.stock_type === 'hire'"/>
 		</el-form-item>
 	</el-form>
 </template>

@@ -49,6 +49,13 @@ class ItemController extends Controller
         $item->image = $request->image;
         $item->stock_type = $request->stock_type;
         $item->save();
+        if ($request->stock_type === 'bulk') {
+            for($x = 0; $x < $request->quantity; $x++) {
+                $piece = new Piece;
+                $piece->item_id = $item->id;
+                $piece->save();
+            }
+        }
 
         return redirect('/items');
     }
