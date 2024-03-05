@@ -30,7 +30,7 @@ class EventController extends Controller
         $event->title = $request->title;
         $event->start_date = $request->start_date;
         $event->end_date = $request->end_date;
-        $event->icon = $request->icon;
+        $event->icon = $request->icon ?: '';
         $event->save();
 
         return redirect('/events');

@@ -457,7 +457,7 @@ export default {
 					<template #form>
 						<el-container direction="vertical">
 							<el-text class="form-title" size="large" tag="b">Details</el-text>
-							<EventForm ref="eventForm" :event="event" @change="(e) => typeof(e) === 'boolean' ? changes=e : ''" />
+							<EventForm ref="eventForm" :event="event" @change="(e) => typeof(e) === 'boolean' ? formChanges=e : ''" />
 						</el-container>
 					</template>
 					<template #default>
