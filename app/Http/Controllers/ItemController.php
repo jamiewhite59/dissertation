@@ -160,22 +160,27 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, $id): RedirectResponse {
-        $itemPieces = Piece::where('item_id', $id)->get();
-        for($x = 0; $x < count($itemPieces); $x++) {
-            $eventItems = EventItem::where('piece_id', $itemPieces[$x]->id)->where('status', '!=', 'completed')->get();
-            if (count($eventItems) !== 0) {
+    public function destroy(Request $request) {
+        if ($request->stock_type === 'hire') {
+            $itemPieces = Piece::where('item_id', $request->id)->get();
+            for($x = 0; $x < count($itemPieces); $x++) {
+                $eventItems = EventItem::where('piece_id', $itemPieces[$x]->id)->where('status', '!=', 'completed')->get();
+                if (count($eventItems) !== 0) {
+                    return back()->withErrors(['unable' => 'At least one piece is in use in an event']);
+                }
+                Piece::destroy($itemPieces[$x]->id);
+            }
+        } else {
+            $activeEventItemsForItem = EventItem::where('item_id', $request->id)->where('status', '!=', 'completed')->get();
+            if (count($activeEventItemsForItem) > 0) {
                 return back()->withErrors(['unable' => 'At least one piece is in use in an event']);
             }
-
-            Piece::destroy($itemPieces[$x]->id);
         }
         try {
-            Item::destroy($id);
+            Item::destroy($request->id);
         } catch (QueryException $exception) {
             return back()->withErrors(['sql_error' => 'Cannot remove item with pieces']);
         }
-
         return redirect('/items');
     }
 

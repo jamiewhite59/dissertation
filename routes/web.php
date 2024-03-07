@@ -63,7 +63,8 @@ Route::put('/events/{event}/completePiece', [EventItemController::class, 'comple
 
 Route::resource('customers', CustomerController::class);
 
-Route::resource('items', ItemController::class);
+Route::resource('items', ItemController::class)->except(['destroy']);
+Route::put('/items/{item}/destroyItem', [ItemController::class, 'destroy'])->name('items.destroy');
 Route::put('/items/{item}/createPiece', [ItemController::class, 'createPiece'])->name('items.createPiece');
 Route::delete('/items/{item}/destroyPiece', [ItemController::class, 'destroyPiece'])->name('items.destroyPiece');
 Route::patch('/items/{item}/updatePiece', [ItemController::class, 'updatePiece'])->name('items.updatePiece');

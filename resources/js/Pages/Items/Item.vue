@@ -36,7 +36,7 @@ export default {
 					center: true,
 				}
 			).then(() => {
-				router.delete(route('items.destroy', this.item.id));
+				router.put(route('items.destroy', this.item.id), this.item);
 			}).catch(() => {});
 		},
 		saveItem() {
