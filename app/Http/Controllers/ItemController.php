@@ -90,6 +90,7 @@ class ItemController extends Controller
         $item->stock_type = $request->stock_type;
         $item->save();
 
+        // TODO: Talk about this bit in diss writeup - bubble sort algorithm  used to determine the max number of pieces required.
         if ($request->stock_type === 'bulk') {
             $currentPieces = Piece::where('item_id', $item->id)->orderBy('id', 'desc')->get();
             $numCurrentPieces = count($currentPieces);
