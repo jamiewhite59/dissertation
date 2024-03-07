@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class EventItem extends Model
@@ -17,12 +17,12 @@ class EventItem extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    public function item(): HasOne {
-        return $this->hasOne(Item::class);
+    public function item(): BelongsTo {
+        return $this->belongsTo(Item::class);
     }
 
-    public function event(): HasOne {
-        return $this->hasOne(Event::class);
+    public function event(): BelongsTo {
+        return $this->belongsTo(Event::class);
     }
 
     public function piece(): HasOne {

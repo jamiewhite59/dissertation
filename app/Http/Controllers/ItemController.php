@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
+use Carbon\Carbon;
+
 use Illuminate\Database\QueryException;
 
 class ItemController extends Controller
@@ -88,6 +90,69 @@ class ItemController extends Controller
         $item->stock_type = $request->stock_type;
         $item->save();
 
+        if ($request->stock_type === 'bulk') {
+            $currentPieces = Piece::where('item_id', $item->id)->orderBy('id', 'desc')->get();
+            $numCurrentPieces = count($currentPieces);
+            $difference = abs($numCurrentPieces - $request->quantity);
+            if ($numCurrentPieces < $request->quantity) {
+                for($x=0; $x < $difference; $x++) {
+                    $piece = new Piece;
+                    $piece->item_id = $item->id;
+                    $piece->save();
+                }
+            } else if ($numCurrentPieces > $request->quantity) {
+                $eventsWithitem = EventItem::where('item_id', $item->id)->where('status', '!=', 'completed')->get()->unique('event_id');
+                $eventsWithoutEndDate = [];
+                $eventsWithEndDate = [];
+                foreach($eventsWithitem as $eventItem) {
+                    $event = $eventItem->event;
+                    if ($event->end_date) {
+                        array_push($eventsWithEndDate, $eventItem->event);
+                    } else {
+                        array_push($eventsWithoutEndDate, $eventItem->event);
+                    }
+                }
+
+                $ongoingItemQuantity = 0;
+                foreach($eventsWithoutEndDate as $event) {
+                    $eventItems = EventItem::where('item_id', $item->id)->where('event_id', $event->id)->get();
+                    $ongoingItemQuantity += count($eventItems);
+                }
+
+                $finiteItemQuantity = 0;
+                foreach($eventsWithEndDate as $event) {
+                    $otherEvents = $eventsWithEndDate;
+                    $index = array_search($event, $eventsWithEndDate);
+                    array_splice($otherEvents, $index, 1);
+
+                    $eventItemQuantity = count(EventItem::where('event_id', $event->id)->where('item_id', $item->id)->get());
+                    foreach($otherEvents as $otherEvent) {
+                        $startA = Carbon::parse($event->start_date);
+                        $endA = Carbon::parse($event->end_date);
+                        $startB = Carbon::parse($otherEvent->start_date);
+                        $endB = Carbon::parse($otherEvent->end_date);
+
+                        if (($startB <= $endA) && ($endB >= $startA)) {
+                            $otherEventItemQuantity = count(EventItem::where('event_id', $otherEvent->id)->where('item_id', $item->id)->get());
+                            $eventItemQuantity += $otherEventItemQuantity;
+                        }
+                    }
+                    if ($finiteItemQuantity < $eventItemQuantity) {
+                        $finiteItemQuantity = $eventItemQuantity;
+                    }
+                }
+
+                $requiredPieces = $ongoingItemQuantity + $finiteItemQuantity;
+                $deletablePieces = $numCurrentPieces - $request->quantity;
+                if ($requiredPieces > $request->quantity) {
+                    return back()->withErrors(['unable' => "Cannot delete this many pieces, at least $requiredPieces pieces are required"]);
+                } else {
+                    for($x=0; $x < $deletablePieces; $x++) {
+                        $currentPieces[$x]->delete();
+                    }
+                }
+            }
+        }
         return redirect('/items');
     }
 
@@ -130,7 +195,6 @@ class ItemController extends Controller
         }
 
         Piece::destroy($id);
-
         return back();
     }
 
