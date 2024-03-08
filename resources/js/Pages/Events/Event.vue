@@ -17,6 +17,7 @@ export default {
 			customerSearch: '',
 			itemSearch: '',
 			activeTab: this.event ? 'items' : 'information',
+			activeDialogTab: 'hire',
 			tableSelection: [],
 			actionValue: 'Allocate',
 			actionInput: '',
@@ -41,6 +42,12 @@ export default {
 			} else {
 				return this.items;
 			}
+		},
+		filteredHireItems() {
+			return this.filteredItems?.filter((item) => item.stock_type === 'hire');
+		},
+		filteredBulkItems() {
+			return this.filteredItems?.filter((item) => item.stock_type === 'bulk');
 		},
 		augmentedItems() {
 			let items = this.event.items;
@@ -478,7 +485,6 @@ export default {
 				</CreateLayout>
 			</el-tab-pane>
 		</el-tabs>
-
 	</MainLayout>
 	<el-dialog v-model="customerDialogVisible" width="30%" style="min-height:400px;" align-center>
 		<template #header>Customers</template>
@@ -496,12 +502,24 @@ export default {
 		<template #header>Items</template>
 		<template #default>
 			<el-input class="dialog-search" v-model="itemSearch" placeholder="Search Items" clearable />
-			<el-scrollbar height="250">
-				<el-row v-for="item in filteredItems" :key="item.id" style="margin-bottom:10px;">
-					<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus /></el-icon></el-button></el-col>
-					<el-col style="display:flex; align-items:center;" :span="21">{{ item.title }}</el-col>
-				</el-row>
-			</el-scrollbar>
+			<el-tabs v-model="activeDialogTab">
+				<el-tab-pane label="Hire" name="hire">
+					<el-scrollbar height="250">
+						<el-row v-for="item in filteredHireItems" :key="item.id" style="margin-bottom:10px;">
+							<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus /></el-icon></el-button></el-col>
+							<el-col style="display:flex; align-items:center;" :span="21">{{ item.title }}</el-col>
+						</el-row>
+					</el-scrollbar>
+				</el-tab-pane>
+				<el-tab-pane label="Bulk" name="bulk">
+					<el-scrollbar height="250">
+						<el-row v-for="item in filteredBulkItems" :key="item.id" style="margin-bottom:10px;">
+							<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus /></el-icon></el-button></el-col>
+							<el-col style="display:flex; align-items:center;" :span="21">{{ item.title }}</el-col>
+						</el-row>
+					</el-scrollbar>
+				</el-tab-pane>
+			</el-tabs>
 		</template>
 	</el-dialog>
 </template>
