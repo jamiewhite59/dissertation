@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use App\Models\Event;
 
 class Item extends Model
 {
@@ -23,7 +24,10 @@ class Item extends Model
         return $this->hasMany(Piece::class);
     }
 
-    public function events(): HasManyThrough {
-        return $this->hasManyThrough(Event::class, EventItem::class);
+    public function events() {
+
+        return Event::whereIn('id', function(Builder $query) {
+            $query->select('event_id')->from('event_items')->where('item_id', '=', $this->id);
+        })->get();
     }
 }

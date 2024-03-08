@@ -70,6 +70,7 @@ class ItemController extends Controller
     public function edit(Request $request, $id): Response {
         $item = Item::find($id);
         $item->pieces = $item->pieces;
+        $item->events = $item->events();
 
         return Inertia::render('Items/Item', [
             'item' => $item,
