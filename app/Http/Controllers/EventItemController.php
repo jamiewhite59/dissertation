@@ -15,12 +15,14 @@ class EventItemController extends Controller {
             return back()->withErrors(['unable' => 'Cannot add any more of this item to this event']);
         }
 
-        $eventItem = new EventItem;
+        for($x=0; $x < $request->quantity; $x++) {
+            $eventItem = new EventItem;
 
-        $eventItem->item_id = $request->item_id;
-        $eventItem->event_id = $request->event_id;
-        $eventItem->status = 'reserved';
-        $eventItem->save();
+            $eventItem->item_id = $request->item_id;
+            $eventItem->event_id = $request->event_id;
+            $eventItem->status = 'reserved';
+            $eventItem->save();
+        }
     }
 
     public function destroy(Request $request) {

@@ -18,6 +18,7 @@ export default {
 			itemSearch: '',
 			activeTab: this.event ? 'items' : 'information',
 			activeDialogTab: 'hire',
+			bulkDialogQuantity: 1,
 			tableSelection: [],
 			actionValue: 'Allocate',
 			actionInput: '',
@@ -131,10 +132,11 @@ export default {
 				router.put(route('events.removeCustomer', this.event.id), { id: id, });
 			}).catch(() => {});
 		},
-		addItem(item_id) {
+		addItem(item) {
 			let data = {
 				event_id: this.event.id,
-				item_id: item_id,
+				item_id: item.id,
+				quantity: this.bulkDialogQuantity,
 			};
 
 			router.put(route('events.addItem', this.event.id), data);
@@ -506,7 +508,7 @@ export default {
 				<el-tab-pane label="Hire" name="hire">
 					<el-scrollbar height="250">
 						<el-row v-for="item in filteredHireItems" :key="item.id" style="margin-bottom:10px;">
-							<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus /></el-icon></el-button></el-col>
+							<el-col :span="3"><el-button size="small" @click="addItem(item)"><el-icon><Plus /></el-icon></el-button></el-col>
 							<el-col style="display:flex; align-items:center;" :span="21">{{ item.title }}</el-col>
 						</el-row>
 					</el-scrollbar>
@@ -514,7 +516,18 @@ export default {
 				<el-tab-pane label="Bulk" name="bulk">
 					<el-scrollbar height="250">
 						<el-row v-for="item in filteredBulkItems" :key="item.id" style="margin-bottom:10px;">
-							<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus /></el-icon></el-button></el-col>
+							<el-col :span="3">
+								<el-popover placement="bottom" trigger="click" @after-leave="bulkDialogQuantity = 1">
+									<el-text size="large" tag="b">Quantity</el-text>
+									<el-container direction="horizontal">
+										<el-input v-model="bulkDialogQuantity" type="number" min="1"/>
+										<el-button @click="addItem(item)" type="primary">Add</el-button>
+									</el-container>
+									<template #reference>
+										<el-button size="small"><el-icon><Plus /></el-icon></el-button>
+									</template>
+								</el-popover>
+							</el-col>
 							<el-col style="display:flex; align-items:center;" :span="21">{{ item.title }}</el-col>
 						</el-row>
 					</el-scrollbar>
