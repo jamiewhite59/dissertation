@@ -101,25 +101,43 @@ export default {
 				<ItemForm ref="itemForm" :item="item" @change="(e) => typeof(e) === 'boolean' ? formChanges=e : ''" />
 			</template>
 			<template #default>
-				<el-col class="item-content" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" direction="vertical">
+				<el-container direction="vertical">
+					<el-row :class="item?.stock_type === 'hire' ? 'extra-information-row' : 'extra-information-full'">
+						<el-col class="item-content">
+							<el-container>
+								<el-text size="large" tag="b" style="margin-bottom: 1em;">Events ({{ item?.events.length }})</el-text>
+							</el-container>
+							<el-container class="item-piece-wrapper">
+								<el-scrollbar class="piece-scrollbar" height="100%">
+									<el-container class="list-space">
+										<EventItem v-for="event in item.events" :key="event.id" :event="event"/>
+									</el-container>
+								</el-scrollbar>
+							</el-container>
+						</el-col>
+					</el-row>
 					<template v-if="item?.stock_type === 'hire'">
-						<el-container>
-							<el-text size="large" tag="b" style="margin-bottom: 1em;">Pieces</el-text>
-						</el-container>
-						<el-container class="item-piece-wrapper">
-							<el-scrollbar class="piece-scrollbar" height="100%">
-								<el-container class="list-space">
-									<el-card class="piece-item add-card" shadow="hover" @click="dialogVisible = true;">
-										<el-text tag="b" size="large">Add Piece</el-text>
-										<el-icon><Plus/></el-icon>
-									</el-card>
-									<PieceItem v-for="piece in item.pieces" :key="piece.id" :piece="piece" @click="selectPiece(piece)" @removePiece="destroyPiece" />
+						<el-divider class="item-information-divider"/>
+						<el-row :class="item?.stock_type === 'hire' ? 'extra-information-row' : 'extra-information-full'">
+							<el-col class="item-content">
+								<el-container>
+									<el-text size="large" tag="b" style="margin-bottom: 1em;">Pieces ({{ item?.pieces.length }})</el-text>
 								</el-container>
-							</el-scrollbar>
-						</el-container>
+								<el-container class="item-piece-wrapper">
+									<el-scrollbar class="piece-scrollbar" height="100%">
+										<el-container class="list-space">
+											<el-card class="piece-item add-card" shadow="hover" @click="dialogVisible = true;">
+												<el-text tag="b" size="large">Add Piece</el-text>
+												<el-icon><Plus/></el-icon>
+											</el-card>
+											<PieceItem v-for="piece in item.pieces" :key="piece.id" :piece="piece" @click="selectPiece(piece)" @removePiece="destroyPiece" />
+										</el-container>
+									</el-scrollbar>
+								</el-container>
+							</el-col>
+						</el-row>
 					</template>
-					<el-text v-else>Single piece with a quantity?</el-text>
-				</el-col>
+				</el-container>
 			</template>
 		</CreateLayout>
 	</MainLayout>
@@ -139,8 +157,23 @@ export default {
 	</el-dialog>
 </template>
 <style lang="scss">
+.extra-information-row {
+	height: calc(50% - 21px);
+}
+.extra-information-full {
+	height: 100%;
+}
+.item-information-divider {
+	width: 100%;
+	margin: 20px 0;
+
+	border-color: #aaa3;
+	box-sizing: border-box;
+	border-top-width: 2px;
+}
 .item-content {
 	flex: 1;
+	height: 100%;
 
 	.item-piece-wrapper {
 		height: calc(100% - 36px);
