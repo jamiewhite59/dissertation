@@ -35,6 +35,11 @@ export default {
 			}
 		},
 	},
+	methods: {
+		back() {
+			window.history.back();
+		},
+	},
 };
 </script>
 
@@ -50,10 +55,22 @@ export default {
 			</el-aside>
 			<el-container class="main-content">
 				<el-header class="main-header" height="100px">
-					<el-text class="page-title" size="large" tag="b">{{title}}</el-text>
-					<el-avatar class="user-avatar">
-						<el-icon><UserFilled/></el-icon>
-					</el-avatar>
+					<el-row style="flex: 1;">
+						<el-col :span="23">
+							<el-button type="primary" link @click="back">
+								<el-icon><ArrowLeft /></el-icon>
+								Back
+							</el-button>
+							<el-row>
+								<el-text class="page-title" size="large" tag="b">{{title}}</el-text>
+							</el-row>
+						</el-col>
+						<el-col :span="1">
+							<el-avatar class="user-avatar">
+								<el-icon><UserFilled/></el-icon>
+							</el-avatar>
+						</el-col>
+					</el-row>
 				</el-header>
 				<el-main class="main-main"><slot></slot></el-main>
 			</el-container>
