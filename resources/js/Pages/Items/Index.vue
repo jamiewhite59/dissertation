@@ -4,6 +4,7 @@ import { router } from '@inertiajs/vue3';
 export default {
 	props: {
 		items: Array,
+		categories: Array,
 	},
 	data() {
 		return {
@@ -65,7 +66,7 @@ export default {
 	<el-dialog v-model="createDialogVisible" width="30%" style="min-height: 400px" align-center @closed="resetForm">
 		<template #header>Create Item</template>
 		<template #default>
-			<ItemForm ref="itemForm" />
+			<ItemForm ref="itemForm" :categories="categories" />
 		</template>
 		<template #footer>
 			<el-button type="primary" @click="createDialogVisible = false">Cancel</el-button>

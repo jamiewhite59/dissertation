@@ -7,6 +7,7 @@ import { ElMessageBox } from 'element-plus';
 export default {
 	props: {
 		item: Object,
+		categories: Array,
 		errors: Object,
 	},
 	data() {
@@ -98,7 +99,7 @@ export default {
 	<MainLayout title="Items" :errors="errors">
 		<CreateLayout :existing="item" :changes="formChanges" @remove="remove" @openIndex="openIndex" @save="saveItem">
 			<template #form>
-				<ItemForm ref="itemForm" :item="item" @change="(e) => typeof(e) === 'boolean' ? formChanges=e : ''" />
+				<ItemForm ref="itemForm" :categories="categories" :item="item" @change="(e) => typeof(e) === 'boolean' ? formChanges=e : ''" />
 			</template>
 			<template #default>
 				<el-container direction="vertical">

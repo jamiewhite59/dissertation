@@ -5,6 +5,7 @@ import { reactive } from 'vue';
 export default {
 	props: {
 		item: Object,
+		categories: Array,
 	},
 	data() {
 		return {
@@ -14,6 +15,7 @@ export default {
 				image: this.item ? this.item.image : null,
 				stock_type: this.item ? this.item.stock_type : 'bulk',
 				quantity: this.item ? this.item.pieces.length : 0,
+				category_id: this.item ? this.item.category_id : '',
 			}),
 			itemRules: reactive({
 				title: [
@@ -72,6 +74,7 @@ export default {
 			this.itemForm.image = null;
 			this.itemForm.stock_type = 'bulk';
 			this.itemForm.quantity = 0;
+			this.itemForm.category_id = '',
 			this.$refs.itemFormRef.resetFields();
 		},
 	},
@@ -96,6 +99,12 @@ export default {
 		</el-form-item>
 		<el-form-item label="Quantity">
 			<el-input v-model="itemForm.quantity" type="number" min="0" :disabled="itemForm.stock_type === 'hire'" />
+		</el-form-item>
+		<el-form-item label="Category" prop="category_id">
+			<el-select v-model="itemForm.category_id" @change="$emit('change', changes)">
+				<el-option label="No Category" :value="''"/>
+				<el-option v-for="category in categories" :key="category.id" :label="category.title" :value="category.id" />
+			</el-select>
 		</el-form-item>
 	</el-form>
 </template>

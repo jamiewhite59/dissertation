@@ -7,6 +7,7 @@ use App\Http\Requests\PieceFormRequest;
 use App\Models\Item;
 use App\Models\Piece;
 use App\Models\EventItem;
+use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -24,6 +25,7 @@ class ItemController extends Controller
     public function index(Request $request): Response
     {
         $items = Item::all();
+        $categories = Category::all();
 
         $items = $items->map(function($item) {
             $item->quantity = count($item->pieces);
@@ -32,6 +34,7 @@ class ItemController extends Controller
 
         return Inertia::render('Items/Index', [
             'items' => $items,
+            'categories' => $categories,
         ]);
     }
 
@@ -52,6 +55,7 @@ class ItemController extends Controller
         $item->description = $request->description ?: '';
         $item->image = $request->image;
         $item->stock_type = $request->stock_type;
+        $item->category_id = $request->category_id;
         $item->save();
         if ($request->stock_type === 'bulk') {
             for($x = 0; $x < $request->quantity; $x++) {
@@ -71,9 +75,11 @@ class ItemController extends Controller
         $item = Item::find($id);
         $item->pieces = $item->pieces;
         $item->events = $item->events();
+        $categories = Category::all();
 
         return Inertia::render('Items/Item', [
             'item' => $item,
+            'categories' => $categories,
         ]);
     }
 
@@ -86,6 +92,7 @@ class ItemController extends Controller
         $item->title = $request->title;
         $item->description = $request->description;
         $item->image = $request->image;
+        $item->category_id = $request->category_id;
 
         //TODO: if stock type is changed whilst there are pieces attached to the item then do not allow saving
         $item->stock_type = $request->stock_type;
