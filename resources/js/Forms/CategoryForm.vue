@@ -21,7 +21,7 @@ export default {
 		};
 	},
 	computed: {
-		changed() {
+		changes() {
 			if (this.category) {
 				return Object.keys(this.categoryForm).some((key) => this.category[key] !== this.categoryForm[key]);
 			} else {
