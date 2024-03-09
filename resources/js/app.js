@@ -17,6 +17,7 @@ import CreateLayout from '@/Layouts/CreateLayout.vue';
 import CustomerItem from '@/Components/CustomerItem.vue';
 import EventItem from '@/Components/EventItem.vue';
 import PieceItem from '@/Components/PieceItem.vue';
+import CategoryItem from '@/Components/CategoryItem.vue';
 
 import EventForm from '@/Forms/EventForm.vue';
 import ItemForm from '@/Forms/ItemForm.vue';
@@ -41,6 +42,7 @@ createInertiaApp({
 		app.component('CustomerItem', CustomerItem);
 		app.component('EventItem', EventItem);
 		app.component('PieceItem', PieceItem);
+		app.component('CategoryItem', CategoryItem);
 		app.component('EventForm', EventForm);
 		app.component('ItemForm', ItemForm);
 		app.component('CustomerForm', CustomerForm);

@@ -1,5 +1,4 @@
 <script>
-import { router } from '@inertiajs/vue3';
 export default {
 	props: {
 		categories: Array,
@@ -9,6 +8,17 @@ export default {
 			search: '',
 			createDialogVisible: false,
 		};
+	},
+	computed: {
+		searchedCategories() {
+			if (this.search) {
+				return this.categories.filter((category) => {
+					return category.title.toLowerCase().includes(this.search.toLowerCase());
+				});
+			} else {
+				return this.categories;
+			}
+		},
 	},
 	methods: {
 		createCategory() {
@@ -26,20 +36,14 @@ export default {
 </script>
 <template>
 	<MainLayout title="Categories">
-		<OverviewLayout @openCreate="openCreate">
+		<OverviewLayout title="Category" :displayCards="!!categories.length" @openCreate="openCreate">
 			<template #search>
 				<el-input class="overview-search" v-model="search" placeholder="Search Categories" clearable />
 			</template>
-			<template #default>
-				hello
-				<!-- <el-container class="item-table-container">
-					<el-table :data="filteredItems" height="100%" @row-click="openEdit">
-						<el-table-column prop="title" label="Title" sortable/>
-						<el-table-column prop="stock_type" label="Stock Type" sortable/>
-						<el-table-column prop="quantity" label="Quantity" />
-						<el-table-column prop="description" label="Description"/>
-					</el-table>
-				</el-container> -->
+			<template #cards>
+				<el-container class="category-list-space">
+					<CategoryItem v-for="category in searchedCategories" :key="category.id" :category="category" />
+				</el-container>
 			</template>
 		</OverviewLayout>
 	</MainLayout>
@@ -55,5 +59,9 @@ export default {
 	</el-dialog>
 </template>
 <style lang="scss">
-
+.category-list-space {
+	display: grid !important;
+	grid-gap: 15px;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
 </style>
