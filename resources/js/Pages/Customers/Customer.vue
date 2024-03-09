@@ -46,7 +46,7 @@ export default {
 			<template #default>
 				<el-col class="event-index-list" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" direction="vertical">
 					<el-container style="margin-bottom:1em;">
-						<el-text size="large" tag="b">Events</el-text>
+						<el-text size="large" tag="b">Events ({{ customer.events.length }})</el-text>
 					</el-container>
 					<el-container class="event-item-wrapper">
 						<el-scrollbar class="event-scrollbar" height="100%">

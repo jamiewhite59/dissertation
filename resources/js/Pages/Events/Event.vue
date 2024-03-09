@@ -471,7 +471,7 @@ export default {
 					</template>
 					<template #default>
 						<el-col class="customer-index-list" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" v-if="event" direction="vertical">
-							<el-text size="large" tag="b">Customers</el-text>
+							<el-text size="large" tag="b">Customers ({{ event.customers.length }})</el-text>
 							<el-container class="customer-item-wrapper">
 								<el-scrollbar class="customer-scrollbar" height="100%">
 									<el-container class="list-space">
