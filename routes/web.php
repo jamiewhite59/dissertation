@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventItemController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PieceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
@@ -69,6 +70,8 @@ Route::put('/items/{item}/createPiece', [ItemController::class, 'createPiece'])-
 Route::delete('/items/{item}/destroyPiece', [ItemController::class, 'destroyPiece'])->name('items.destroyPiece');
 Route::patch('/items/{item}/updatePiece', [ItemController::class, 'updatePiece'])->name('items.updatePiece');
 
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
 
 Route::get('/test', [TestController::class, 'test'])->name('test');
 

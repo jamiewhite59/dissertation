@@ -64,7 +64,7 @@ export default {
 				<el-icon><Postcard /></el-icon>
 				Pieces
 			</el-menu-item>
-			<el-menu-item index="3-2" disabled>
+			<el-menu-item index="3-2" @click="openIndex('categories.index')">
 				<el-icon><TakeawayBox /></el-icon>
 				Categories
 			</el-menu-item>
