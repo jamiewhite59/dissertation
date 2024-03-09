@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Event;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Item extends Model
 {
@@ -29,5 +30,9 @@ class Item extends Model
         return Event::whereIn('id', function(Builder $query) {
             $query->select('event_id')->from('event_items')->where('item_id', '=', $this->id);
         })->get();
+    }
+
+    public function category(): BelongsTo {
+        return $this->belongsTo(Category::class);
     }
 }
