@@ -57,6 +57,7 @@ export default {
 						<el-table-column prop="title" label="Title" sortable/>
 						<el-table-column prop="stock_type" label="Stock Type" sortable/>
 						<el-table-column prop="quantity" label="Quantity" />
+						<el-table-column prop="category.title" label="Category" />
 						<el-table-column prop="description" label="Description"/>
 					</el-table>
 				</el-container>

@@ -29,6 +29,7 @@ class ItemController extends Controller
 
         $items = $items->map(function($item) {
             $item->quantity = count($item->pieces);
+            $item->category = $item->category;
             return $item;
         });
 
