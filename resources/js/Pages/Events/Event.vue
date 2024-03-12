@@ -39,7 +39,8 @@ export default {
 		filteredItems() {
 			if (this.itemSearch) {
 				return this.items.filter((item) =>
-					item.title.toLowerCase().includes(this.itemSearch.toLowerCase()));
+					item.title.toLowerCase().includes(this.itemSearch.toLowerCase())
+					|| item.category?.title.toLowerCase().includes(this.itemSearch.toLowerCase()));
 			} else {
 				return this.items;
 			}
@@ -373,6 +374,9 @@ export default {
 			});
 		},
 	},
+	mounted() {
+		console.debug('items', this.items);
+	},
 };
 </script>
 
@@ -509,7 +513,13 @@ export default {
 					<el-scrollbar height="250">
 						<el-row v-for="item in filteredHireItems" :key="item.id" style="margin-bottom:10px;">
 							<el-col :span="3"><el-button size="small" @click="addItem(item)"><el-icon><Plus /></el-icon></el-button></el-col>
-							<el-col style="display:flex; align-items:center;" :span="21">{{ item.title }}</el-col>
+							<el-col style="display:flex; align-items:center;" :span="21">
+								<el-text>{{ item.title }}</el-text>
+								<template v-if="item.category">
+									<el-divider direction="vertical" />
+									<el-text tag="i">{{item.category.title }}</el-text>
+								</template>
+							</el-col>
 						</el-row>
 					</el-scrollbar>
 				</el-tab-pane>
@@ -528,7 +538,13 @@ export default {
 									</template>
 								</el-popover>
 							</el-col>
-							<el-col style="display:flex; align-items:center;" :span="21">{{ item.title }}</el-col>
+							<el-col style="display:flex; align-items:center;" :span="21">
+								<el-text>{{ item.title }}</el-text>
+								<template v-if="item.category">
+									<el-divider direction="vertical" />
+									<el-text tag="i">{{item.category.title }}</el-text>
+								</template>
+							</el-col>
 						</el-row>
 					</el-scrollbar>
 				</el-tab-pane>

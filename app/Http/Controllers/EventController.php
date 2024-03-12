@@ -42,6 +42,10 @@ class EventController extends Controller
         $event->items = $event->eventItems();
         $customers = Customer::all();
         $items = Item::all();
+        $items = $items->map(function($item) {
+            $item->category = $item->category;
+            return $item;
+        });
 
         return Inertia::render('Events/Event', [
             'event' => $event,
