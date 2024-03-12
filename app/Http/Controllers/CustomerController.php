@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerFormRequest;
 use App\Models\Customer;
+use App\Models\Event;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -37,9 +38,11 @@ class CustomerController extends Controller
     public function edit(Request $request, $id): Response {
         $customer = Customer::find($id);
         $customer->events = $customer->events;
+        $events = Event::all();
 
         return Inertia::render('Customers/Customer', [
             'customer' => $customer,
+            'events' => $events,
         ]);
     }
 
@@ -59,5 +62,14 @@ class CustomerController extends Controller
         Customer::destroy($id);
 
         return redirect('/customers');
+    }
+
+    public function addEvent(Request $request, $id): RedirectResponse {
+        $customer = Customer::find($id);
+
+        $customer->events()->attach($request->id);
+
+        return back();
+
     }
 }

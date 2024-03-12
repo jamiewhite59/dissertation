@@ -63,6 +63,7 @@ Route::put('/events/{event}/checkinPiece', [EventItemController::class, 'checkin
 Route::put('/events/{event}/completePiece', [EventItemController::class, 'completePiece'])->name('events.completePiece');
 
 Route::resource('customers', CustomerController::class);
+Route::put('/customers/{customer}/addEvent', [CustomerController::class, 'addEvent'])->name('customers.addEvent');
 
 Route::resource('items', ItemController::class)->except(['destroy']);
 Route::put('/items/{item}/destroyItem', [ItemController::class, 'destroy'])->name('items.destroy');

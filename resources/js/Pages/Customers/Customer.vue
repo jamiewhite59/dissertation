@@ -6,13 +6,29 @@ import { ElMessageBox } from 'element-plus';
 export default {
 	props: {
 		customer: Object,
+		events: Array,
 		errors: Object,
 	},
 	data() {
 		return {
 			changes: false,
 			eventDialogVisible: false,
+			eventSearch: '',
 		};
+	},
+	computed: {
+		filteredEvents() {
+			var customerEventIds = this.customer.events.map((event) => event.id);
+			var availableEvents = this.events.filter((event) => ! customerEventIds.includes(event.id));
+			if (this.eventSearch) {
+				console.debug('availavle', availableEvents);
+				return availableEvents.filter((event) => {
+					return event.title.toLowerCase().includes(this.eventSearch.toLowerCase());
+				});
+			} else {
+				return availableEvents;
+			}
+		},
 	},
 	methods: {
 		remove() {
@@ -33,6 +49,9 @@ export default {
 		},
 		save() {
 			this.$refs.customerForm.save();
+		},
+		addEvent(id) {
+			router.put(route('customers.addEvent', this.customer.id), {id: id,});
 		},
 	},
 };
@@ -61,7 +80,18 @@ export default {
 			</template>
 		</CreateLayout>
 	</MainLayout>
-	<el-dialog v-model="eventDialogVisible">hello</el-dialog>
+	<el-dialog v-model="eventDialogVisible" width="30%" style="min-height:400px;" align-center>
+		<template #header>Events</template>
+		<template #default>
+			<el-input class="dialog-search" v-model="eventSearch" placeholder="Search Events" clearable />
+			<el-scrollbar height="250px">
+				<el-row v-for="event in filteredEvents" :key="event.id" style="margin-bottom:10px">
+					<el-col :span="3"><el-button size="small" @click="addEvent(event.id)"><el-icon><Plus /></el-icon></el-button></el-col>
+					<el-col :span="21">{{ event.title }}</el-col>
+				</el-row>
+			</el-scrollbar>
+		</template>
+	</el-dialog>
 </template>
 <style lang="scss">
 .event-index-list {
@@ -79,6 +109,12 @@ export default {
 				grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 			}
 		}
+	}
+}
+
+.el-dialog {
+	.dialog-search {
+		margin-bottom: 10px;
 	}
 }
 </style>
