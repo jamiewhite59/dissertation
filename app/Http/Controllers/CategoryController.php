@@ -35,6 +35,11 @@ class CategoryController extends Controller
     public function edit(Request $request, $id) {
         $category = Category::find($id);
         $category->items = $category->items;
+        $category->items = $category->items->map(function($item) {
+            $item->pieces = $item->pieces;
+            $item->events = $item->events();
+            return $item;
+        });
 
         return Inertia::render('Categories/Category', [
             'category' => $category,

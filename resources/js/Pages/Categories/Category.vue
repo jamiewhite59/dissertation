@@ -46,14 +46,40 @@ export default {
 				</el-container>
 			</template>
 			<template #default>
-				<template v-if="category.items.length">
-					<div v-for="item in category.items" :key="item.id">{{ item.title }}</div>
-				</template>
+				<el-col v-if="category.items.length" class="items-content">
+					<el-container>
+						<el-text size="large" tag="b" style="margin-bottom: 1em;">Items ({{ category.items.length }})</el-text>
+					</el-container>
+					<el-container class="item-wrapper">
+						<el-scrollbar class="piece-scrollbar" height="100%">
+							<el-container class="list-space">
+								<ItemItem v-for="item in category.items" :key="item.id" :item="item" />
+							</el-container>
+						</el-scrollbar>
+					</el-container>
+				</el-col>
 				<template v-else>No items associated to this category</template>
 			</template>
 		</CreateLayout>
 	</MainLayout>
 </template>
 <style lang="scss">
+.items-content {
+	flex: 1;
+	height: 100%;
 
+	.item-wrapper {
+		height: calc(100% - 36px);
+
+		.piece-scrollbar {
+			width: 100%;
+
+			.list-space {
+				display: grid !important;
+				grid-gap: 15px;
+				grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+			}
+		}
+	}
+}
 </style>

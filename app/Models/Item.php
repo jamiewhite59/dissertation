@@ -26,7 +26,6 @@ class Item extends Model
     }
 
     public function events() {
-
         return Event::whereIn('id', function(Builder $query) {
             $query->select('event_id')->from('event_items')->where('item_id', '=', $this->id);
         })->get();

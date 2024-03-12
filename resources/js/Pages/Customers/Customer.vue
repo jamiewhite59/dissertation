@@ -38,7 +38,7 @@ export default {
 </script>
 
 <template>
-	<MainLayout title="Customers" :errors="errors">
+	<MainLayout :title="customer ? customer.name : 'Customers'" :errors="errors">
 		<CreateLayout :existing="customer" :changes="changes" @remove="remove" @openIndex="openIndex" @save="save">
 			<template #form>
 				<CustomerForm ref="customerForm" :customer="customer" @change="(e) => typeof(e) === 'boolean' ? changes=e : ''" />

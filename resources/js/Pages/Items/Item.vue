@@ -96,7 +96,7 @@ export default {
 };
 </script>
 <template>
-	<MainLayout title="Items" :errors="errors">
+	<MainLayout :title="item ? item.title : 'Items'" :errors="errors">
 		<CreateLayout :existing="item" :changes="formChanges" @remove="remove" @openIndex="openIndex" @save="saveItem">
 			<template #form>
 				<ItemForm ref="itemForm" :categories="categories" :item="item" @change="(e) => typeof(e) === 'boolean' ? formChanges=e : ''" />
@@ -104,11 +104,11 @@ export default {
 			<template #default>
 				<el-container direction="vertical">
 					<el-row :class="item?.stock_type === 'hire' ? 'extra-information-row' : 'extra-information-full'">
-						<el-col class="item-content">
+						<el-col class="event-content">
 							<el-container>
 								<el-text size="large" tag="b" style="margin-bottom: 1em;">Events ({{ item?.events.length }})</el-text>
 							</el-container>
-							<el-container class="item-piece-wrapper">
+							<el-container class="event-piece-wrapper">
 								<el-scrollbar class="piece-scrollbar" height="100%">
 									<el-container class="list-space">
 										<EventItem v-for="event in item.events" :key="event.id" :event="event"/>
@@ -172,11 +172,11 @@ export default {
 	box-sizing: border-box;
 	border-top-width: 2px;
 }
-.item-content {
+.item-content, .event-content {
 	flex: 1;
 	height: 100%;
 
-	.item-piece-wrapper {
+	.item-piece-wrapper, .event-piece-wrapper {
 		height: calc(100% - 36px);
 
 		.piece-scrollbar {
