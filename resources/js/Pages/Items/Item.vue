@@ -127,10 +127,7 @@ export default {
 								<el-container class="item-piece-wrapper">
 									<el-scrollbar class="piece-scrollbar" height="100%">
 										<el-container class="list-space">
-											<el-card class="piece-item add-card" shadow="hover" @click="dialogVisible = true;">
-												<el-text tag="b" size="large">Add Piece</el-text>
-												<el-icon><Plus/></el-icon>
-											</el-card>
+											<AddCard addItem="Piece" @addClicked="dialogVisible = true"/>
 											<PieceItem v-for="piece in item.pieces" :key="piece.id" :piece="piece" @click="selectPiece(piece)" @removePiece="destroyPiece" />
 										</el-container>
 									</el-scrollbar>

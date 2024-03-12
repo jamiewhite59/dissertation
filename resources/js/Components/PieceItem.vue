@@ -28,26 +28,5 @@ export default {
 	min-width: 120px;
 
 	white-space: nowrap;
-
-	&.add-card {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-
-			.el-card__body {
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-
-				gap: 1em;
-
-				.el-descriptions {
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-				}
-			}
-		}
 }
 </style>

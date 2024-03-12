@@ -11,6 +11,7 @@ export default {
 	data() {
 		return {
 			changes: false,
+			eventDialogVisible: false,
 		};
 	},
 	methods: {
@@ -51,6 +52,7 @@ export default {
 					<el-container class="event-item-wrapper">
 						<el-scrollbar class="event-scrollbar" height="100%">
 							<el-container class="list-space">
+								<AddCard addItem="Event" @addClicked="eventDialogVisible = true"/>
 								<EventItem v-for="event in customer?.events" :key="event.id" :event="event" />
 							</el-container>
 						</el-scrollbar>
@@ -59,6 +61,7 @@ export default {
 			</template>
 		</CreateLayout>
 	</MainLayout>
+	<el-dialog v-model="eventDialogVisible">hello</el-dialog>
 </template>
 <style lang="scss">
 .event-index-list {

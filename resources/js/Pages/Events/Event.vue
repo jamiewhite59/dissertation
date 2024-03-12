@@ -479,9 +479,7 @@ export default {
 							<el-container class="customer-item-wrapper">
 								<el-scrollbar class="customer-scrollbar" height="100%">
 									<el-container class="list-space">
-										<el-card class="customer-item add-card" shadow="hover" @click="customerDialogVisible = true">
-											<el-text tag="b" size="large">Add Customer</el-text><el-icon><Plus /></el-icon>
-										</el-card>
+										<AddCard addItem="Customer" @addClicked="customerDialogVisible = true"/>
 										<CustomerItem v-for="customer in event.customers" :key="customer.id" :customer="customer" :remove="true" @removeCustomer="removeCustomer" />
 									</el-container>
 								</el-scrollbar>
