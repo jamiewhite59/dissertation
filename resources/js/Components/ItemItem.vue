@@ -14,9 +14,6 @@ export default {
 			router.get(route('items.edit', id));
 		},
 	},
-	mounted() {
-		console.debug('item', this.item);
-	},
 };
 </script>
 <template>

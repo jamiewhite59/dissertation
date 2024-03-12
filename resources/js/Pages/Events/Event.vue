@@ -374,9 +374,6 @@ export default {
 			});
 		},
 	},
-	mounted() {
-		console.debug('items', this.items);
-	},
 };
 </script>
 
