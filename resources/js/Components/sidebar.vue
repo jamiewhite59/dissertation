@@ -12,6 +12,16 @@ export default {
 				return '2';
 			case 'items':
 				return '3-1';
+			case 'pieces':
+				return '3-2';
+			case 'categories':
+				return '3-3';
+			case 'groups':
+				return '3-4';
+			case 'post-event-actions':
+				return '3-5';
+			case 'periodic-actions':
+				return '3-6';
 			case 'organisation':
 				return '4';
 			case 'logs':
@@ -64,19 +74,19 @@ export default {
 				<el-icon><Postcard /></el-icon>
 				Pieces
 			</el-menu-item>
-			<el-menu-item index="3-2" @click="openIndex('categories.index')">
+			<el-menu-item index="3-3" @click="openIndex('categories.index')">
 				<el-icon><TakeawayBox /></el-icon>
 				Categories
 			</el-menu-item>
-			<el-menu-item index="3-3" disabled>
+			<el-menu-item index="3-4" disabled>
 				<el-icon><Folder /></el-icon>
 				Groups
 			</el-menu-item>
-			<el-menu-item index="3-4" disabled>
+			<el-menu-item index="3-5" disabled>
 				<el-icon><Flag /></el-icon>
 				Post-Event Actions
 			</el-menu-item>
-			<el-menu-item index="3-5" disabled>
+			<el-menu-item index="3-6" disabled>
 				<el-icon><Guide /></el-icon>
 				Periodic Actions
 			</el-menu-item>
