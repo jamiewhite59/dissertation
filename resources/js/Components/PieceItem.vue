@@ -3,6 +3,7 @@ export default {
 	props: {
 		piece: Object,
 		showTitle: Boolean,
+		indicateGroup: Boolean,
 	},
 	data() {
 		return {
@@ -20,6 +21,12 @@ export default {
 			</template>
 			<el-descriptions-item v-if="showTitle">
 				<el-text>{{ piece.item.title }}</el-text>
+			</el-descriptions-item>
+			<el-descriptions-item v-else-if="indicateGroup">
+				<template v-if="piece.group_id">
+					<el-text tag="b">Group: </el-text>
+					<el-text>{{ piece.group.title }}</el-text>
+				</template>
 			</el-descriptions-item>
 		</el-descriptions>
 	</el-card>

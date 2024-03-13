@@ -75,6 +75,9 @@ class ItemController extends Controller
     public function edit(Request $request, $id): Response {
         $item = Item::find($id);
         $item->pieces = $item->pieces;
+        $item->pieces = $item->pieces->map(function($piece) {
+            $piece->group = $piece->group;
+        });
         $item->events = $item->events();
         $categories = Category::all();
 
