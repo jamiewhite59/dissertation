@@ -52,6 +52,9 @@ export default {
 				router.put(route('groups.removePiece', this.group.id), {id: id,});
 			}).catch(() => {});
 		},
+		openItem(piece) {
+			router.get((route('items.edit', piece.item.id)));
+		},
 	},
 };
 </script>
@@ -73,7 +76,7 @@ export default {
 						<el-scrollbar class="piece-scrollbar" height="100%">
 							<el-container class="list-space">
 								<AddCard class="piece-item" addItem="Piece" @addClicked="pieceDialogVisible = true"/>
-								<PieceItem v-for="piece in group.pieces" :key="piece.id" :piece="piece" @removePiece="removePiece"/>
+								<PieceItem v-for="piece in group.pieces" :key="piece.id" :piece="piece" showTitle @click="openItem(piece)" @removePiece="removePiece"/>
 							</el-container>
 						</el-scrollbar>
 					</el-container>

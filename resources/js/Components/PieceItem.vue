@@ -2,6 +2,7 @@
 export default {
 	props: {
 		piece: Object,
+		showTitle: Boolean,
 	},
 	data() {
 		return {
@@ -17,6 +18,9 @@ export default {
 			<template #extra>
 				<el-button size="small" @click.stop="$emit('removePiece', piece.id)"><el-icon><Minus/></el-icon></el-button>
 			</template>
+			<el-descriptions-item v-if="showTitle">
+				<el-text>{{ piece.item.title }}</el-text>
+			</el-descriptions-item>
 		</el-descriptions>
 	</el-card>
 </template>

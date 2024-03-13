@@ -30,6 +30,10 @@ class GroupController extends Controller
     public function edit(Request $request, $id) {
         $group = Group::find($id);
         $group->pieces = $group->pieces;
+        $group->pieces = $group->pieces->map(function($piece) {
+            $piece->item = $piece->item;
+            return $piece;
+        });
 
         return Inertia::render('Groups/Group', [
             'group' => $group,
