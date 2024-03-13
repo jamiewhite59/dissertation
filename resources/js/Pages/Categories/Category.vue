@@ -78,20 +78,19 @@ export default {
 				</el-container>
 			</template>
 			<template #default>
-				<el-col v-if="category.items.length" class="items-content">
+				<el-col class="items-content">
 					<el-container>
 						<el-text size="large" tag="b" style="margin-bottom: 1em;">Items ({{ category.items.length }})</el-text>
 					</el-container>
 					<el-container class="item-wrapper">
 						<el-scrollbar class="piece-scrollbar" height="100%">
 							<el-container class="list-space">
-								<AddCard addItem="Item" @addClicked="itemDialogVisible = true"/>
+								<AddCard class="item-item" addItem="Item" @addClicked="itemDialogVisible = true"/>
 								<ItemItem v-for="item in category.items" :key="item.id" :item="item" remove @removeItem="removeItem" />
 							</el-container>
 						</el-scrollbar>
 					</el-container>
 				</el-col>
-				<template v-else>No items associated to this category</template>
 			</template>
 		</CreateLayout>
 	</MainLayout>
