@@ -17,4 +17,9 @@ class Group extends Model
     public function pieces(): HasMany {
         return $this->hasMany(Piece::class);
     }
+
+    public function container() {
+        $piece = Piece::find($this->container_piece_id);
+        return $piece;
+    }
 }

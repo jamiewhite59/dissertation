@@ -29,14 +29,19 @@ class GroupController extends Controller
     public function store(GroupFormRequest $request) {
         $group = new Group;
         $group->title = $request->title;
-        $group->container_piece_id = $request->container_piece_id;
-
+        $containerPiece = Piece::firstWhere('code', $request->container_piece_code);
+        $group->container_piece_id = $containerPiece->id;
         $group->save();
+
+        $containerPiece->group_id = $group->id;
+        $containerPiece->save();
+
         return redirect('/groups');
     }
 
     public function edit(Request $request, $id) {
         $group = Group::find($id);
+        $group->container = $group->container();
         $group->pieces = $group->pieces;
         $group->pieces = $group->pieces->map(function($piece) {
             $piece->item = $piece->item;
@@ -52,8 +57,12 @@ class GroupController extends Controller
         $group = Group::find($id);
 
         $group->title = $request->title;
-        $group->container_piece_id = $request->container_piece_id;
+        $containerPiece = Piece::firstWhere('code', $request->container_piece_code);
+        $group->container_piece_id = $containerPiece->id;
         $group->save();
+
+        $containerPiece->group_id = $group->id;
+        $containerPiece->save();
 
         return redirect('/groups');
     }
@@ -66,6 +75,9 @@ class GroupController extends Controller
 
     public function addPiece(Request $request, $id) {
         $piece = Piece::firstWhere('code', $request->piece_code);
+        if (! $piece) {
+            return back()->withErrors(['not_found' => 'No item piece found with that code']);
+        }
         $piece->group_id = $id;
         $piece->save();
 
@@ -74,6 +86,9 @@ class GroupController extends Controller
 
     public function removePiece(Request $request, $id) {
         $piece = Piece::find($request->id);
+        if ($piece->group_id === $id) {
+            return back()->withErrors(['unable' => 'Cannot remove the container of this group']);
+        }
         $piece->group_id = null;
         $piece->save();
 

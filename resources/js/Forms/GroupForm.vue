@@ -10,11 +10,14 @@ export default {
 		return {
 			groupForm: reactive({
 				title: this.group ? this.group.title : '',
-				container_piece_id: this.group ? this.group.container_piece_id : '',
+				container_piece_code: this.group?.container ? this.group.container.code : '',
 			}),
 			rules: reactive({
 				title: [
 					{ required: true, message: 'Title is required', trigger: 'blur', },
+				],
+				container_piece_code: [
+					{ required: true, message: 'Code is required', trigger: 'blur', },
 				],
 			}),
 		};
@@ -52,7 +55,7 @@ export default {
 		},
 		resetForm() {
 			this.groupForm.title = '';
-			this.groupForm.container_piece_id = '';
+			this.groupForm.container_piece_code = '';
 			this.$refs.formRef.resetFields();
 		},
 	},
@@ -63,8 +66,8 @@ export default {
 		<el-form-item label="Title" prop="title" required>
 			<el-input v-model="groupForm.title"/>
 		</el-form-item>
-		<el-form-item label="Container Piece ID" prop="container_piece_id">
-			<el-input v-model="groupForm.container_piece_id"/>
+		<el-form-item label="Container Piece Code" prop="container_piece_code">
+			<el-input v-model="groupForm.container_piece_code" :disabled="group" required/>
 		</el-form-item>
 	</el-form>
 </template>

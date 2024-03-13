@@ -23,6 +23,7 @@ class GroupFormRequest extends FormRequest
     {
         return [
             'title' => ['required'],
+            'container_piece_code' => ['required'],
         ];
     }
 }
