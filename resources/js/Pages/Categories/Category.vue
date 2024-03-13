@@ -7,11 +7,27 @@ export default {
 	props: {
 		category: Object,
 		errors: Object,
+		items: Array,
 	},
 	data() {
 		return {
 			formChanges: false,
+			itemDialogVisible: false,
+			itemSearch: '',
 		};
+	},
+	computed: {
+		filteredItems() {
+			var categoryItemIds = this.category.items.map((item) => item.id);
+			var availableItems = this.items.filter((item) => ! categoryItemIds.includes(item.id));
+			if (this.itemSearch) {
+				return availableItems.filter((item) => {
+					return item.title.toLowerCase().includes(this.itemSearch.toLowerCase());
+				});
+			} else {
+				return availableItems;
+			}
+		},
 	},
 	methods: {
 		remove() {
@@ -33,6 +49,22 @@ export default {
 		save() {
 			this.$refs.categoryForm.save();
 		},
+		addItem(id) {
+			router.put(route('categories.addItem', this.category.id), {id: id,});
+		},
+		removeItem(id) {
+			ElMessageBox.confirm(
+				'Are you sure you want to remove this item from this category?',
+				'Remove Item',
+				{
+					confirmButtonText: 'Remove',
+					type: 'error',
+					center: true,
+				}
+			).then(() => {
+				router.put(route('categories.removeItem', this.category.id), {id: id,});
+			}).catch(() => {});
+		},
 	},
 };
 </script>
@@ -53,7 +85,8 @@ export default {
 					<el-container class="item-wrapper">
 						<el-scrollbar class="piece-scrollbar" height="100%">
 							<el-container class="list-space">
-								<ItemItem v-for="item in category.items" :key="item.id" :item="item" />
+								<AddCard addItem="Item" @addClicked="itemDialogVisible = true"/>
+								<ItemItem v-for="item in category.items" :key="item.id" :item="item" remove @removeItem="removeItem" />
 							</el-container>
 						</el-scrollbar>
 					</el-container>
@@ -62,6 +95,18 @@ export default {
 			</template>
 		</CreateLayout>
 	</MainLayout>
+	<el-dialog v-model="itemDialogVisible" width="30%" style="min-height:400px;" align-center>
+		<template #header>Items</template>
+		<template #default>
+			<el-input class="dialog-search" v-model="itemSearch" placeholder="Search Items" clearable />
+			<el-scrollbar height="250px">
+				<el-row v-for="item in filteredItems" :key="item.id" style="margin-bottom:10px">
+					<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus /></el-icon></el-button></el-col>
+					<el-col :span="21">{{ item.title }}</el-col>
+				</el-row>
+			</el-scrollbar>
+		</template>
+	</el-dialog>
 </template>
 <style lang="scss">
 .items-content {
@@ -80,6 +125,11 @@ export default {
 				grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 			}
 		}
+	}
+}
+.el-dialog {
+	.dialog-search {
+		margin-bottom: 10px;
 	}
 }
 </style>

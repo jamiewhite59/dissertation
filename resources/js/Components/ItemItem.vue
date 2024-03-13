@@ -4,6 +4,7 @@ import { router } from '@inertiajs/vue3';
 export default {
 	props: {
 		item: Object,
+		remove: Boolean,
 	},
 	data() {
 		return {
@@ -19,6 +20,9 @@ export default {
 <template>
 	<el-card class="item-item" shadow="hover" @click=openEdit(item.id)>
 		<el-descriptions :title="item.title" :column="1">
+			<template v-if="remove" #extra>
+				<el-button size="small" @click.stop="$emit('removeItem', item.id)"><el-icon><Minus/></el-icon></el-button>
+			</template>
 			<el-descriptions-item>
 				<el-text tag="b">Stock Type: </el-text>
 				<el-text>

@@ -76,6 +76,8 @@ Route::post('/categories', [CategoryController::class, 'store'])->name('categori
 Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
 Route::patch('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
 Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+Route::put('/categories/{id}/addItem', [CategoryController::class, 'addItem'])->name('categories.addItem');
+Route::put('/categories/{id}/removeItem', [CategoryController::class, 'removeItem'])->name('categories.removeItem');
 
 Route::get('/test', [TestController::class, 'test'])->name('test');
 

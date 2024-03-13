@@ -6,6 +6,7 @@ use App\Http\Requests\CategoryFormRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Category;
+use App\Models\Item;
 
 class CategoryController extends Controller
 {
@@ -40,9 +41,11 @@ class CategoryController extends Controller
             $item->events = $item->events();
             return $item;
         });
+        $items = Item::all();
 
         return Inertia::render('Categories/Category', [
             'category' => $category,
+            'items' => $items,
         ]);
     }
 
@@ -60,5 +63,21 @@ class CategoryController extends Controller
         Category::destroy($request->id);
 
         return redirect('/categories');
+    }
+
+    public function addItem(Request $request, $id) {
+        $item = Item::find($request->id);
+
+        $item->category_id = $id;
+        $item->save();
+        return back();
+    }
+
+    public function removeItem(Request $request, $id) {
+        $item = Item::find($request->id);
+
+        $item->category_id = null;
+        $item->save();
+        return back();
     }
 }

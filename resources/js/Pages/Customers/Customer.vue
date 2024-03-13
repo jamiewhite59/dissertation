@@ -21,7 +21,6 @@ export default {
 			var customerEventIds = this.customer.events.map((event) => event.id);
 			var availableEvents = this.events.filter((event) => ! customerEventIds.includes(event.id));
 			if (this.eventSearch) {
-				console.debug('availavle', availableEvents);
 				return availableEvents.filter((event) => {
 					return event.title.toLowerCase().includes(this.eventSearch.toLowerCase());
 				});
