@@ -68,8 +68,11 @@ export default {
 	},
 	methods: {
 		createEvent() {
-			this.$refs.eventForm.save();
-			this.createDialogVisible = false;
+			this.$refs.eventForm.save()
+				.then((res) => {
+					this.createDialogVisible = false;
+				})
+				.catch((res) => {});
 		},
 		resetForm() {
 			this.$refs.eventForm.resetForm();

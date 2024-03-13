@@ -34,7 +34,7 @@ class EventController extends Controller
         $event->icon = $request->icon ?: '';
         $event->save();
 
-        return redirect('/events');
+        return redirect("/events/$event->id/edit");
     }
 
     public function edit(Request $request, $id): Response {
