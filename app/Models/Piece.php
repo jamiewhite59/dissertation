@@ -20,4 +20,8 @@ class Piece extends Model
     public function eventItems():HasMany {
         return $this->hasMany(EventItem::class);
     }
+
+    public function group(): BelongsTo {
+        return $this->belongsTo(Group::class);
+    }
 }
