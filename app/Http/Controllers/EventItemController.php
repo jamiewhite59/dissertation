@@ -147,12 +147,24 @@ class EventItemController extends Controller {
     public function addGroup(Request $request, $id) {
         DB::transaction(function() use ($request, $id) {
             foreach($request->pieces as $piece) {
-                $eventItem = new EventItem;
+                $availablePiece = EventItem::where('event_id', $id)->where('piece_id', $piece['id'])->get();
+                if (count($availablePiece)) {
+                    return back()->withErrors(['unable' => 'Group contains piece that has already been allocated to this event']);
+                }
 
-                $eventItem->item_id = $piece['item_id'];
-                $eventItem->event_id = $id;
-                $eventItem->status = 'allocated';
-                $eventItem->piece_id = $piece['id'];
+                $eventItem = EventItem::where('event_id', $id)->where('piece_id', null)->where('item_id', $piece['item_id'])->first();
+                if ($eventItem) {
+                    $eventItem->status = 'allocated';
+                    $eventItem->piece_id = $piece['id'];
+                } else {
+                    $eventItem = new EventItem;
+
+                    $eventItem->item_id = $piece['item_id'];
+                    $eventItem->event_id = $id;
+                    $eventItem->status = 'allocated';
+                    $eventItem->piece_id = $piece['id'];
+                }
+
                 $eventItem->save();
             }
             Group::destroy($request->id);
