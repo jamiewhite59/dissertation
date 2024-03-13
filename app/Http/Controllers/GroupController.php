@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Models\Piece;
+use App\Models\EventItem;
 
 class GroupController extends Controller
 {
@@ -78,6 +79,11 @@ class GroupController extends Controller
         if (! $piece) {
             return back()->withErrors(['not_found' => 'No item piece found with that code']);
         }
+        $current = EventItem::where('piece_id', $piece->id)->where('status', '!=', 'completed')->get();
+        if (count($current)) {
+            return back()->withErrors(['unable' => 'Unable to add piece to group whilst in use on an event']);
+        }
+
         $piece->group_id = $id;
         $piece->save();
 
