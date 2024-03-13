@@ -78,7 +78,7 @@ export default {
 				<el-icon><TakeawayBox /></el-icon>
 				Categories
 			</el-menu-item>
-			<el-menu-item index="3-4" disabled>
+			<el-menu-item index="3-4" @click="openIndex('groups.index')">
 				<el-icon><Folder /></el-icon>
 				Groups
 			</el-menu-item>

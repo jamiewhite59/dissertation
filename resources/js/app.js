@@ -19,12 +19,14 @@ import EventItem from '@/Components/EventItem.vue';
 import PieceItem from '@/Components/PieceItem.vue';
 import CategoryItem from '@/Components/CategoryItem.vue';
 import ItemItem from '@/Components/ItemItem.vue';
+import GroupItem from '@/Components/GroupItem.vue';
 import AddCard from '@/Components/AddCard.vue';
 
 import EventForm from '@/Forms/EventForm.vue';
 import ItemForm from '@/Forms/ItemForm.vue';
 import CustomerForm from '@/Forms/CustomerForm.vue';
 import CategoryForm from '@/Forms/CategoryForm.vue';
+import GroupForm from '@/Forms/GroupForm.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -51,6 +53,8 @@ createInertiaApp({
 		app.component('ItemForm', ItemForm);
 		app.component('CustomerForm', CustomerForm);
 		app.component('CategoryForm', CategoryForm);
+		app.component('GroupForm', GroupForm);
+		app.component('GroupItem', GroupItem);
 
 		app.mount(el);
 		return app;

@@ -5,6 +5,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventItemController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\PieceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
@@ -74,6 +75,8 @@ Route::patch('/items/{item}/updatePiece', [ItemController::class, 'updatePiece']
 Route::resource('categories', CategoryController::class)->except(['create']);
 Route::put('/categories/{id}/addItem', [CategoryController::class, 'addItem'])->name('categories.addItem');
 Route::put('/categories/{id}/removeItem', [CategoryController::class, 'removeItem'])->name('categories.removeItem');
+
+Route::resource('groups', GroupController::class);
 
 Route::get('/test', [TestController::class, 'test'])->name('test');
 
