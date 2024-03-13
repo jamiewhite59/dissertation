@@ -31,6 +31,11 @@ class GroupController extends Controller
         $group = new Group;
         $group->title = $request->title;
         $containerPiece = Piece::firstWhere('code', $request->container_piece_code);
+
+        $current = EventItem::where('piece_id', $containerPiece->id)->where('status', '!=', 'completed')->get();
+        if (count($current)) {
+            return back()->withErrors(['unable' => 'Unable to add piece to group whilst in use on an event']);
+        }
         $group->container_piece_id = $containerPiece->id;
         $group->save();
 
