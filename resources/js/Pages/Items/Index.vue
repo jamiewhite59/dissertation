@@ -5,6 +5,8 @@ export default {
 	props: {
 		items: Array,
 		categories: Array,
+		errors: Object,
+		flash: Object,
 	},
 	data() {
 		return {
@@ -46,7 +48,7 @@ export default {
 };
 </script>
 <template>
-	<MainLayout title="Items">
+	<MainLayout title="Items" :errors="errors" :flash="flash">
 		<OverviewLayout @openCreate="openCreate">
 			<template #search>
 				<el-input class="overview-search" v-model="search" placeholder="Search Items" clearable />

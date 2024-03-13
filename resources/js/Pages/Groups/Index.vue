@@ -3,6 +3,7 @@ export default {
 	props: {
 		groups: Array,
 		errors: Object,
+		flash: Object,
 	},
 	data() {
 		return {
@@ -36,7 +37,7 @@ export default {
 };
 </script>
 <template>
-	<MainLayout title="Groups" :errors="errors">
+	<MainLayout title="Groups" :errors="errors" :flash="flash">
 		<OverviewLayout title="Group" :displayCards="!!groups.length" @openCreate="openCreate">
 			<template #search>
 				<el-input class="overview-search" v-model="search" placeholder="Search Groups" clearable />

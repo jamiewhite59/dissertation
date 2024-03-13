@@ -8,6 +8,7 @@ export default {
 		customer: Object,
 		events: Array,
 		errors: Object,
+		flash: Object,
 	},
 	data() {
 		return {
@@ -57,7 +58,7 @@ export default {
 </script>
 
 <template>
-	<MainLayout :title="customer ? customer.name : 'Customers'" :errors="errors">
+	<MainLayout :title="customer ? customer.name : 'Customers'" :errors="errors" :flash="flash">
 		<CreateLayout :existing="customer" :changes="changes" @remove="remove" @openIndex="openIndex" @save="save">
 			<template #form>
 				<CustomerForm ref="customerForm" :customer="customer" @change="(e) => typeof(e) === 'boolean' ? changes=e : ''" />

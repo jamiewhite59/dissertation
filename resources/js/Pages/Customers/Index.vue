@@ -2,6 +2,7 @@
 export default {
 	props: {
 		customers: Array,
+		errors: Object,
 	},
 	data() {
 		return {
@@ -38,7 +39,7 @@ export default {
 </script>
 
 <template>
-	<MainLayout title="Customers">
+	<MainLayout title="Customers" :errors="errors" :flash="flash">
 		<OverviewLayout title="Customer" :displayCards="!!filteredCustomers.length" @openCreate="createDialogVisible = true">
 			<template #search>
 				<el-input class="overview-search" v-model="search" placeholder="Search Customers" clearable />

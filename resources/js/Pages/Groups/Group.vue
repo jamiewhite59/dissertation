@@ -7,6 +7,7 @@ export default {
 	props: {
 		group: Object,
 		errors: Object,
+		flash: Object,
 	},
 	data() {
 		return {
@@ -59,7 +60,7 @@ export default {
 };
 </script>
 <template>
-	<MainLayout :title="group ? group.title : 'Group'" :errors="errors">
+	<MainLayout :title="group ? group.title : 'Group'" :errors="errors" :flash="flash">
 		<CreateLayout :existing="group" :changes="formChanges" @remove="remove" @openIndex="openIndex" @save="save">
 			<template #form>
 				<el-container direction="vertical">

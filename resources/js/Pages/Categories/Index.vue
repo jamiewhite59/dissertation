@@ -2,6 +2,8 @@
 export default {
 	props: {
 		categories: Array,
+		errors: Object,
+		flash: Object,
 	},
 	data() {
 		return {
@@ -36,7 +38,7 @@ export default {
 };
 </script>
 <template>
-	<MainLayout title="Categories">
+	<MainLayout title="Categories" :errors="errors" :flash="flash">
 		<OverviewLayout title="Category" :displayCards="!!categories.length" @openCreate="openCreate">
 			<template #search>
 				<el-input class="overview-search" v-model="search" placeholder="Search Categories" clearable />

@@ -2,6 +2,8 @@
 export default {
 	props: {
 		events: Array,
+		errors: Object,
+		flash: Object,
 	},
 	data() {
 		return {
@@ -77,7 +79,7 @@ export default {
 </script>
 
 <template>
-	<MainLayout title="Events">
+	<MainLayout title="Events" :errors="errors" :flash="flash">
 		<OverviewLayout title="Event" :displayCards="!!searchedEvents.length" @openCreate="createDialogVisible = true">
 			<template #extra>
 				<el-select v-model="statusSelected" multiple placeholder="Filter Events" style="width: 250px">

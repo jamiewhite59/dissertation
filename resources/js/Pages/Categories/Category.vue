@@ -7,6 +7,7 @@ export default {
 	props: {
 		category: Object,
 		errors: Object,
+		flash: Object,
 		items: Array,
 	},
 	data() {
@@ -69,7 +70,7 @@ export default {
 };
 </script>
 <template>
-	<MainLayout :title="category ? category.title : 'Category'" :errors="errors">
+	<MainLayout :title="category ? category.title : 'Category'" :errors="errors" :flash="flash">
 		<CreateLayout :existing="category" :changes="formChanges" @remove="remove" @openIndex="openIndex" @save="save">
 			<template #form>
 				<el-container direction="vertical">

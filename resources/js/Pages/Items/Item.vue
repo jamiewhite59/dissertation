@@ -9,6 +9,7 @@ export default {
 		item: Object,
 		categories: Array,
 		errors: Object,
+		flash: Object,
 	},
 	data() {
 		return {
@@ -96,7 +97,7 @@ export default {
 };
 </script>
 <template>
-	<MainLayout :title="item ? item.title : 'Items'" :errors="errors">
+	<MainLayout :title="item ? item.title : 'Items'" :errors="errors" :flash="flash">
 		<CreateLayout :existing="item" :changes="formChanges" @remove="remove" @openIndex="openIndex" @save="saveItem">
 			<template #form>
 				<ItemForm ref="itemForm" :categories="categories" :item="item" @change="(e) => typeof(e) === 'boolean' ? formChanges=e : ''" />
