@@ -59,8 +59,8 @@ class CategoryController extends Controller
         return redirect('/categories');
     }
 
-    public function destroy(Request $request) {
-        Category::destroy($request->id);
+    public function destroy(Request $request, $id) {
+        Category::destroy($id);
 
         return redirect('/categories');
     }
