@@ -67,7 +67,7 @@ export default {
 			<el-input v-model="groupForm.title"/>
 		</el-form-item>
 		<el-form-item label="Container Piece Code" prop="container_piece_code">
-			<el-input v-model="groupForm.container_piece_code" :disabled="group" required/>
+			<el-input v-model="groupForm.container_piece_code" :disabled="!!group" required/>
 		</el-form-item>
 	</el-form>
 </template>
