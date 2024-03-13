@@ -69,11 +69,10 @@ export default {
 						if (valid) {
 							if (this.event) {
 								router.patch(route('events.update', this.event.id), this.eventForm);
-								resolve();
 							} else {
 								router.post(route('events.store', this.eventForm));
-								resolve();
 							}
+							resolve();
 						}
 					});
 			});

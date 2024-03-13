@@ -39,16 +39,19 @@ export default {
 	},
 	methods: {
 		save() {
-			this.validate()
-				.then((valid) => {
-					if (valid) {
-						if (this.customer) {
-							router.patch(route('customers.update', this.customer.id), this.customerForm);
-						} else {
-							router.post(route('customers.store', this.customerForm));
+			return new Promise((resolve, reject) => {
+				this.validate()
+					.then((valid) => {
+						if (valid) {
+							if (this.customer) {
+								router.patch(route('customers.update', this.customer.id), this.customerForm);
+							} else {
+								router.post(route('customers.store', this.customerForm));
+							}
+							resolve();
 						}
-					}
-				});
+					});
+			});
 		},
 		validate() {
 			return this.$refs.formRef.validate()

@@ -3,6 +3,7 @@ export default {
 	props: {
 		customers: Array,
 		errors: Object,
+		flash: Object,
 	},
 	data() {
 		return {
@@ -28,8 +29,11 @@ export default {
 	},
 	methods: {
 		createCustomer() {
-			this.$refs.customerForm.save();
-			this.createDialogVisible = false;
+			this.$refs.customerForm.save()
+				.then((res) => {
+					this.createDialogVisible = false;
+				})
+				.catch((err) => {});
 		},
 		resetForm() {
 			this.$refs.customerForm.resetForm();

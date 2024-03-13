@@ -32,7 +32,7 @@ class CustomerController extends Controller
         $customer->company = $request->company ?: '';
         $customer->save();
 
-        return redirect('/customers');
+        return redirect("/customers/$customer->id/edit");
     }
 
     public function edit(Request $request, $id): Response {
