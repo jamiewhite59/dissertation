@@ -80,10 +80,10 @@ export default {
 			</template>
 		</CreateLayout>
 	</MainLayout>
-	<el-dialog v-model="eventDialogVisible" width="30%" style="min-height:400px;" align-center>
+	<el-dialog v-model="eventDialogVisible" width="30%" style="min-height:400px;" align-center  @opened="$refs.eventSearch.focus()">
 		<template #header>Events</template>
 		<template #default>
-			<el-input class="dialog-search" v-model="eventSearch" placeholder="Search Events" clearable />
+			<el-input class="dialog-search" v-model="eventSearch" ref="eventSearch" placeholder="Search Events" clearable/>
 			<el-scrollbar height="250px">
 				<el-row v-for="event in filteredEvents" :key="event.id" style="margin-bottom:10px">
 					<el-col :span="3"><el-button size="small" @click="addEvent(event.id)"><el-icon><Plus /></el-icon></el-button></el-col>

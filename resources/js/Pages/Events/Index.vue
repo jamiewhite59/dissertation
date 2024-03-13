@@ -101,7 +101,7 @@ export default {
 			</template>
 		</OverviewLayout>
 	</MainLayout>
-	<el-dialog v-model="createDialogVisible" width="30%" style="min-height: 400px" align-center @closed="resetForm">
+	<el-dialog v-model="createDialogVisible" width="30%" style="min-height: 400px" align-center @opened="$refs.eventForm.$refs.eventTitle.focus()" @closed="resetForm">
 		<template #header>Create Event</template>
 		<template #default>
 			<EventForm ref="eventForm" />

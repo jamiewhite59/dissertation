@@ -50,7 +50,7 @@ export default {
 			</template>
 		</OverviewLayout>
 	</MainLayout>
-	<el-dialog v-model="createDialogVisible" width="30%" align-center @closed="resetForm">
+	<el-dialog v-model="createDialogVisible" width="30%" align-center @opened="$refs.categoryForm.$refs.categoryTitle.focus()" @closed="resetForm">
 		<template #header>Create Category</template>
 		<template #default>
 			<CategoryForm ref="categoryForm"/>

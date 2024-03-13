@@ -49,7 +49,7 @@ export default {
 			</template>
 		</OverviewLayout>
 	</MainLayout>
-	<el-dialog v-model="createDialogVisible" width="30%" align-center @closed="resetForm">
+	<el-dialog v-model="createDialogVisible" width="30%" align-center @opened="$refs.groupForm.$refs.groupTitle.focus()" @closed="resetForm">
 		<template #header>Create Group</template>
 		<template #default>
 			<GroupForm ref="groupForm"/>

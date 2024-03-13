@@ -80,7 +80,7 @@ export default {
 <template>
 	<el-form class="create-form" ref="formRef" label-position="top" :model="eventForm" :rules="eventFormRules" @input="$emit('change', changes)">
 		<el-form-item label="Title" prop="title" required>
-			<el-input v-model="eventForm.title" />
+			<el-input v-model="eventForm.title" ref="eventTitle" />
 		</el-form-item>
 		<el-form-item label="Icon" prop="icon">
 			<el-input v-model="eventForm.icon" />

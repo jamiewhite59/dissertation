@@ -95,10 +95,10 @@ export default {
 			</template>
 		</CreateLayout>
 	</MainLayout>
-	<el-dialog v-model="itemDialogVisible" width="30%" style="min-height:400px;" align-center>
+	<el-dialog v-model="itemDialogVisible" width="30%" style="min-height:400px;" align-center @opened="$refs.itemSearch.focus()">
 		<template #header>Items</template>
 		<template #default>
-			<el-input class="dialog-search" v-model="itemSearch" placeholder="Search Items" clearable />
+			<el-input class="dialog-search" v-model="itemSearch" ref="itemSearch" placeholder="Search Items" clearable />
 			<el-scrollbar height="250px">
 				<el-row v-for="item in filteredItems" :key="item.id" style="margin-bottom:10px">
 					<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus /></el-icon></el-button></el-col>

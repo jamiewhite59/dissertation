@@ -62,7 +62,7 @@ export default {
 <template>
 	<el-form class="create-form" ref="formRef" label-position="top" :model="categoryForm" :rules="rules" @input="$emit('change', changes)">
 		<el-form-item label="Title" prop="title" required>
-			<el-input v-model="categoryForm.title" />
+			<el-input v-model="categoryForm.title" ref="categoryTitle" />
 		</el-form-item>
 		<el-form-item label="Description" prop="description">
 			<el-input v-model="categoryForm.description" type="textarea" :autosize="{minRows: 3, maxRows: 6}" :rows="4" />

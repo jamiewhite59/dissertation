@@ -72,7 +72,7 @@ export default {
 <template>
 	<el-form class="create-form" ref="formRef" label-position="top" :model="customerForm" :rules="rules" @input="$emit('change', changes)">
 		<el-form-item label="Name" prop="name" required>
-			<el-input v-model="customerForm.name" />
+			<el-input v-model="customerForm.name" ref="customerName" />
 		</el-form-item>
 		<el-form-item label="Email" prop="email" required>
 			<el-input v-model="customerForm.email"/>

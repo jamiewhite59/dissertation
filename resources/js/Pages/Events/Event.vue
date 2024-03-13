@@ -508,10 +508,10 @@ export default {
 			</el-tab-pane>
 		</el-tabs>
 	</MainLayout>
-	<el-dialog v-model="customerDialogVisible" width="30%" style="min-height:400px;" align-center>
+	<el-dialog v-model="customerDialogVisible" width="30%" style="min-height:400px;" align-center  @opened="$refs.customerSearch.focus()">
 		<template #header>Customers</template>
 		<template #default>
-			<el-input class="dialog-search" v-model="customerSearch" placeholder="Search Customers" clearable />
+			<el-input class="dialog-search" v-model="customerSearch" ref="customerSearch" placeholder="Search Customers" clearable />
 			<el-scrollbar height="250px">
 				<el-row v-for="customer in filteredCustomers" :key="customer.id" style="margin-bottom:10px">
 					<el-col :span="3"><el-button size="small" @click="addCustomer(customer.id)"><el-icon><Plus /></el-icon></el-button></el-col>
@@ -520,10 +520,10 @@ export default {
 			</el-scrollbar>
 		</template>
 	</el-dialog>
-	<el-dialog v-model="itemDialogVisible" width="30%" style="min-height:400px;" align-center>
+	<el-dialog v-model="itemDialogVisible" width="30%" style="min-height:400px;" align-center @opened="$refs.itemSearch.focus()">
 		<template #header>Items</template>
 		<template #default>
-			<el-input class="dialog-search" v-model="itemSearch" placeholder="Search Items" clearable />
+			<el-input class="dialog-search" v-model="itemSearch" ref="itemSearch" placeholder="Search Items" clearable />
 			<el-tabs v-model="activeDialogTab">
 				<el-tab-pane label="Hire" name="hire">
 					<el-scrollbar height="250">
