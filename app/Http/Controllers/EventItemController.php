@@ -38,6 +38,10 @@ class EventItemController extends Controller {
             return back()->withErrors(['not_found' => "No piece was found with code $request->piece_code"]);
         }
 
+        if ($piece->group_id) {
+            return back()->withErrors(['unable' => 'This piece is part of a group & cannot be added separately']);
+        }
+
         $availablePiece = EventItem::where('event_id', $request->event_id)->where('piece_id', $piece->id)->get();
         if (count($availablePiece) > 0) {
             return back()->withErrors(['already_allocated' => 'Piece already allocated to event']);
