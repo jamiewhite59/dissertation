@@ -6,6 +6,7 @@ use App\Http\Requests\GroupFormRequest;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Group;
+use App\Models\Piece;
 
 class GroupController extends Controller
 {
@@ -28,6 +29,7 @@ class GroupController extends Controller
 
     public function edit(Request $request, $id) {
         $group = Group::find($id);
+        $group->pieces = $group->pieces;
 
         return Inertia::render('Groups/Group', [
             'group' => $group,
@@ -48,5 +50,21 @@ class GroupController extends Controller
         Group::destroy($id);
 
         return redirect('/groups');
+    }
+
+    public function addPiece(Request $request, $id) {
+        $piece = Piece::firstWhere('code', $request->piece_code);
+        $piece->group_id = $id;
+        $piece->save();
+
+        return back();
+    }
+
+    public function removePiece(Request $request, $id) {
+        $piece = Piece::find($request->id);
+        $piece->group_id = null;
+        $piece->save();
+
+        return back();
     }
 }

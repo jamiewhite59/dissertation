@@ -77,6 +77,8 @@ Route::put('/categories/{id}/addItem', [CategoryController::class, 'addItem'])->
 Route::put('/categories/{id}/removeItem', [CategoryController::class, 'removeItem'])->name('categories.removeItem');
 
 Route::resource('groups', GroupController::class);
+Route::put('/groups/{id}/addPiece', [GroupController::class, 'addPiece'])->name('groups.addPiece');
+Route::put('/groups/{id}/removePiece', [GroupController::class, 'removePiece'])->name('groups.removePiece');
 
 Route::get('/test', [TestController::class, 'test'])->name('test');
 
