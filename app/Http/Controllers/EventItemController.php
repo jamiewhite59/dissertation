@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EventItemRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\EventItem;
 use App\Models\Piece;
+use App\Models\Group;
 
 class EventItemController extends Controller {
     public function create(Request $request) {
@@ -136,6 +138,21 @@ class EventItemController extends Controller {
         $eventItem->piece_id = null;
         $eventItem->status = 'reserved';
         $eventItem->save();
+    }
+
+    public function addGroup(Request $request, $id) {
+        DB::transaction(function() use ($request, $id) {
+            foreach($request->pieces as $piece) {
+                $eventItem = new EventItem;
+
+                $eventItem->item_id = $piece['item_id'];
+                $eventItem->event_id = $id;
+                $eventItem->status = 'allocated';
+                $eventItem->piece_id = $piece['id'];
+                $eventItem->save();
+            }
+            Group::destroy($request->id);
+        });
     }
 
     // INTERNAL FUNCTIONS

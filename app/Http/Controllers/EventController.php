@@ -6,6 +6,7 @@ use App\Http\Requests\EventFormRequest;
 use App\Models\Event;
 use App\Models\Customer;
 use App\Models\Item;
+use App\Models\Group;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -46,11 +47,17 @@ class EventController extends Controller
             $item->category = $item->category;
             return $item;
         });
+        $groups = Group::all();
+        $groups = $groups->map(function($group) {
+            $group->pieces = $group->pieces;
+            return $group;
+        });
 
         return Inertia::render('Events/Event', [
             'event' => $event,
             'customers' => $customers,
             'items' => $items,
+            'groups' => $groups,
         ]);
     }
 

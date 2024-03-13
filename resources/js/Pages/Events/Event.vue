@@ -7,6 +7,7 @@ export default {
 		event: Object,
 		customers: Array,
 		items: Array,
+		groups: Array,
 		errors: Object,
 		flash: Object,
 	},
@@ -383,6 +384,9 @@ export default {
 				cell.style.cursor = 'pointer';
 			}
 		},
+		addGroup(group) {
+			router.put(route('events.addGroup', this.event.id), group);
+		},
 	},
 };
 </script>
@@ -549,6 +553,16 @@ export default {
 									<el-divider direction="vertical" />
 									<el-text tag="i">{{item.category.title }}</el-text>
 								</template>
+							</el-col>
+						</el-row>
+					</el-scrollbar>
+				</el-tab-pane>
+				<el-tab-pane label="Group" name="group">
+					<el-scrollbar height="250">
+						<el-row v-for="group in groups" :key="group.id" style="margin-bottom:10px;">
+							<el-col :span="3"><el-button size="small" @click="addGroup(group)"><el-icon><Plus /></el-icon></el-button></el-col>
+							<el-col style="display:flex; align-items:center;" :span="21">
+								<el-text>{{ group.title }}</el-text>
 							</el-col>
 						</el-row>
 					</el-scrollbar>
