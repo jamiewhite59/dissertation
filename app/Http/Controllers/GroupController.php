@@ -12,6 +12,14 @@ class GroupController extends Controller
 {
     public function index(Request $request) {
         $groups = Group::all();
+        $groups = $groups->map(function($group) {
+            $group->pieces = $group->pieces;
+            $group->pieces = $group->pieces->map(function($piece) {
+                $piece->item = $piece->item;
+                return $piece;
+            });
+            return $group;
+        });
 
         return Inertia::render('Groups/Index', [
             'groups' => $groups,

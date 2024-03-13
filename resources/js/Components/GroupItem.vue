@@ -20,7 +20,8 @@ export default {
 	<el-card shadow="hover" style="text-align:center;" @click="openEdit(group.id)">
 		<el-descriptions :title="group.title" :column="1">
 			<el-descriptions-item>
-				stuff hi
+				<el-text tag="b">Number of Pieces: </el-text>
+				<el-text>{{ group.pieces.length }}</el-text>
 			</el-descriptions-item>
 		</el-descriptions>
 	</el-card>
