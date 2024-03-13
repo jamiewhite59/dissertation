@@ -66,7 +66,7 @@ class ItemController extends Controller
             }
         }
 
-        return redirect('/items');
+        return redirect("/items/$item->id/edit");
     }
 
     /**
