@@ -410,7 +410,7 @@ export default {
 							<el-input class="item-action-input" ref="actionInput" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
 						</el-container>
 					</el-row>
-					<el-table :class="hovering ? 'cell-hover' : ''" :data="augmentedItems" height="100%" @selection-change="handleTableSelectionChange" @cell-click="openEdit" @cell-mouse-enter="mouseEnter">
+					<el-table :data="augmentedItems" height="100%" @selection-change="handleTableSelectionChange" @cell-click="openEdit" @cell-mouse-enter="mouseEnter">
 						<el-table-column type="selection" width="55" />
 						<el-table-column prop="item_title" label="Title" sortable />
 						<el-table-column prop="piece_code" label="Code">
