@@ -158,12 +158,19 @@ export default {
 			}).catch(() => {});
 		},
 		allocatePieceCode(item, code) {
-			let data = {
-				event_id: this.event.id,
-				piece_code: code ? code : this.actionInput,
-				event_item_id: item?.id,
-			};
-			router.put(route('events.addItemPiece', this.event.id), data);
+			let containerGroup = this.groups.find((group) => {
+				return group.container.code === this.actionInput;
+			});
+			if (containerGroup) {
+				this.addGroup(containerGroup);
+			} else {
+				let data = {
+					event_id: this.event.id,
+					piece_code: code ? code : this.actionInput,
+					event_item_id: item?.id,
+				};
+				router.put(route('events.addItemPiece', this.event.id), data);
+			}
 			this.actionInput = '';
 		},
 		allocatePieceBulk(item, quantity) {
