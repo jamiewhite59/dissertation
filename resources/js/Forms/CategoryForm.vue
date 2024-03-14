@@ -31,16 +31,19 @@ export default {
 	},
 	methods: {
 		save() {
-			this.validate()
-				.then((valid) => {
-					if (valid) {
-						if (this.category) {
-							router.patch(route('categories.update', this.category.id), this.categoryForm);
-						} else {
-							router.post(route('categories.store', this.categoryForm));
+			return new Promise((resolve, reject) => {
+				this.validate()
+					.then((valid) => {
+						if (valid) {
+							if (this.category) {
+								router.patch(route('categories.update', this.category.id), this.categoryForm);
+							} else {
+								router.post(route('categories.store', this.categoryForm));
+							}
+							resolve();
 						}
-					}
-				});
+					});
+			});
 		},
 		validate() {
 			return this.$refs.formRef.validate()

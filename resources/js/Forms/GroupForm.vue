@@ -33,16 +33,19 @@ export default {
 	},
 	methods: {
 		save() {
-			this.validate()
-				.then((valid) => {
-					if (valid) {
-						if (this.group) {
-							router.patch(route('groups.update', this.group.id), this.groupForm);
-						} else {
-							router.post(route('groups.store', this.groupForm));
+			return new Promise((resolve, reject) => {
+				this.validate()
+					.then((valid) => {
+						if (valid) {
+							if (this.group) {
+								router.patch(route('groups.update', this.group.id), this.groupForm);
+							} else {
+								router.post(route('groups.store', this.groupForm));
+							}
+							resolve();
 						}
-					}
-				});
+					});
+			});
 		},
 		validate() {
 			return this.$refs.formRef.validate()

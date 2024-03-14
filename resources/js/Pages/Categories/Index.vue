@@ -25,8 +25,11 @@ export default {
 	},
 	methods: {
 		createCategory() {
-			this.$refs.categoryForm.save();
-			this.createDialogVisible = false;
+			this.$refs.categoryForm.save()
+				.then((res) => {
+					this.createDialogVisible = false;
+				})
+				.catch((err) => {});
 		},
 		resetForm() {
 			this.$refs.categoryForm.resetForm();

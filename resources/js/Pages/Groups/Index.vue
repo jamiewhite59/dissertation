@@ -27,8 +27,12 @@ export default {
 			this.createDialogVisible = true;
 		},
 		createGroup() {
-			this.$refs.groupForm.save();
-			this.createDialogVisible = false;
+			this.$refs.groupForm.save()
+				.then((res) => {
+					this.createDialogVisible = false;
+
+				})
+				.catch((err) => {});
 		},
 		resetForm() {
 			this.$refs.groupForm.resetForm();
