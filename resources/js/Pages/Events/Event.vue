@@ -31,8 +31,13 @@ export default {
 			var eventCustomerIds = this.event.customers.map((customer) => customer.id);
 			var availableCustomers = this.customers.filter((customer) => !eventCustomerIds.includes(customer.id));
 			if (this.customerSearch) {
-				return availableCustomers.filter((customer) =>
-					customer.name.toLowerCase().includes(this.customerSearch.toLowerCase()));
+				return availableCustomers.filter((customer) => {
+					let search = this.customerSearch.toLowerCase();
+					return customer.name.toLowerCase().includes(search)
+					|| customer.email.toLowerCase().includes(search)
+					|| customer.phone_number.toLowerCase().includes(search);
+
+				});
 			} else {
 				return availableCustomers;
 			}
