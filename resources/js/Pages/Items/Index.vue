@@ -18,9 +18,10 @@ export default {
 		filteredItems() {
 			if (this.search) {
 				return this.items.filter((item) => {
-					let title = item.title ? item.title.toLowerCase().includes(this.search.toLowerCase()) : false;
-					let description = item.description ? item.description.toLowerCase().includes(this.search.toLowerCase()) : false;
-					let stock_type = item.stock_type ? item.stock_type.toLowerCase().includes(this.search.toLowerCase()) : false;
+					let search = this.search.toLowerCase();
+					let title = item.title ? item.title.toLowerCase().includes(search) : false;
+					let description = item.description ? item.description.toLowerCase().includes(search) : false;
+					let stock_type = item.stock_type ? item.stock_type.toLowerCase().includes(search) : false;
 					return title || description || stock_type;
 				});
 			} else {

@@ -39,9 +39,11 @@ export default {
 		},
 		filteredItems() {
 			if (this.itemSearch) {
-				return this.items.filter((item) =>
-					item.title.toLowerCase().includes(this.itemSearch.toLowerCase())
-					|| item.category?.title.toLowerCase().includes(this.itemSearch.toLowerCase()));
+				return this.items.filter((item) => {
+					let search = this.itemSearch.toLowerCase();
+					return item.title.toLowerCase().includes(search)
+					|| item.category?.title.toLowerCase().includes(search);
+				});
 			} else {
 				return this.items;
 			}

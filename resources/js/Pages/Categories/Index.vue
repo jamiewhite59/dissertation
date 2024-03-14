@@ -15,8 +15,9 @@ export default {
 		searchedCategories() {
 			if (this.search) {
 				return this.categories.filter((category) => {
-					return category.title.toLowerCase().includes(this.search.toLowerCase())
-					|| category.description?.toLowerCase().includes(this.search.toLowerCase());
+					let search = this.search.toLowerCase();
+					return category.title.toLowerCase().includes(search)
+					|| category.description?.toLowerCase().includes(search);
 				});
 			} else {
 				return this.categories;

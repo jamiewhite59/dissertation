@@ -16,10 +16,11 @@ export default {
 		filteredCustomers() {
 			if (this.search) {
 				return this.customers.filter((customer) => {
-					let name = customer.name ? customer.name.toLowerCase().includes(this.search.toLowerCase()) : false;
-					let email = customer.email ? customer.email.toLowerCase().includes(this.search.toLowerCase()) : false;
-					let company = customer.company ? customer.company.toLowerCase().includes(this.search.toLowerCase()) : false;
-					let phone = customer.phone_number ? customer.phone_number.toLowerCase().includes(this.search.toLowerCase()) : false;
+					let search = this.search.toLowerCase();
+					let name = customer.name ? customer.name.toLowerCase().includes(search) : false;
+					let email = customer.email ? customer.email.toLowerCase().includes(search) : false;
+					let company = customer.company ? customer.company.toLowerCase().includes(search) : false;
+					let phone = customer.phone_number ? customer.phone_number.toLowerCase().includes(search) : false;
 					return  name || email || company || phone;
 				});
 			} else {

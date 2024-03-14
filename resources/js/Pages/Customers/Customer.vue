@@ -34,7 +34,10 @@ export default {
 			var availableEvents = this.augmentedEvents.filter((event) => ! customerEventIds.includes(event.id));
 			if (this.eventSearch) {
 				return availableEvents.filter((event) => {
-					return event.title.toLowerCase().includes(this.eventSearch.toLowerCase());
+					let search = this.eventSearch.toLowerCase();
+					return event.title.toLowerCase().includes(search)
+					|| event.start_date_formatted.toLowerCase().includes(search)
+					|| event.end_date_formatted.toLowerCase().includes(search);
 				});
 			} else {
 				return availableEvents;
