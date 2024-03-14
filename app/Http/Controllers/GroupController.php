@@ -97,7 +97,8 @@ class GroupController extends Controller
 
     public function removePiece(Request $request, $id) {
         $piece = Piece::find($request->id);
-        if ($piece->group_id === $id) {
+        $group = Group::find($id);
+        if ($group->container_piece_id === $piece->id) {
             return back()->withErrors(['unable' => 'Cannot remove the container of this group']);
         }
         $piece->group_id = null;
