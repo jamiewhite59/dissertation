@@ -69,7 +69,7 @@ export default {
 	<el-dialog v-model="createDialogVisible" width="30%" style="min-height: 400px" align-center @opened="$refs.itemForm.$refs.itemTitle.focus()" @closed="resetForm">
 		<template #header>Create Item</template>
 		<template #default>
-			<ItemForm ref="itemForm" :categories="categories" />
+			<ItemForm ref="itemForm" :categories="categories" @keyup.enter="createItem" />
 		</template>
 		<template #footer>
 			<el-button type="primary" @click="createDialogVisible = false">Cancel</el-button>

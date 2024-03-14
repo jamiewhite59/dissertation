@@ -56,7 +56,7 @@ export default {
 	<el-dialog v-model="createDialogVisible" width="30%" align-center @opened="$refs.categoryForm.$refs.categoryTitle.focus()" @closed="resetForm">
 		<template #header>Create Category</template>
 		<template #default>
-			<CategoryForm ref="categoryForm"/>
+			<CategoryForm ref="categoryForm" @keyup.enter="createCategory"/>
 		</template>
 		<template #footer>
 			<el-button type="primary" @click="createDialogVisible = false">Cancel</el-button>

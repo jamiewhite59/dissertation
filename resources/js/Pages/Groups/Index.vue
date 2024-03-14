@@ -56,7 +56,7 @@ export default {
 	<el-dialog v-model="createDialogVisible" width="30%" align-center @opened="$refs.groupForm.$refs.groupTitle.focus()" @closed="resetForm">
 		<template #header>Create Group</template>
 		<template #default>
-			<GroupForm ref="groupForm"/>
+			<GroupForm ref="groupForm" @keyup.enter="createGroup"/>
 		</template>
 		<template #footer>
 			<el-button type="primary" @click="createDialogVisible = false">Cancel</el-button>

@@ -58,7 +58,7 @@ export default {
 	<el-dialog v-model="createDialogVisible" width="30%" style="min-height: 400px" align-center @opened="$refs.customerForm.$refs.customerName.focus()" @closed="resetForm">
 		<template #header>Create Customer</template>
 		<template #default>
-			<CustomerForm ref="customerForm" />
+			<CustomerForm ref="customerForm" @keyup.enter="createCustomer" />
 		</template>
 		<template #footer>
 			<el-button type="primary" @click="createDialogVisible = false">Cancel</el-button>

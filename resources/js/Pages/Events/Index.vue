@@ -107,7 +107,7 @@ export default {
 	<el-dialog v-model="createDialogVisible" width="30%" style="min-height: 400px" align-center @opened="$refs.eventForm.$refs.eventTitle.focus()" @closed="resetForm">
 		<template #header>Create Event</template>
 		<template #default>
-			<EventForm ref="eventForm" />
+			<EventForm ref="eventForm" @keyup.enter="createEvent" />
 		</template>
 		<template #footer>
 			<el-button type="primary" @click="createDialogVisible = false">Cancel</el-button>
