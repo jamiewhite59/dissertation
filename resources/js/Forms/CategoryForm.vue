@@ -67,6 +67,9 @@ export default {
 		<el-form-item label="Title" prop="title" required>
 			<el-input v-model="categoryForm.title" ref="categoryTitle" />
 		</el-form-item>
+		<el-form-item style="display:none">
+			<el-input />
+		</el-form-item>
 		<el-form-item label="Description" prop="description">
 			<el-input v-model="categoryForm.description" type="textarea" :autosize="{minRows: 3, maxRows: 6}" :rows="4" />
 		</el-form-item>

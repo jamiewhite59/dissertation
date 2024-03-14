@@ -144,9 +144,12 @@ export default {
 	<el-dialog v-model="dialogVisible" width="30%" align-center @opened="$refs.codeInput.focus()" @closed="hideDialog">
 		<template #header>{{ selectedPiece ? 'Edit Piece' : 'Create Piece' }}</template>
 		<template #default>
-			<el-form ref="pieceFormRef" label-position="top" :model="pieceForm" :rules="pieceRules">
+			<el-form ref="pieceFormRef" label-position="top" :model="pieceForm" :rules="pieceRules" @keyup.enter="savePiece">
 				<el-form-item label="Identifying Code" prop="code">
 					<el-input ref="codeInput" v-model="pieceForm.code"/>
+				</el-form-item>
+				<el-form-item style="display:none">
+					<el-input/>
 				</el-form-item>
 			</el-form>
 		</template>

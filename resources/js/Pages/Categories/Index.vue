@@ -34,15 +34,12 @@ export default {
 		resetForm() {
 			this.$refs.categoryForm.resetForm();
 		},
-		openCreate() {
-			this.createDialogVisible = true;
-		},
 	},
 };
 </script>
 <template>
 	<MainLayout title="Categories" :errors="errors" :flash="flash">
-		<OverviewLayout title="Category" :displayCards="!!categories.length" @openCreate="openCreate">
+		<OverviewLayout title="Category" :displayCards="!!categories.length" @openCreate="createDialogVisible = true">
 			<template #search>
 				<el-input class="overview-search" v-model="search" placeholder="Search Categories" clearable />
 			</template>

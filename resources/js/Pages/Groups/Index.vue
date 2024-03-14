@@ -30,7 +30,6 @@ export default {
 			this.$refs.groupForm.save()
 				.then((res) => {
 					this.createDialogVisible = false;
-
 				})
 				.catch((err) => {});
 		},

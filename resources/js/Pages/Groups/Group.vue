@@ -86,7 +86,7 @@ export default {
 	<el-dialog v-model="pieceDialogVisible" width="30%" style="min-height:400px;" align-center @opened="$refs.pieceSearch.focus()">
 		<template #header>Add Piece</template>
 		<template #default>
-			<el-input v-model="pieceCodeInput" ref="pieceSearch" placeholder="Enter Piece Code" clearable>
+			<el-input v-model="pieceCodeInput" ref="pieceSearch" placeholder="Enter Piece Code" clearable @keyup.enter="addPiece">
 				<template #append>
 					<el-button @click="addPiece">Add</el-button>
 				</template>
