@@ -557,7 +557,7 @@ export default {
 			</el-table>
 		</template>
 	</el-dialog>
-	<el-dialog v-model="itemDialogVisible" width="30%" style="min-height:400px;" align-center @opened="$refs.itemSearch.focus()" @closed="itemSearch = ''">
+	<el-dialog v-model="itemDialogVisible" width="40%" style="min-height:400px;" align-center @opened="$refs.itemSearch.focus()" @closed="itemSearch = ''">
 		<template #header>Items</template>
 		<template #default>
 			<el-input class="dialog-search" v-model="itemSearch" ref="itemSearch" placeholder="Search Items" clearable />

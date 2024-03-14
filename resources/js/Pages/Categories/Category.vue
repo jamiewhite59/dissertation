@@ -93,16 +93,18 @@ export default {
 			</template>
 		</CreateLayout>
 	</MainLayout>
-	<el-dialog v-model="itemDialogVisible" width="30%" style="min-height:400px;" align-center @opened="$refs.itemSearch.focus()">
+	<el-dialog v-model="itemDialogVisible" width="30%" style="min-height:400px;" align-center @opened="$refs.itemSearch.focus()" @closed="itemSearch = ''">
 		<template #header>Items</template>
 		<template #default>
 			<el-input class="dialog-search" v-model="itemSearch" ref="itemSearch" placeholder="Search Items" clearable />
-			<el-scrollbar height="250px">
-				<el-row v-for="item in filteredItems" :key="item.id" style="margin-bottom:10px">
-					<el-col :span="3"><el-button size="small" @click="addItem(item.id)"><el-icon><Plus /></el-icon></el-button></el-col>
-					<el-col :span="21">{{ item.title }}</el-col>
-				</el-row>
-			</el-scrollbar>
+			<el-table :data="filteredItems" height="250">
+				<el-table-column label="Add" width="70">
+					<template #default="scope">
+						<el-button size="small" @click="addItem(scope.row.id)"><el-icon><Plus /></el-icon></el-button>
+					</template>
+				</el-table-column>
+				<el-table-column prop="title" label="Title"/>
+			</el-table>
 		</template>
 	</el-dialog>
 </template>
