@@ -80,9 +80,7 @@ export default {
 			</template>
 			<template #default>
 				<el-col class="items-content">
-					<el-container>
-						<el-text size="large" tag="b" style="margin-bottom: 1em;">Items ({{ category.items.length }})</el-text>
-					</el-container>
+					<el-text size="large" tag="b">Items ({{ category.items.length }})</el-text>
 					<el-container class="item-wrapper">
 						<el-scrollbar class="piece-scrollbar" height="100%">
 							<el-container class="list-space">
@@ -113,10 +111,13 @@ export default {
 	flex: 1;
 	height: 100%;
 
+	text-align: center;
+
 	.item-wrapper {
 		height: calc(100% - 36px);
 
 		.piece-scrollbar {
+			margin-top: 1em;
 			width: 100%;
 
 			.list-space {

@@ -487,7 +487,7 @@ export default {
 				<CreateLayout :existing="event" :changes="formChanges" @remove="remove" @openIndex="openIndex" @save="save">
 					<template #form>
 						<el-container direction="vertical">
-							<el-text class="form-title" size="large" tag="b">Details</el-text>
+							<el-text size="large" tag="b">Details</el-text>
 							<EventForm ref="eventForm" :event="event" @change="(e) => typeof(e) === 'boolean' ? formChanges=e : ''" />
 						</el-container>
 					</template>

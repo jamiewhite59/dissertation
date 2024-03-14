@@ -70,9 +70,7 @@ export default {
 			</template>
 			<template #default>
 				<el-col class="pieces-content">
-					<el-container>
-						<el-text size="large" tag="b" style="margin-bottom: 1em;">Pieces ({{ group.pieces.length }})</el-text>
-					</el-container>
+					<el-text size="large" tag="b" style="margin-bottom: 1em;">Pieces ({{ group.pieces.length }})</el-text>
 					<el-container class="piece-wrapper">
 						<el-scrollbar class="piece-scrollbar" height="100%">
 							<el-container class="list-space">
@@ -101,10 +99,13 @@ export default {
 	flex: 1;
 	height: 100%;
 
+	text-align: center;
+
 	.piece-wrapper {
 		height: calc(100% - 36px);
 
 		.piece-scrollbar {
+			margin-top: 1em;
 			width: 100%;
 
 			.list-space {

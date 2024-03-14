@@ -61,13 +61,14 @@ export default {
 	<MainLayout :title="customer ? customer.name : 'Customers'" :errors="errors" :flash="flash">
 		<CreateLayout :existing="customer" :changes="changes" @remove="remove" @openIndex="openIndex" @save="save">
 			<template #form>
-				<CustomerForm ref="customerForm" :customer="customer" @change="(e) => typeof(e) === 'boolean' ? changes=e : ''" />
+				<el-container direction="vertical">
+					<el-text size="large" tag="b">Details</el-text>
+					<CustomerForm ref="customerForm" :customer="customer" @change="(e) => typeof(e) === 'boolean' ? changes=e : ''" />
+				</el-container>
 			</template>
 			<template #default>
 				<el-col class="event-index-list" :xs="24" :sm="24" :md="24" :lg="16" :xl="16" direction="vertical">
-					<el-container style="margin-bottom:1em;">
-						<el-text size="large" tag="b">Events ({{ customer.events.length }})</el-text>
-					</el-container>
+					<el-text size="large" tag="b">Events ({{ customer.events.length }})</el-text>
 					<el-container class="event-item-wrapper">
 						<el-scrollbar class="event-scrollbar" height="100%">
 							<el-container class="list-space">
@@ -97,10 +98,14 @@ export default {
 .event-index-list {
 	flex: 1;
 
+	text-align: center;
+
 	.event-item-wrapper {
 		height: calc(100% - 36px);
 
 		.event-scrollbar {
+			margin-top: 1em;
+
 			width: 100%;
 
 			.list-space {
