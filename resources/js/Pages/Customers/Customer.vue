@@ -18,9 +18,20 @@ export default {
 		};
 	},
 	computed: {
+		augmentedEvents() {
+			return this.events.map((event) => {
+				event.start_date_formatted = new Date(event.start_date).toLocaleDateString();
+				if (! event.end_date) {
+					event.end_date_formatted = 'Ongoing';
+				} else {
+					event.end_date_formatted = new Date(event.end_date).toLocaleDateString();
+				}
+				return event;
+			});
+		},
 		filteredEvents() {
 			var customerEventIds = this.customer.events.map((event) => event.id);
-			var availableEvents = this.events.filter((event) => ! customerEventIds.includes(event.id));
+			var availableEvents = this.augmentedEvents.filter((event) => ! customerEventIds.includes(event.id));
 			if (this.eventSearch) {
 				return availableEvents.filter((event) => {
 					return event.title.toLowerCase().includes(this.eventSearch.toLowerCase());
@@ -85,12 +96,24 @@ export default {
 		<template #header>Events</template>
 		<template #default>
 			<el-input class="dialog-search" v-model="eventSearch" ref="eventSearch" placeholder="Search Events" clearable/>
-			<el-scrollbar height="250px">
-				<el-row v-for="event in filteredEvents" :key="event.id" style="margin-bottom:10px">
-					<el-col :span="3"><el-button size="small" @click="addEvent(event.id)"><el-icon><Plus /></el-icon></el-button></el-col>
-					<el-col :span="21">{{ event.title }}</el-col>
-				</el-row>
-			</el-scrollbar>
+			<el-table :data="filteredEvents" height="250" style="height: 100%;">
+				<el-table-column label="Add" width="70">
+					<template #default="scope">
+						<el-button size="small" @click="addEvent(scope.row.id)"><el-icon><Plus /></el-icon></el-button>
+					</template>
+				</el-table-column>
+				<el-table-column prop="title" label="Title"/>
+				<el-table-column label="Start">
+					<template #default="scope">
+						<el-text>{{ scope.row.start_date_formatted }}</el-text>
+					</template>
+				</el-table-column>
+				<el-table-column label="End">
+					<template #default="scope">
+						<el-text>{{ scope.row.end_date_formatted }}</el-text>
+					</template>
+				</el-table-column>
+			</el-table>
 		</template>
 	</el-dialog>
 </template>
