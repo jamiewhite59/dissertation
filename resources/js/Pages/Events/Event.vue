@@ -548,29 +548,24 @@ export default {
 					</el-table>
 				</el-tab-pane>
 				<el-tab-pane label="Bulk" name="bulk">
-					<el-scrollbar height="250">
-						<el-row v-for="item in filteredBulkItems" :key="item.id" style="margin-bottom:10px;">
-							<el-col :span="3">
-								<el-popover placement="bottom" trigger="click" @after-leave="bulkDialogQuantity = 1">
+					<el-table :data="filteredBulkItems" height="250">
+						<el-table-column label="Add" width="70">
+							<template #default="scope">
+								<el-popover placement="left" trigger="click" @after-leave="bulkDialogQuantity = 1">
 									<el-text size="large" tag="b">Quantity</el-text>
 									<el-container direction="horizontal">
 										<el-input v-model="bulkDialogQuantity" type="number" min="1"/>
-										<el-button @click="addItem(item)" type="primary">Add</el-button>
+										<el-button @click="addItem(scope.row)" type="primary">Add</el-button>
 									</el-container>
 									<template #reference>
 										<el-button size="small"><el-icon><Plus /></el-icon></el-button>
 									</template>
 								</el-popover>
-							</el-col>
-							<el-col style="display:flex; align-items:center;" :span="21">
-								<el-text>{{ item.title }}</el-text>
-								<template v-if="item.category">
-									<el-divider direction="vertical" />
-									<el-text tag="i">{{item.category.title }}</el-text>
-								</template>
-							</el-col>
-						</el-row>
-					</el-scrollbar>
+							</template>
+						</el-table-column>
+						<el-table-column prop="title" label="Title"/>
+						<el-table-column prop="category.title" label="Category"/>
+					</el-table>
 				</el-tab-pane>
 				<el-tab-pane label="Group" name="group">
 					<el-scrollbar height="250">
