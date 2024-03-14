@@ -95,7 +95,7 @@ export default {
 			</template>
 		</CreateLayout>
 	</MainLayout>
-	<el-dialog v-model="eventDialogVisible" width="30%" style="min-height:400px;" align-center  @opened="$refs.eventSearch.focus()">
+	<el-dialog v-model="eventDialogVisible" width="30%" style="min-height:400px;" align-center @opened="$refs.eventSearch.focus()" @closed="eventSearch = ''">
 		<template #header>Events</template>
 		<template #default>
 			<el-input class="dialog-search" v-model="eventSearch" ref="eventSearch" placeholder="Search Events" clearable/>
