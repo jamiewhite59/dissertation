@@ -601,7 +601,7 @@ export default {
 							</template>
 						</el-table-column>
 						<el-table-column prop="title" label="Title"/>
-						<el-table-column>
+						<el-table-column label="Information">
 							<template #default="scope">
 								<el-popover placement="bottom" trigger="hover" width="300">
 									<template #reference>
