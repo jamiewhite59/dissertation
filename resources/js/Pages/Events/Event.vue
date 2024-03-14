@@ -531,24 +531,21 @@ export default {
 			</el-table>
 		</template>
 	</el-dialog>
-	<el-dialog v-model="itemDialogVisible" width="30%" style="min-height:400px;" align-center @opened="$refs.itemSearch.focus()">
+	<el-dialog v-model="itemDialogVisible" width="30%" style="min-height:400px;" align-center @opened="$refs.itemSearch.focus()" @closed="itemSearch = ''">
 		<template #header>Items</template>
 		<template #default>
 			<el-input class="dialog-search" v-model="itemSearch" ref="itemSearch" placeholder="Search Items" clearable />
 			<el-tabs v-model="activeDialogTab">
 				<el-tab-pane label="Hire" name="hire">
-					<el-scrollbar height="250">
-						<el-row v-for="item in filteredHireItems" :key="item.id" style="margin-bottom:10px;">
-							<el-col :span="3"><el-button size="small" @click="addItem(item)"><el-icon><Plus /></el-icon></el-button></el-col>
-							<el-col style="display:flex; align-items:center;" :span="21">
-								<el-text>{{ item.title }}</el-text>
-								<template v-if="item.category">
-									<el-divider direction="vertical" />
-									<el-text tag="i">{{item.category.title }}</el-text>
-								</template>
-							</el-col>
-						</el-row>
-					</el-scrollbar>
+					<el-table :data="filteredHireItems" height="250">
+						<el-table-column label="Add" width="70">
+							<template #default="scope">
+								<el-button size="small" @click="addItem(scope.row)"><el-icon><Plus /></el-icon></el-button>
+							</template>
+						</el-table-column>
+						<el-table-column prop="title" label="Title"/>
+						<el-table-column prop="category.title" label="Category"/>
+					</el-table>
 				</el-tab-pane>
 				<el-tab-pane label="Bulk" name="bulk">
 					<el-scrollbar height="250">
