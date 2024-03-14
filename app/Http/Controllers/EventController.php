@@ -51,6 +51,10 @@ class EventController extends Controller
         $groups = $groups->map(function($group) {
             $group->pieces = $group->pieces;
             $group->container = $group->container();
+            $group->pieces = $group->pieces->map(function($piece) {
+                $piece->item = $piece->item;
+                return $piece;
+            });
             return $group;
         });
 
