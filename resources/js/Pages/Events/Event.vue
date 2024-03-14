@@ -510,16 +510,20 @@ export default {
 			</el-tab-pane>
 		</el-tabs>
 	</MainLayout>
-	<el-dialog v-model="customerDialogVisible" width="30%" style="min-height:400px;" align-center  @opened="$refs.customerSearch.focus()">
+	<el-dialog v-model="customerDialogVisible" width="40%" style="min-height:400px;" align-center  @opened="$refs.customerSearch.focus()">
 		<template #header>Customers</template>
 		<template #default>
 			<el-input class="dialog-search" v-model="customerSearch" ref="customerSearch" placeholder="Search Customers" clearable />
-			<el-scrollbar height="250px">
-				<el-row v-for="customer in filteredCustomers" :key="customer.id" style="margin-bottom:10px">
-					<el-col :span="3"><el-button size="small" @click="addCustomer(customer.id)"><el-icon><Plus /></el-icon></el-button></el-col>
-					<el-col :span="21">{{ customer.name }}</el-col>
-				</el-row>
-			</el-scrollbar>
+			<el-table :data="filteredCustomers" height="250">
+				<el-table-column label="Add" width="70">
+					<template #default="scope">
+						<el-button size="small" @click="addCustomer(scope.row.id)"><el-icon><Plus /></el-icon></el-button>
+					</template>
+				</el-table-column>
+				<el-table-column prop="name" label="Name"/>
+				<el-table-column prop="email" label="Email"/>
+				<el-table-column prop="phone_number" label="Phone"/>
+			</el-table>
 		</template>
 	</el-dialog>
 	<el-dialog v-model="itemDialogVisible" width="30%" style="min-height:400px;" align-center @opened="$refs.itemSearch.focus()">
