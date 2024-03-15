@@ -541,7 +541,7 @@ export default {
 			</el-tab-pane>
 		</el-tabs>
 	</MainLayout>
-	<el-dialog v-model="customerDialogVisible" width="40%" style="min-height:400px;" align-center  @opened="$refs.customerSearch.focus()">
+	<el-dialog v-model="customerDialogVisible" width="40%" style="min-height:400px;" align-center  @opened="$refs.customerSearch.focus()" @closed="customerSearch = ''">
 		<template #header>Customers</template>
 		<template #default>
 			<el-input class="dialog-search" v-model="customerSearch" ref="customerSearch" placeholder="Search Customers" clearable />
@@ -566,7 +566,16 @@ export default {
 					<el-table :data="filteredHireItems" height="250">
 						<el-table-column label="Add" width="70">
 							<template #default="scope">
-								<el-button size="small" @click="addItem(scope.row)"><el-icon><Plus /></el-icon></el-button>
+								<el-popover placement="left" trigger="hover" @after-leave="bulkDialogQuantity = 1">
+									<el-text size="large" tag="b">Quantity</el-text>
+									<el-container direction="horizontal">
+										<el-input v-model="bulkDialogQuantity" type="number" min="1"/>
+										<el-button @click="addItem(scope.row)" type="primary">Add</el-button>
+									</el-container>
+									<template #reference>
+										<el-button size="small"><el-icon><Plus /></el-icon></el-button>
+									</template>
+								</el-popover>
 							</template>
 						</el-table-column>
 						<el-table-column prop="title" label="Title"/>
@@ -577,7 +586,7 @@ export default {
 					<el-table :data="filteredBulkItems" height="250">
 						<el-table-column label="Add" width="70">
 							<template #default="scope">
-								<el-popover placement="left" trigger="click" @after-leave="bulkDialogQuantity = 1">
+								<el-popover placement="left" trigger="hover" @after-leave="bulkDialogQuantity = 1">
 									<el-text size="large" tag="b">Quantity</el-text>
 									<el-container direction="horizontal">
 										<el-input v-model="bulkDialogQuantity" type="number" min="1"/>
