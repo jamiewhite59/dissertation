@@ -59,6 +59,10 @@ class EventController extends Controller
             return $group;
         });
         $categories = Category::all();
+        $tempCategory = new Category;
+        $tempCategory->id = null;
+        $tempCategory->title = 'Uncategorised';
+        $categories->push($tempCategory);
 
         return Inertia::render('Events/Event', [
             'event' => $event,
