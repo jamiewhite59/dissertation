@@ -75,6 +75,11 @@ export default {
 				let category = this.categories.find((category) => {
 					return item.item_category_id === category.id;
 				});
+				if (! category) {
+					category = {
+						title: 'Uncategorised',
+					};
+				}
 				if (! category.children) {
 					category.children = [];
 				}
