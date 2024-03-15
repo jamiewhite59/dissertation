@@ -482,7 +482,7 @@ export default {
 							<el-input class="item-action-input" ref="actionInput" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
 						</el-container>
 					</el-row>
-					<el-table :data="eventItemCategories" ref="itemTable" height="100%" @selection-change="handleTableSelectionChange" row-key="id" @cell-click="openEdit" @cell-mouse-enter="mouseEnter" @row-click="toggleCategoryExpanded">
+					<el-table :data="eventItemCategories" ref="itemTable" height="100%" :default-sort="{prop: 'title', order:'ascending'}" row-key="id" @selection-change="handleTableSelectionChange" @cell-click="openEdit" @cell-mouse-enter="mouseEnter" @row-click="toggleCategoryExpanded">
 						<el-table-column type="selection" width="55" />
 						<el-table-column prop="title" label="Title" />
 						<el-table-column prop="piece_code" label="Code">
