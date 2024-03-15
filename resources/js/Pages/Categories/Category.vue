@@ -50,8 +50,22 @@ export default {
 		save() {
 			this.$refs.categoryForm.save();
 		},
-		addItem(id) {
-			router.put(route('categories.addItem', this.category.id), {id: id,});
+		addItem(item) {
+			if (item.category_id) {
+				ElMessageBox.confirm(
+					'This item is already assigned to a category, would you like to update it?',
+					'Update Category',
+					{
+						confirmButtonText: 'Update',
+						type: 'error',
+						center: true,
+					}
+				).then(() => {
+					router.put(route('categories.addItem', this.category.id), {id: item.id,});
+				}).catch(() => {});
+			} else {
+				router.put(route('categories.addItem', this.category.id), {id: item.id,});
+			}
 		},
 		removeItem(id) {
 			ElMessageBox.confirm(
@@ -100,10 +114,11 @@ export default {
 			<el-table :data="filteredItems" height="250">
 				<el-table-column label="Add" width="70">
 					<template #default="scope">
-						<el-button size="small" @click="addItem(scope.row.id)"><el-icon><Plus /></el-icon></el-button>
+						<el-button size="small" @click="addItem(scope.row)"><el-icon><Plus /></el-icon></el-button>
 					</template>
 				</el-table-column>
 				<el-table-column prop="title" label="Title"/>
+				<el-table-column prop="category.title" label="Category"/>
 			</el-table>
 		</template>
 	</el-dialog>

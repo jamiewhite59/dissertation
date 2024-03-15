@@ -42,6 +42,10 @@ class CategoryController extends Controller
             return $item;
         });
         $items = Item::all();
+        $items = $items->map(function($item) {
+            $item->category = $item->category;
+            return $item;
+        });
 
         return Inertia::render('Categories/Category', [
             'category' => $category,
