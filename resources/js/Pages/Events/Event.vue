@@ -8,6 +8,7 @@ export default {
 		customers: Array,
 		items: Array,
 		groups: Array,
+		categories: Array,
 		errors: Object,
 		flash: Object,
 	},
@@ -68,6 +69,19 @@ export default {
 				}
 			});
 			return newItems;
+		},
+		eventItemCategories() {
+			let categories = this.augmentedItems?.map((item) => {
+				let category = this.categories.find((category) => {
+					return item.item_category_id === category.id;
+				});
+				if (! category.items) {
+					category.items = [];
+				}
+				category.items.push(item);
+				return category;
+			});
+			return [... new Set(categories),];
 		},
 		groupsItemInfo() {
 			let groupItemInfo = [];
@@ -428,6 +442,10 @@ export default {
 			}).items;
 		},
 	},
+	mounted() {
+		console.debug('augmented items', this.augmentedItems);
+		console.debug('ccategories', this.eventItemCategories);
+	},
 };
 </script>
 
@@ -454,65 +472,72 @@ export default {
 							<el-input class="item-action-input" ref="actionInput" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
 						</el-container>
 					</el-row>
-					<el-table :data="augmentedItems" height="100%" @selection-change="handleTableSelectionChange" @cell-click="openEdit" @cell-mouse-enter="mouseEnter">
-						<el-table-column type="selection" width="55" />
-						<el-table-column prop="item_title" label="Title" sortable />
-						<el-table-column prop="piece_code" label="Code">
-							<template #default="scope">
-								<div v-if="scope.row.piece_code">{{scope.row.piece_code}}</div>
-								<div v-else-if="scope.row.item_stock_type === 'bulk'">Bulk Stock</div>
+					<el-table :data="eventItemCategories" height="100%" default-expand-all>
+						<el-table-column type="expand">
+							<template #default="category">
+								<el-table :data="category.row.items" height="100%" @selection-change="handleTableSelectionChange" @cell-click="openEdit" @cell-mouse-enter="mouseEnter">
+									<el-table-column type="selection" width="55" />
+									<el-table-column prop="item_title" label="Title" sortable />
+									<el-table-column prop="piece_code" label="Code">
+										<template #default="scope">
+											<div v-if="scope.row.piece_code">{{scope.row.piece_code}}</div>
+											<div v-else-if="scope.row.item_stock_type === 'bulk'">Bulk Stock</div>
+										</template>
+									</el-table-column>
+									<el-table-column prop="status" label="Status">
+										<template #default="scope">
+											<div v-if="scope.row.item_stock_type === 'hire'">{{ scope.row.status }}</div>
+											<div v-else>{{getBulkStatus(scope.row.item_id)}}</div>
+										</template>
+									</el-table-column>
+									<el-table-column label="Qty" width="60">
+										<template #default="scope">
+											<div>{{ itemQuantities[scope.row.item_id].stock_type === 'hire' ? 1 : itemQuantities[scope.row.item_id].quantity }}</div>
+										</template>
+									</el-table-column>
+									<el-table-column label="Alloc" width="60">
+										<template #default="scope">
+											<div v-if="scope.row.item_stock_type === 'hire'">{{ scope.row.piece_id ? 1 : 0 }}</div>
+											<div v-else>{{ getStatusQuantity(scope.row.item_id, 'allocated') }}</div>
+										</template>
+									</el-table-column>
+									<el-table-column label="Out" width="60">
+										<template #default="scope">
+											<div v-if="scope.row.item_stock_type === 'hire'">{{ ['checked-out', 'checked-in', 'completed'].includes(scope.row.status) ? 1 : 0 }}</div>
+											<div v-else>{{ getStatusQuantity(scope.row.item_id, 'checked-out') }}</div>
+										</template>
+									</el-table-column>
+									<el-table-column label="In" width="60">
+										<template #default="scope">
+											<div v-if="scope.row.item_stock_type === 'hire'">{{ ['checked-in', 'completed'].includes(scope.row.status) ? 1 : 0 }}</div>
+											<div v-else>{{ getStatusQuantity(scope.row.item_id, 'checked-in') }}</div>
+										</template>
+									</el-table-column>
+									<el-table-column label="Compl" width="70">
+										<template #default="scope">
+											<div v-if="scope.row.item_stock_type === 'hire'">{{ scope.row.status === 'completed' ? 1 : 0 }}</div>
+											<div v-else>{{ getStatusQuantity(scope.row.item_id, 'completed') }}</div>
+										</template>
+									</el-table-column>
+									<el-table-column label="Action" width="90">
+										<template #default="scope">
+											<el-dropdown trigger="click" size="small">
+												<el-button type="primary"><el-icon><arrow-down /></el-icon></el-button>
+												<template #dropdown>
+													<el-dropdown-menu>
+														<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'allocate')" @click="rowAction(scope.row, 'allocate')">Allocate</el-dropdown-item>
+														<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'check-out')" @click="rowAction(scope.row, 'check-out')">Check Out</el-dropdown-item>
+														<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'check-in')" @click="rowAction(scope.row, 'check-in')">Check In</el-dropdown-item>
+														<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'complete')" @click="rowAction(scope.row, 'complete')">Complete</el-dropdown-item>
+													</el-dropdown-menu>
+												</template>
+											</el-dropdown>
+										</template>
+									</el-table-column>
+								</el-table>
 							</template>
 						</el-table-column>
-						<el-table-column prop="status" label="Status">
-							<template #default="scope">
-								<div v-if="scope.row.item_stock_type === 'hire'">{{ scope.row.status }}</div>
-								<div v-else>{{getBulkStatus(scope.row.item_id)}}</div>
-							</template>
-						</el-table-column>
-						<el-table-column label="Qty" width="60">
-							<template #default="scope">
-								<div>{{ itemQuantities[scope.row.item_id].stock_type === 'hire' ? 1 : itemQuantities[scope.row.item_id].quantity }}</div>
-							</template>
-						</el-table-column>
-						<el-table-column label="Alloc" width="60">
-							<template #default="scope">
-								<div v-if="scope.row.item_stock_type === 'hire'">{{ scope.row.piece_id ? 1 : 0 }}</div>
-								<div v-else>{{ getStatusQuantity(scope.row.item_id, 'allocated') }}</div>
-							</template>
-						</el-table-column>
-						<el-table-column label="Out" width="60">
-							<template #default="scope">
-								<div v-if="scope.row.item_stock_type === 'hire'">{{ ['checked-out', 'checked-in', 'completed'].includes(scope.row.status) ? 1 : 0 }}</div>
-								<div v-else>{{ getStatusQuantity(scope.row.item_id, 'checked-out') }}</div>
-							</template>
-						</el-table-column>
-						<el-table-column label="In" width="60">
-							<template #default="scope">
-								<div v-if="scope.row.item_stock_type === 'hire'">{{ ['checked-in', 'completed'].includes(scope.row.status) ? 1 : 0 }}</div>
-								<div v-else>{{ getStatusQuantity(scope.row.item_id, 'checked-in') }}</div>
-							</template>
-						</el-table-column>
-						<el-table-column label="Compl" width="70">
-							<template #default="scope">
-								<div v-if="scope.row.item_stock_type === 'hire'">{{ scope.row.status === 'completed' ? 1 : 0 }}</div>
-								<div v-else>{{ getStatusQuantity(scope.row.item_id, 'completed') }}</div>
-							</template>
-						</el-table-column>
-						<el-table-column label="Action" width="90">
-							<template #default="scope">
-								<el-dropdown trigger="click" size="small">
-									<el-button type="primary"><el-icon><arrow-down /></el-icon></el-button>
-									<template #dropdown>
-										<el-dropdown-menu>
-											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'allocate')" @click="rowAction(scope.row, 'allocate')">Allocate</el-dropdown-item>
-											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'check-out')" @click="rowAction(scope.row, 'check-out')">Check Out</el-dropdown-item>
-											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'check-in')" @click="rowAction(scope.row, 'check-in')">Check In</el-dropdown-item>
-											<el-dropdown-item :disabled="rowDropdownDisabled(scope.row, 'complete')" @click="rowAction(scope.row, 'complete')">Complete</el-dropdown-item>
-										</el-dropdown-menu>
-									</template>
-								</el-dropdown>
-							</template>
-						</el-table-column>
+						<el-table-column prop="title" label="Title"/>
 					</el-table>
 				</el-container>
 			</el-tab-pane>
