@@ -430,12 +430,12 @@ export default {
 			});
 		},
 		openEdit(piece, col) {
-			if (col.property === 'item_title') {
+			if (col.property === 'title' && ! piece.children) {
 				router.get(route('items.edit', piece.item_id));
 			}
 		},
 		mouseEnter(row, col, cell, e) {
-			if (col.property === 'item_title') {
+			if (col.property === 'title' && ! row.children) {
 				cell.style.cursor = 'pointer';
 			}
 		},
@@ -447,10 +447,9 @@ export default {
 				return group.group_id === id;
 			}).items;
 		},
-	},
-	mounted() {
-		console.debug('augmented items', this.augmentedItems);
-		console.debug('ccategories', this.eventItemCategories);
+		toggleCategoryExpanded(row) {
+			this.$refs.itemTable.toggleRowExpansion(row);
+		},
 	},
 };
 </script>
@@ -478,7 +477,7 @@ export default {
 							<el-input class="item-action-input" ref="actionInput" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
 						</el-container>
 					</el-row>
-					<el-table :data="eventItemCategories" height="100%" @selection-change="handleTableSelectionChange" row-key="id" @cell-click="openEdit" @cell-mouse-enter="mouseEnter">
+					<el-table :data="eventItemCategories" ref="itemTable" height="100%" @selection-change="handleTableSelectionChange" row-key="id" @cell-click="openEdit" @cell-mouse-enter="mouseEnter" @row-click="toggleCategoryExpanded">
 						<el-table-column type="selection" width="55" />
 						<el-table-column prop="title" label="Title" />
 						<el-table-column prop="piece_code" label="Code">
