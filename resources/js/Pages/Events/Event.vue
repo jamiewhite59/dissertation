@@ -479,7 +479,12 @@ export default {
 					</el-row>
 					<el-table :data="eventItemCategories" ref="itemTable" height="100%" :default-sort="{prop: 'title', order:'ascending'}" row-key="id" @selection-change="handleTableSelectionChange" @cell-click="openEdit" @cell-mouse-enter="mouseEnter" @row-click="toggleCategoryExpanded">
 						<el-table-column type="selection" width="55" />
-						<el-table-column prop="title" label="Item/Category" />
+						<el-table-column prop="title" label="Item/Category">
+							<template #default="scope">
+								<el-text v-if="scope.row.children" tag="b">{{ scope.row.title }}</el-text>
+								<el-text v-else>{{ scope.row.title }}</el-text>
+							</template>
+						</el-table-column>
 						<el-table-column prop="piece_code" label="Code">
 							<template #default="scope">
 								<div v-if="scope.row.piece_code">{{scope.row.piece_code}}</div>
