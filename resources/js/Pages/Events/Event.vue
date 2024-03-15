@@ -75,11 +75,6 @@ export default {
 				let category = this.categories.find((category) => {
 					return item.item_category_id === category.id;
 				});
-				if (! category) {
-					category = {
-						title: 'Uncategorised',
-					};
-				}
 				if (! category.children) {
 					category.children = [];
 				}
@@ -484,7 +479,7 @@ export default {
 					</el-row>
 					<el-table :data="eventItemCategories" ref="itemTable" height="100%" :default-sort="{prop: 'title', order:'ascending'}" row-key="id" @selection-change="handleTableSelectionChange" @cell-click="openEdit" @cell-mouse-enter="mouseEnter" @row-click="toggleCategoryExpanded">
 						<el-table-column type="selection" width="55" />
-						<el-table-column prop="title" label="Title" />
+						<el-table-column prop="title" label="Item/Category" />
 						<el-table-column prop="piece_code" label="Code">
 							<template #default="scope">
 								<div v-if="scope.row.piece_code">{{scope.row.piece_code}}</div>
