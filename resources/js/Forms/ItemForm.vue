@@ -101,7 +101,7 @@ export default {
 			<el-input v-model="itemForm.quantity" type="number" min="0" :disabled="itemForm.stock_type === 'hire'" />
 		</el-form-item>
 		<el-form-item label="Category" prop="category_id">
-			<el-select v-model="itemForm.category_id" @change="$emit('change', changes)">
+			<el-select v-model="itemForm.category_id" clearable @change="$emit('change', changes)">
 				<el-option label="No Category" :value="''"/>
 				<el-option v-for="category in categories" :key="category.id" :label="category.title" :value="category.id" />
 			</el-select>

@@ -123,9 +123,7 @@ export default {
 						<el-divider class="item-information-divider"/>
 						<el-row :class="item?.stock_type === 'hire' ? 'extra-information-row' : 'extra-information-full'">
 							<el-col class="item-content">
-								<el-container>
-									<el-text size="large" tag="b" style="margin-bottom: 1em;">Pieces ({{ item?.pieces.length }})</el-text>
-								</el-container>
+								<el-text size="large" tag="b" style="margin-bottom: 1em;">Pieces ({{ item?.pieces.length }})</el-text>
 								<el-container class="item-piece-wrapper">
 									<el-scrollbar class="piece-scrollbar" height="100%">
 										<el-container class="list-space">

@@ -58,7 +58,7 @@ export default {
 				<el-container class="item-table-container">
 					<el-table :data="filteredItems" height="100%" @row-click="openEdit">
 						<el-table-column prop="title" label="Title" sortable/>
-						<el-table-column prop="category.title" label="Category" />
+						<el-table-column prop="category.title" label="Category" sortable />
 						<el-table-column prop="stock_type" label="Stock Type" sortable/>
 						<el-table-column prop="quantity" label="Quantity" />
 						<el-table-column prop="description" label="Description"/>
