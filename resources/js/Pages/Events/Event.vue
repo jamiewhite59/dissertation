@@ -8,6 +8,7 @@ export default {
 		customers: Array,
 		items: Array,
 		groups: Array,
+		categories: Array,
 		errors: Object,
 		flash: Object,
 	},
@@ -68,6 +69,19 @@ export default {
 				}
 			});
 			return newItems;
+		},
+		eventItemCategories() {
+			let categories = this.augmentedItems?.map((item) => {
+				let category = this.categories.find((category) => {
+					return item.item_category_id === category.id;
+				});
+				if (! category.children) {
+					category.children = [];
+				}
+				category.children.push(item);
+				return category;
+			});
+			return [... new Set(categories),];
 		},
 		groupsItemInfo() {
 			let groupItemInfo = [];
@@ -371,6 +385,9 @@ export default {
 			this.tableSelection.value = val;
 		},
 		getBulkStatus(item_id) {
+			if (! item_id) {
+				return '';
+			}
 			let items = this.event.items.filter((item) => item.item_id === item_id);
 			if (items.every((item) => item.status === 'completed')) {
 				return 'completed';
@@ -385,6 +402,9 @@ export default {
 			}
 		},
 		getStatusQuantity(item_id, status) {
+			if (! item_id) {
+				return '';
+			}
 			let items = this.event.items.filter((item) => item.item_id === item_id);
 			let statusArr = ['allocated', 'checked-out', 'checked-in', 'completed',];
 			let index = statusArr.indexOf(status);
@@ -410,12 +430,12 @@ export default {
 			});
 		},
 		openEdit(piece, col) {
-			if (col.property === 'item_title') {
+			if (col.property === 'title' && ! piece.children) {
 				router.get(route('items.edit', piece.item_id));
 			}
 		},
 		mouseEnter(row, col, cell, e) {
-			if (col.property === 'item_title') {
+			if (col.property === 'title' && ! row.children) {
 				cell.style.cursor = 'pointer';
 			}
 		},
@@ -426,6 +446,9 @@ export default {
 			return this.groupsItemInfo.find((group) => {
 				return group.group_id === id;
 			}).items;
+		},
+		toggleCategoryExpanded(row) {
+			this.$refs.itemTable.toggleRowExpansion(row);
 		},
 	},
 };
@@ -454,9 +477,14 @@ export default {
 							<el-input class="item-action-input" ref="actionInput" v-model="actionInput" placeholder="Enter Item Code" @keypress="checkCodeInput" />
 						</el-container>
 					</el-row>
-					<el-table :data="augmentedItems" height="100%" @selection-change="handleTableSelectionChange" @cell-click="openEdit" @cell-mouse-enter="mouseEnter">
+					<el-table :data="eventItemCategories" ref="itemTable" height="100%" :default-sort="{prop: 'title', order:'ascending'}" row-key="id" @selection-change="handleTableSelectionChange" @cell-click="openEdit" @cell-mouse-enter="mouseEnter" @row-click="toggleCategoryExpanded">
 						<el-table-column type="selection" width="55" />
-						<el-table-column prop="item_title" label="Title" sortable />
+						<el-table-column prop="title" label="Item/Category">
+							<template #default="scope">
+								<el-text v-if="scope.row.children" tag="b">{{ scope.row.title }}</el-text>
+								<el-text v-else>{{ scope.row.title }}</el-text>
+							</template>
+						</el-table-column>
 						<el-table-column prop="piece_code" label="Code">
 							<template #default="scope">
 								<div v-if="scope.row.piece_code">{{scope.row.piece_code}}</div>
@@ -471,7 +499,7 @@ export default {
 						</el-table-column>
 						<el-table-column label="Qty" width="60">
 							<template #default="scope">
-								<div>{{ itemQuantities[scope.row.item_id].stock_type === 'hire' ? 1 : itemQuantities[scope.row.item_id].quantity }}</div>
+								<div>{{ itemQuantities[scope.row.item_id]?.stock_type === 'hire' ? 1 : itemQuantities[scope.row.item_id]?.quantity }}</div>
 							</template>
 						</el-table-column>
 						<el-table-column label="Alloc" width="60">
@@ -500,7 +528,7 @@ export default {
 						</el-table-column>
 						<el-table-column label="Action" width="90">
 							<template #default="scope">
-								<el-dropdown trigger="click" size="small">
+								<el-dropdown v-if="! scope.row.children" trigger="click" size="small">
 									<el-button type="primary"><el-icon><arrow-down /></el-icon></el-button>
 									<template #dropdown>
 										<el-dropdown-menu>

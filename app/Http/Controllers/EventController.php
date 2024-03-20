@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\Customer;
 use App\Models\Item;
 use App\Models\Group;
+use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -57,12 +58,18 @@ class EventController extends Controller
             });
             return $group;
         });
+        $categories = Category::all();
+        $tempCategory = new Category;
+        $tempCategory->id = null;
+        $tempCategory->title = 'Uncategorised';
+        $categories->push($tempCategory);
 
         return Inertia::render('Events/Event', [
             'event' => $event,
             'customers' => $customers,
             'items' => $items,
             'groups' => $groups,
+            'categories' => $categories,
         ]);
     }
 
@@ -75,7 +82,7 @@ class EventController extends Controller
         $event->icon = $request->icon;
         $event->save();
 
-        return redirect()->route('events.index');
+        return redirect()->route('eventsindex');
     }
 
     public function destroy(Request $request, $id): RedirectResponse {
