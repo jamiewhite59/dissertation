@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventItemController;
@@ -80,6 +81,8 @@ Route::put('/categories/{id}/removeItem', [CategoryController::class, 'removeIte
 Route::resource('groups', GroupController::class);
 Route::put('/groups/{id}/addPiece', [GroupController::class, 'addPiece'])->name('groups.addPiece');
 Route::put('/groups/{id}/removePiece', [GroupController::class, 'removePiece'])->name('groups.removePiece');
+
+Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
 
 Route::get('/test', [TestController::class, 'test'])->name('test');
 
