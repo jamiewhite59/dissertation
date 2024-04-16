@@ -30,7 +30,7 @@ export default {
 			<el-row class="overview-list">
 				<el-scrollbar class="overview-scrollbar" height="100%">
 					<slot name="cards" v-if="displayCards"></slot>
-					<el-empty v-else :description="'No' + title +'s'" />
+					<el-empty v-else :description="'No ' + title +'s'" />
 				</el-scrollbar>
 			</el-row>
 		</slot>

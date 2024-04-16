@@ -40,7 +40,7 @@ export default {
 </script>
 <template>
 	<MainLayout title="Categories" :errors="errors" :flash="flash">
-		<OverviewLayout title="Category" :displayCards="!!categories.length" @openCreate="createDialogVisible = true">
+		<OverviewLayout title="Categorie" :displayCards="!!categories.length" @openCreate="createDialogVisible = true">
 			<template #search>
 				<el-input class="overview-search" v-model="search" placeholder="Search Categories" clearable />
 			</template>
