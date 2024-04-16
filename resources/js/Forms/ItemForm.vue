@@ -94,9 +94,9 @@ export default {
 				<el-option label="Hire" value="hire"/>
 			</el-select>
 		</el-form-item>
-		<el-form-item label="Image" prop="image">
+		<!-- <el-form-item label="Image" prop="image">
 			<el-input v-model="itemForm.image"/>
-		</el-form-item>
+		</el-form-item> -->
 		<el-form-item label="Quantity">
 			<el-input v-model="itemForm.quantity" type="number" min="0" :disabled="itemForm.stock_type === 'hire'" />
 		</el-form-item>

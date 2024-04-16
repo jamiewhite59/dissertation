@@ -103,7 +103,7 @@ export default {
 			<el-icon><User /></el-icon>
 			<span>User</span>
 		</el-menu-item>
-		<el-menu-item index="7" disabled>
+		<el-menu-item disabled index="7" @click="openIndex('analytics.index')">
 			<el-icon><Histogram /></el-icon>
 			<span>Analytics</span>
 		</el-menu-item>
