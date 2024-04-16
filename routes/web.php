@@ -50,6 +50,9 @@ use Inertia\Inertia;
 // Route::get('/items/{id}/edit', [ItemController::class, 'edit'])->name('items.edit');
 // Route::patch('/items/{id}', [ItemController::class, 'update'])->name('items.update');
 // Route::delete('/items/{id}', [ItemController::class, 'destroy'])->name('items.destroy');
+Route::get('/', function() {
+	return redirect('/customers');
+});
 
 Route::resource('events', EventController::class);
 Route::put('/events/{event}/addCustomer', [EventController::class, 'addCustomer'])->name('events.addCustomer');
