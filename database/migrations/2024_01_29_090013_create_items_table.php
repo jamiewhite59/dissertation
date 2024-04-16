@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
-            $table->string('description')->nullable();
+            $table->string('description')->nullable()->default('');
             $table->binary('image')->nullable();
             $table->enum('stock_type', ['bulk', 'hire'])->default('bulk');
             $table->timestamps();
+            $table->foreignUuid('category_id')->nullable()->constrained()->nullOnDelete();
         });
     }
 

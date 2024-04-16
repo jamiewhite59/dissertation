@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pieces', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('code')->unique()->nullable();
-            $table->foreignUuid('item_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignUuid('group_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('title');
+            $table->string('description')->nullable();
+            $table->binary('image')->nullable();
+            $table->enum('stock_type', ['bulk', 'hire'])->default('bulk');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pieces');
+        Schema::dropIfExists('items');
     }
 };

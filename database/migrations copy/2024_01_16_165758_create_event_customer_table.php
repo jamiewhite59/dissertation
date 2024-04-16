@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_items', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('item_id')->constrained();
+        Schema::create('event_customer', function (Blueprint $table) {
             $table->foreignUuid('event_id')->constrained();
-            $table->string('status');
-            $table->timestamps();
-            $table->foreignUuid('piece_id')->nullable()->constrained();
+            $table->foreignUuid('customer_id')->constrained();
         });
     }
 
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_items');
+        Schema::dropIfExists('event_customer');
     }
 };
