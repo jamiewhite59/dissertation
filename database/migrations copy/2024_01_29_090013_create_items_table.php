@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('title')->unique();
-            $table->date('start_date');
-            $table->date('end_date')->nullable();
-            $table->string('icon')->nullable();
+            $table->string('title');
+            $table->string('description')->nullable();
+            $table->binary('image')->nullable();
+            $table->enum('stock_type', ['bulk', 'hire'])->default('bulk');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('items');
     }
 };

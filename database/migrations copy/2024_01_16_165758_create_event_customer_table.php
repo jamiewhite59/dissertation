@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->date('end_date')->nullable()->change();
-            $table->string('icon')->nullable()->change();
+        Schema::create('event_customer', function (Blueprint $table) {
+            $table->foreignUuid('event_id')->constrained();
+            $table->foreignUuid('customer_id')->constrained();
         });
     }
 
@@ -22,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('events', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('event_customer');
     }
 };

@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('event_customer', function(Blueprint $table) {
-            $table->uuid('event_id')->change();
-            $table->uuid('customer_id')->change();
+        Schema::create('events', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('title')->unique();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+            $table->string('icon')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('events');
     }
 };

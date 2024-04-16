@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('pieces', function (Blueprint $table) {
-            $table->string('code')->unique()->nullable()->change();
+        Schema::create('event_item_pieces', function (Blueprint $table) {
+            $table->foreignUuid('piece_id')->constrained();
+            $table->foreignUuid('event_item_id')->constrained();
         });
     }
 
@@ -21,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('pieces', function (Blueprint $table) {
-            $table->dropUnique('code');
-        });
+        Schema::dropIfExists('event_item_piece');
     }
 };

@@ -11,7 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::rename('event_item_piece', 'event_item_pieces');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('title');
+            $table->string('description')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,7 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::rename('event_item_pieces', 'event_item_piece');
-
+        Schema::dropIfExists('categories');
     }
 };

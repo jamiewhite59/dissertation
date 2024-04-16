@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pieces', function (Blueprint $table) {
-            $table->uuid('id');
-            $table->string('code')->nullable();
-            $table->foreignUuid('item_id')->constrained();
+            $table->uuid('id')->primary();
+            $table->string('code')->unique()->nullable();
+            $table->foreignUuid('item_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignUuid('group_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

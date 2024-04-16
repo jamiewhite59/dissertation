@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('event_item_piece', function (Blueprint $table) {
-            $table->foreignUuid('piece_id')->constrained();
-            $table->foreignUuid('event_item_id')->constrained();
+        Schema::create('groups', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('title');
+            $table->uuid('container_piece_id')->nullable();
+
+            $table->timestamps();
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_item_piece');
+        Schema::dropIfExists('groups');
     }
 };
