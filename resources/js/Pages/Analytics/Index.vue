@@ -7,7 +7,7 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,
 export default {
 	components: {
 		Bar,
-		Pie,
+		// Pie,
 		Doughnut,
 	},
 	props: {
@@ -19,7 +19,7 @@ export default {
 	data() {
 		return {
 			itemEventsOptions: {
-				responsive: false,
+				responsive: true,
 				plugins: {
 					legend: {
 						display: false,
@@ -34,7 +34,7 @@ export default {
 				},
 			},
 			customerEventsOptions: {
-				responsive: false,
+				responsive: true,
 				plugins: {
 					legend: {
 						display: false,
@@ -115,8 +115,16 @@ export default {
 <template>
 	<MainLayout title="Analytics" :errors="errors" :flash="flash">
 		<el-container direction="vertical" style="height:100%;">
-			<Doughnut id="a-doughnut" :options="itemEventsOptions" :data="itemEventsData"/>
-			<Bar id="a-bar" :options="customerEventsOptions" :data="customerEventsData"/>
+			<el-row justify="center" align="middle" style="flex:1;">
+				<div style="position: relative; width: 40%;">
+					<Doughnut id="a-doughnut" :options="itemEventsOptions" :data="itemEventsData"/>
+				</div>
+			</el-row>
+			<el-row justify="center" align="middle" style="flex:1;">
+				<div style="position: relative; width: 60%;">
+					<Bar id="a-bar" :options="customerEventsOptions" :data="customerEventsData"/>
+				</div>
+			</el-row>
 		</el-container>
 	</MainLayout>
 </template>
