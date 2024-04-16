@@ -65,7 +65,7 @@ export default {
 								<el-text class="page-title" size="large" tag="b">{{title}}</el-text>
 							</el-row>
 						</el-col>
-						<el-col :span="1">
+						<el-col :span="1" style="display: flex;flex-direction:column;justify-content: center;align-items: center;">
 							<el-avatar class="user-avatar">
 								<el-icon><UserFilled/></el-icon>
 							</el-avatar>
