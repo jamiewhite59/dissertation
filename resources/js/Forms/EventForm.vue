@@ -85,9 +85,9 @@ export default {
 		<el-form-item label="Title" prop="title" required>
 			<el-input v-model="eventForm.title" ref="eventTitle" />
 		</el-form-item>
-		<el-form-item label="Icon" prop="icon">
+		<!-- <el-form-item label="Icon" prop="icon">
 			<el-input v-model="eventForm.icon" />
-		</el-form-item>
+		</el-form-item> -->
 		<el-form-item label="Start Date" prop="start_date" required>
 			<el-date-picker v-model="eventForm.start_date" type="date" clearable style="width:100%" @change="$emit('change', changes)" />
 		</el-form-item>
