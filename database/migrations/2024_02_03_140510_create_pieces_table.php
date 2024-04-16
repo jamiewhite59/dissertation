@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pieces', function (Blueprint $table) {
             $table->uuid('id');
-            $table->string('code')->nullable();
+            $table->string('code')->unique()->nullable();
             $table->foreignUuid('item_id')->constrained();
             $table->timestamps();
         });
