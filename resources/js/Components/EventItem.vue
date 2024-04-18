@@ -21,13 +21,14 @@ export default {
 			}
 		},
 		status() {
-			let now = new Date().getTime();
+			let now = new Date().toISOString().split('T')[0];
+			now = new Date(now).getTime();
 			let startDate = new Date(this.event.start_date).getTime();
 			let endDate = new Date(this.event.end_date)?.getTime();
 
 			if (now < startDate) {
 				return 'info';
-			} else if (now > startDate && (now < endDate || !endDate)) {
+			} else if (now >= startDate && (now <= endDate || !endDate)) {
 				return 'success';
 			} else {
 				return 'danger';

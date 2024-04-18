@@ -86,7 +86,7 @@ class EventController extends Controller
         $event->icon = $request->icon;
         $event->save();
 
-        return redirect()->route('eventsindex');
+        return redirect()->route('events.index');
     }
 
     public function destroy(Request $request, $id): RedirectResponse {

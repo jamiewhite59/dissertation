@@ -18,13 +18,13 @@ class EventSeeder extends Seeder
             'id' => '00000000-0000-0000-0000-000000000000',
             'title' => 'Office Xmas Party',
             'start_date' => Carbon::parse('Monday next week'),
-            'end_date' => Carbon::parse('Thursday next week'),
+            'end_date' => Carbon::parse('wednesday next week'),
         ]);
         DB::table('events')->insert([
             'id' => '00000000-0000-0000-0000-000000000001',
             'title' => 'Diversity Day',
-            'start_date' => Carbon::parse('2 weeks monday'),
-            'end_date' => Carbon::parse('2 weeks thursday'),
+            'start_date' => Carbon::parse('1 week monday'),
+            'end_date' => Carbon::parse('2 weeks friday'),
         ]);
         DB::table('events')->insert([
             'id' => '00000000-0000-0000-0000-000000000002',
@@ -34,7 +34,7 @@ class EventSeeder extends Seeder
         ]);
         DB::table('events')->insert([
             'id' => '00000000-0000-0000-0000-000000000003',
-            'title' => 'Diwali',
+            'title' => 'Easter Party',
             'start_date' => Carbon::parse('last monday'),
             'end_date' => Carbon::parse('last tuesday'),
         ]);

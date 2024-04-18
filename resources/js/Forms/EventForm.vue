@@ -89,10 +89,10 @@ export default {
 			<el-input v-model="eventForm.icon" />
 		</el-form-item> -->
 		<el-form-item label="Start Date" prop="start_date" required>
-			<el-date-picker v-model="eventForm.start_date" type="date" clearable style="width:100%" @change="$emit('change', changes)" />
+			<el-date-picker v-model="eventForm.start_date" type="date" value-format="YYYY-MM-DD" format="DD-MM-YYYY" clearable style="width:100%" @change="$emit('change', changes)" />
 		</el-form-item>
 		<el-form-item label="End Date" prop="end_date">
-			<el-date-picker v-model="eventForm.end_date" type="date" clearable style="width:100%" @change="$emit('change', changes)" />
+			<el-date-picker v-model="eventForm.end_date" type="date" value-format="YYYY-MM-DD" format="DD-MM-YYYY" clearable style="width:100%" @change="$emit('change', changes)" />
 		</el-form-item>
 	</el-form>
 </template>
