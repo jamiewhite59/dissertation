@@ -22,7 +22,8 @@ export default {
 					let title = item.title ? item.title.toLowerCase().includes(search) : false;
 					let description = item.description ? item.description.toLowerCase().includes(search) : false;
 					let stock_type = item.stock_type ? item.stock_type.toLowerCase().includes(search) : false;
-					return title || description || stock_type;
+					let category = item.category ? item.category.title.toLowerCase().includes(search) : false;
+					return title || description || stock_type || category;
 				});
 			} else {
 				return this.items;
