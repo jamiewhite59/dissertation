@@ -12,9 +12,10 @@ use App\Models\Group;
 class EventItemController extends Controller {
     public function create(Request $request) {
         $itemPieces = Piece::where('item_id', $request->item_id)->get();
+        $numItemPieces = count($itemPieces);
         $sameItems = EventItem::where('item_id', $request->item_id)->where('event_id', $request->event_id)->get();
-        if ((count($sameItems) + $request->quantity) > count($itemPieces)) {
-            return back()->withErrors(['unable' => "Cannot add $request->quantity more of this item to this event"]);
+        if ((count($sameItems) + $request->quantity) > $numItemPieces) {
+            return back()->withErrors(['unable' => "Cannot add $request->quantity more of this item to this event (max $numItemPieces)"]);
         }
 
         for($x=0; $x < $request->quantity; $x++) {

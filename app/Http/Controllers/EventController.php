@@ -48,6 +48,10 @@ class EventController extends Controller
             $item->category = $item->category;
             return $item;
         });
+        $items = $items->map(function($item) {
+            $item->pieces = $item->pieces;
+            return $item;
+        });
         $groups = Group::all();
         $groups = $groups->map(function($group) {
             $group->pieces = $group->pieces;

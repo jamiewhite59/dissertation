@@ -608,6 +608,11 @@ export default {
 						</el-table-column>
 						<el-table-column prop="title" label="Title"/>
 						<el-table-column prop="category.title" label="Category"/>
+						<el-table-column label="Quantity">
+							<template #default="scope">
+								<el-text>{{ scope.row.pieces.length }}</el-text>
+							</template>
+						</el-table-column>
 					</el-table>
 				</el-tab-pane>
 				<el-tab-pane label="Bulk" name="bulk">
@@ -628,6 +633,11 @@ export default {
 						</el-table-column>
 						<el-table-column prop="title" label="Title"/>
 						<el-table-column prop="category.title" label="Category"/>
+						<el-table-column label="Quantity">
+							<template #default="scope">
+								<el-text>{{ scope.row.pieces.length }}</el-text>
+							</template>
+						</el-table-column>
 					</el-table>
 				</el-tab-pane>
 				<el-tab-pane label="Group" name="group">
