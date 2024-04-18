@@ -40,7 +40,11 @@ export default {
 		searchedEvents() {
 			if (this.search) {
 				return this.filteredEvents.filter((event) => {
-					return event.title.toLowerCase().includes(this.search.toLowerCase());
+					let search = this.search.toLowerCase();
+					let title = event.title ? event.title.toLowerCase().includes(search) : false;
+					let start = event.start_date ? event.start_date.toLowerCase().includes(search) : false;
+					let end = event.end_date ? event.end_date.toLowerCase().includes(search) : false;
+					return title || start || end;
 				});
 			} else {
 				return this.filteredEvents;
@@ -77,6 +81,9 @@ export default {
 		resetForm() {
 			this.$refs.eventForm.resetForm();
 		},
+	},
+	mounted() {
+		console.debug('events', this.events);
 	},
 };
 </script>
