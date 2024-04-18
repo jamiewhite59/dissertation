@@ -134,6 +134,9 @@ export default {
 		},
 		actionValue() {
 			this.$refs.actionInput.focus();
+			setTimeout(() => {
+				this.$refs.actionInput.focus();
+			}, 30);
 		},
 	},
 	methods: {
