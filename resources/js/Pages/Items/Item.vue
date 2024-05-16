@@ -84,7 +84,7 @@ export default {
 		},
 		selectPiece(piece) {
 			this.selectedPiece = piece;
-			this.pieceForm.code = piece.code;
+			this.pieceForm.code = piece?.code;
 			this.dialogVisible = true;
 		},
 		hideDialog() {
@@ -127,7 +127,7 @@ export default {
 								<el-container class="item-piece-wrapper">
 									<el-scrollbar class="piece-scrollbar" height="100%">
 										<el-container class="list-space">
-											<AddCard addItem="Piece" @addClicked="dialogVisible = true"/>
+											<AddCard addItem="Piece" @addClicked="selectPiece(null)"/>
 											<PieceItem v-for="piece in item.pieces" :key="piece.id" :piece="piece" indicateGroup @click="selectPiece(piece)" @removePiece="destroyPiece" />
 										</el-container>
 									</el-scrollbar>

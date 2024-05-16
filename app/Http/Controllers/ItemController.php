@@ -204,7 +204,7 @@ class ItemController extends Controller
         try {
             Item::destroy($request->id);
         } catch (QueryException $exception) {
-            return back()->withErrors(['sql_error' => 'Cannot remove item with pieces']);
+            return back()->withErrors(['sql_error' => 'Cannot remove item']);
         }
         return redirect('/items');
     }

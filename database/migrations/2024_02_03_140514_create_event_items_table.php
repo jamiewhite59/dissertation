@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('event_items', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('item_id')->constrained();
-            $table->foreignUuid('event_id')->constrained();
+            $table->foreignUuid('item_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('event_id')->constrained()->onDelete('cascade');
             $table->string('status');
             $table->timestamps();
             $table->foreignUuid('piece_id')->nullable()->constrained();
